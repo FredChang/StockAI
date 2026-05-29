@@ -186,24 +186,38 @@ async function getStockList() {
   try {
     for (const mode of [2, 4]) {
       const html = await proxyFetch(TWSE_LIST_URL + mode, false);
-      const rows = html.match(/<tr[^>]*>([\s\S]*?)<\/tr>/gi);
-      if (!rows) continue;
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const rows = doc.querySelectorAll('tr');
       
       rows.forEach(row => {
-        const cells = row.match(/<td[^>]*>([\s\S]*?)<\/td>/gi);
-        if (cells && cells.length >= 5) {
-          const cell0 = cells[0].replace(/<[^>]*>?/gm, '').trim();
-          const cat = cells[4].replace(/<[^>]*>?/gm, '').trim();
-          const parts = cell0.split(/\s+/);
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 5) {
+          const cell0 = cells[0].textContent.trim();
+          const cat = cells[4].textContent.trim();
+          
+          // 移除所有不可見字元與全形空白
+          const cleanText = cell0.replace(/[\s\u3000\u00A0]+/g, ' ');
+          const parts = cleanText.split(' ');
+          
           if (parts.length >= 2 && /^\d{4}$/.test(parts[0])) {
-            if (!cat.includes('權證') && !cat.includes('ETF')) {
-              list.push({ id: parts[0] + (mode === 2 ? '.TW' : '.TWO'), code: parts[0], name: parts[1], industry: cat });
+            if (!cat.includes('權證') && !cat.includes('ETF') && !cat.includes('受益證券')) {
+              list.push({ 
+                id: parts[0] + (mode === 2 ? '.TW' : '.TWO'), 
+                code: parts[0], 
+                name: parts[1], 
+                industry: cat 
+              });
             }
           }
         }
       });
+      console.log(`Mode ${mode} loaded: ${list.length} stocks`);
     }
-  } catch (e) { console.error('Stock List Error:', e); }
+  } catch (e) { 
+    console.error('Stock List Error:', e); 
+    throw new Error('存取證交所清單失敗，請稍後再試');
+  }
   return list;
 }
 
