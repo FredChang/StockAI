@@ -55,7 +55,11 @@ async function safeFetch(url, isHtml = false) {
 
 async function getFullMarketTickers() {
   const tickers = [];
-  const modes = [{mode: 2, suffix: '.TW'}, {mode: 4, suffix: '.TWO'}];
+  const modes = [
+    {mode: 2, suffix: '.TW'},   // 上市
+    {mode: 4, suffix: '.TWO'},  // 上櫃
+    {mode: 5, suffix: '.TWO'}   // 興櫃 (Emerging)
+  ];
   
   for (const {mode, suffix} of modes) {
     try {
@@ -71,14 +75,20 @@ async function getFullMarketTickers() {
         const cell0 = cells[0].innerText.trim();
         const category = cells[4].innerText.trim();
         
+        // Match "CODE NAME" or "CODE"
         const match = cell0.match(/^(\d{4,6})\s+(.+)$/);
         if (match) {
           const code = match[1];
           const name = match[2];
           
+          // Only exclude Warrants and similar derivatives
           if (category.includes('權證') || category.includes('牛熊證') || category.includes('認購') || category.includes('認售')) return;
-          if (code.length === 4 || code.startsWith('00')) {
-             tickers.push({ id: code + suffix, code, name });
+          
+          // Stocks (4 digits), ETFs (00xxx), Innovation board, etc.
+          if (code.length === 4 || code.length === 5 || code.startsWith('00')) {
+             if (!tickers.some(t => t.code === code)) {
+                 tickers.push({ id: code + suffix, code, name });
+             }
           }
         }
       });
@@ -87,13 +97,9 @@ async function getFullMarketTickers() {
     }
   }
 
-  // Deduplicate and merge with CORE_STOCKS if necessary
-  const all = [...tickers];
-  CORE_STOCKS.forEach(s => {
-      if (!all.some(a => a.id === s.id)) all.push(s);
-  });
-  
-  return all.length > 50 ? all : CORE_STOCKS;
+  // Ensure unique list
+  const uniqueTickers = Array.from(new Map(tickers.map(t => [t.code, t])).values());
+  return uniqueTickers.length > 500 ? uniqueTickers : CORE_STOCKS;
 }
 
 async function refreshMarkets() {
@@ -177,7 +183,7 @@ async function runScan() {
 
     state.results = scoreAndRank(results);
     renderResults();
-    status.innerText = `✅ 完成！分析 ${results.length} 檔，最優 Top 20 狙擊名單已就緒`;
+    status.innerText = `✅ 掃描完成！共分析 ${results.length} 檔，篩選出 TOP 20`;
   } catch (err) {
     status.innerText = '❌ 掃描異常，請重試';
     console.error(err);
