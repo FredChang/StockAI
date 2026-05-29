@@ -94,7 +94,8 @@ async function refreshMarkets() {
   if (!tickerEl) return;
   tickerEl.innerHTML = '';
   
-  for (const item of symbols) {
+  // 並行抓取所有市場數據，防止序列等待導致的介面卡死
+  const results = await Promise.allSettled(symbols.map(async (item) => {
     try {
       const data = await proxyFetch(`${YAHOO_BASE}${item.s}?range=1d&interval=1d`);
       const meta = data.chart.result[0].meta;
@@ -103,14 +104,19 @@ async function refreshMarkets() {
       const change = price - prev;
       const pct = (change / prev) * 100;
       
+      return { ...item, price, pct, change };
+    } catch (e) { return null; }
+  }));
+
+  results.forEach(res => {
+    if (res.status === 'fulfilled' && res.value) {
+      const item = res.value;
       const div = document.createElement('div');
       div.className = 'market-item';
-      div.innerHTML = `<span>${item.f} ${item.n}</span> <span class="price-text ${change >= 0 ? 'price-up' : 'price-down'}">${price.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2})} (${pct.toFixed(2)}%)</span>`;
+      div.innerHTML = `<span>${item.f} ${item.n}</span> <span class="price-text ${item.change >= 0 ? 'price-up' : 'price-down'}">${item.price.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2})} (${item.pct.toFixed(2)}%)</span>`;
       tickerEl.appendChild(div);
-    } catch (e) {
-      console.warn(`Market load failed: ${item.n}`);
     }
-  }
+  });
 }
 
 // --- Scanning Logic ---
