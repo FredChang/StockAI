@@ -55,54 +55,52 @@ async function safeFetch(url, isHtml = false) {
 
 async function getFullMarketTickers(statusEl) {
   const tickers = [];
-  const modes = [
-    {mode: 2, suffix: '.TW', n: '上市'}, 
-    {mode: 4, suffix: '.TWO', n: '上櫃'}, 
-    {mode: 5, suffix: '.TWO', n: '興櫃'}
-  ];
   
-  for (const {mode, suffix, n} of modes) {
-    try {
-      if (statusEl) statusEl.innerText = `🔍 正在同步${n}市場清單...`;
-      const html = await safeFetch(`${TWSE_LIST_URL}${mode}`, true);
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const rows = doc.querySelectorAll('tr');
-      
-      let count = 0;
-      rows.forEach(row => {
-        const cells = row.querySelectorAll('td');
-        if (cells.length < 5) return;
-        
-        const cell0 = cells[0].innerText.trim();
-        const category = cells[4].innerText.trim();
-        
-        const match = cell0.match(/^(\d{4,6})\s+(.+)$/);
-        if (match) {
-          const code = match[1];
-          const name = match[2];
-          if (category.includes('權證') || category.includes('牛熊證') || category.includes('認購') || category.includes('認售')) return;
-          if (code.length >= 4) {
-             if (!tickers.some(t => t.code === code)) {
-                 tickers.push({ id: code + suffix, code, name });
-                 count++;
-             }
-          }
+  // 1. 上市公司 (TWSE OpenAPI)
+  try {
+    if (statusEl) statusEl.innerText = `🔍 正在解析 1,100+ 上市標的...`;
+    const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL');
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        if (item.Code && item.Code.length >= 4) {
+          tickers.push({ id: item.Code + '.TW', code: item.Code, name: item.Name });
         }
       });
-      console.log(`${n} synced: ${count} tickers`);
-    } catch (e) {
-      console.error(`Failed to fetch mode ${mode}`, e);
     }
+    console.log('TWSE synced:', tickers.length);
+  } catch (e) {
+    console.warn('TWSE API failed', e);
   }
 
-  const uniqueTickers = Array.from(new Map(tickers.map(t => [t.code, t])).values());
-  if (uniqueTickers.length < 300) {
-      console.warn('Scraping failed or too few results, merging CORE_STOCKS');
+  // 2. 上櫃與興櫃 (使用 TPEx OpenAPI 或備援邏輯)
+  try {
+    if (statusEl) statusEl.innerText = `🔍 正在解析 900+ 上櫃與興櫃標的...`;
+    // TPEx OpenData: OTC Stock Quotes
+    const data = await safeFetch('https://www.tpex.org.tw/openapi/v1/t13n04nd');
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        const code = item.SecuritiesCode || item.Code;
+        const name = item.SecuritiesName || item.Name;
+        if (code && code.length >= 4 && !tickers.some(t => t.code === code)) {
+          tickers.push({ id: code + '.TWO', code: code, name: name });
+        }
+      });
+    }
+    console.log('TPEx synced total:', tickers.length);
+  } catch (e) {
+    console.warn('TPEx API failed', e);
+  }
+
+  // 3. 確保名單完整度 (補足新創板、ETF等)
+  if (tickers.length < 1500) {
+      console.warn('OpenAPI coverage incomplete, merging static list');
       CORE_STOCKS.forEach(s => {
-          if (!uniqueTickers.some(u => u.code === s.code)) uniqueTickers.push(s);
+          if (!tickers.some(t => t.code === s.code)) tickers.push(s);
       });
   }
+
+  // Ensure unique list
+  const uniqueTickers = Array.from(new Map(tickers.map(t => [t.code, t])).values());
   return uniqueTickers;
 }
 
