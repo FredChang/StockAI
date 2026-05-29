@@ -1,6 +1,6 @@
 import { CORE_STOCKS } from './stocks.js';
 
-// --- 全市場精選標的 ---
+// --- 全市場精選標的 (Initial fallback) ---
 let FULL_MARKET_LIST = [...CORE_STOCKS];
 
 const PROXY_URL = 'https://corsproxy.io/?'; 
@@ -71,13 +71,11 @@ async function getFullMarketTickers() {
         const cell0 = cells[0].innerText.trim();
         const category = cells[4].innerText.trim();
         
-        // Filter: "2330 台積電"
         const match = cell0.match(/^(\d{4,6})\s+(.+)$/);
         if (match) {
           const code = match[1];
           const name = match[2];
           
-          // Skip warrants, etc.
           if (category.includes('權證') || category.includes('牛熊證') || category.includes('認購') || category.includes('認售')) return;
           if (code.length === 4 || code.startsWith('00')) {
              tickers.push({ id: code + suffix, code, name });
@@ -88,7 +86,14 @@ async function getFullMarketTickers() {
       console.error(`Failed to fetch mode ${mode}`, e);
     }
   }
-  return tickers.length > 0 ? tickers : CORE_STOCKS;
+
+  // Deduplicate and merge with CORE_STOCKS if necessary
+  const all = [...tickers];
+  CORE_STOCKS.forEach(s => {
+      if (!all.some(a => a.id === s.id)) all.push(s);
+  });
+  
+  return all.length > 50 ? all : CORE_STOCKS;
 }
 
 async function refreshMarkets() {
@@ -126,21 +131,20 @@ async function runScan() {
   btn.disabled = true;
 
   try {
-    status.innerText = '正在抓取全台股清單...';
-    const tickers = await getFullMarketTickers();
+    status.innerText = '🔍 正在同步全台股清單...';
+    let tickers = await getFullMarketTickers();
     const total = tickers.length;
-    status.innerText = `取得標的共 ${total} 檔，開始分析數據...`;
+    status.innerText = `📡 取得標的 ${total} 檔，開始 AI 數據分析...`;
 
     let results = [];
     let completed = 0;
     const startTime = Date.now();
-    const batchSize = 15; // Parallel requests
+    const batchSize = 15;
 
     for (let i = 0; i < total; i += batchSize) {
       const batchIds = tickers.slice(i, i + batchSize);
       const promises = batchIds.map(async (s) => {
         try {
-          // Use 150d to ensure MA60 availability
           const data = await safeFetch(`${YAHOO_URL}${s.id}?range=150d&interval=1d`);
           const res = data.chart.result[0];
           const quotes = res.indicators.quote[0].close;
@@ -166,17 +170,16 @@ async function runScan() {
       fill.style.width = `${pct}%`;
       const elapsed = (Date.now() - startTime) / 1000;
       const rem = Math.round(((total - completed) * (elapsed / completed)));
-      status.innerText = `全市場掃描: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
+      status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
       
-      // Small pause to avoid browser getting too heavy
       if (i % 30 === 0) await new Promise(r => setTimeout(r, 50));
     }
 
     state.results = scoreAndRank(results);
     renderResults();
-    status.innerText = `✅ 完成！分析 ${results.length} 檔，列出 Top 20 狙擊名單`;
+    status.innerText = `✅ 完成！分析 ${results.length} 檔，最優 Top 20 狙擊名單已就緒`;
   } catch (err) {
-    status.innerText = '掃描異常，請重試';
+    status.innerText = '❌ 掃描異常，請重試';
     console.error(err);
   } finally {
     state.isScanning = false;
@@ -225,7 +228,7 @@ function scoreAndRank(recs, limit = 20) {
     r.aiScore = (sc / state.weights.reduce((a,b)=>a+b,0)) * 100;
   });
   
-  // High-momentum filter: Price above MA5
+  // Return only top 20 carefully
   return recs.filter(r => r.close >= r.ma5).sort((a,b) => b.aiScore - a.aiScore).slice(0, limit);
 }
 
@@ -246,11 +249,11 @@ function renderResults() {
 }
 
 window.showStockDetails = async (id) => {
-  const s = state.results.find(r => r.id === id) || state.watchlist.find(w => w.id === id) || FULL_MARKET_LIST.find(f => f.id === id);
+  const s = state.results.find(r => r.id === id) || state.watchlist.find(w => w.id === id) || CORE_STOCKS.find(f => f.id === id);
   if (!s) return;
   
   state.selectedStock = s;
-  state.currentTimeframe = '1mo'; // Default
+  state.currentTimeframe = '1mo';
   
   document.getElementById('chart-modal').style.display = 'block';
   document.getElementById('modal-title').innerText = `${s.name} (${s.code})`;
@@ -293,10 +296,7 @@ async function renderChart(symbol, range) {
             fill: {
                 type: 'gradient',
                 gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.7,
-                    opacityTo: 0.2,
-                    stops: [0, 90, 100]
+                    shadeIntensity: 1, opacityFrom: 0.7, opacityTo: 0.2, stops: [0, 90, 100]
                 }
             },
             dataLabels: { enabled: false },
@@ -307,9 +307,7 @@ async function renderChart(symbol, range) {
                 labels: { 
                     style: { colors: '#94a3b8', fontSize: '10px' },
                     datetimeFormatter: { year: 'yyyy', month: 'MM/dd', day: 'MM/dd', hour: 'HH:mm' }
-                },
-                axisBorder: { show: false },
-                axisTicks: { show: false }
+                }
             },
             yaxis: {
                 labels: { 
@@ -318,10 +316,7 @@ async function renderChart(symbol, range) {
                 }
             },
             grid: { borderColor: 'rgba(255,255,255,0.05)' },
-            tooltip: {
-                x: { format: 'yyyy/MM/dd HH:mm' },
-                theme: 'dark'
-            }
+            tooltip: { x: { format: 'yyyy/MM/dd HH:mm' }, theme: 'dark' }
         };
 
         el.innerHTML = '';
@@ -344,11 +339,8 @@ window.updateChartTimeframe = (range) => {
 function updateChartTabsUI() {
     document.querySelectorAll('.tf-btn').forEach(btn => {
         const range = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
-        if (range === state.currentTimeframe) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
+        if (range === state.currentTimeframe) btn.classList.add('active');
+        else btn.classList.remove('active');
     });
 }
 
@@ -360,12 +352,13 @@ function toggleWatchlist() {
     if (idx >= 0) {
         state.watchlist.splice(idx, 1);
     } else {
+        const now = new Date();
         state.watchlist.push({
             ...s,
             entryPrice: s.close,
             currentPrice: s.close,
-            shares: 1, // 預設 1 張
-            date: new Date().toISOString()
+            shares: 1,
+            addDate: now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
         });
     }
     
@@ -428,35 +421,51 @@ function updateWatchlistUI() {
       return; 
   }
   
-  let tot = 0;
+  let totalPnl = 0;
+  let totalPrincipal = 0;
+  
   l.innerHTML = state.watchlist.map(w => {
     const pnlPerShare = w.currentPrice - w.entryPrice;
     const pct = (pnlPerShare / w.entryPrice * 100);
-    // P&L 算法: (現價 - 買價) * 張數 * 1000 (每張 1000 股)
+    const principal = w.entryPrice * w.shares * 1000;
     const amt = pnlPerShare * w.shares * 1000; 
-    tot += amt;
+    
+    totalPnl += amt;
+    totalPrincipal += principal;
+    
     return `
       <div class="stock-card" onclick="showStockDetails('${w.id}')">
         <div class="stock-info">
             <span class="stock-id">${w.code}</span> 
             <span class="stock-name">${w.name}</span>
+            <span style="font-size:0.6rem; color:var(--text-secondary); margin-top:4px;">📅 加入: ${w.addDate || '--'}</span>
         </div>
         <div style="text-align: right;">
             <div class="price-text">${w.currentPrice.toFixed(2)}</div>
-            <div style="color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; font-size: 0.8rem; font-weight: 600;">
-                ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}% (${amt.toLocaleString()} TWD)
+            <div style="color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; font-size: 0.8rem; font-weight: 700;">
+                ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%
+            </div>
+            <div style="font-size:0.7rem; color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; opacity:0.8;">
+                ${amt.toLocaleString()} TWD
             </div>
         </div>
       </div>`;
   }).join('');
   
-  // 顯示總盈虧
+  const totalPct = (totalPnl / totalPrincipal) * 100;
+  
   s.innerHTML = `
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:0.8rem;">監控總計: ${state.watchlist.length} 檔</span>
-        <span style="font-weight:800; color:${tot >= 0 ? '#ff4d4d' : '#00ff00'};">
-            ${tot >= 0 ? '+' : ''}${tot.toLocaleString()} TWD
-        </span>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="summary-item">
+            <div style="font-size:0.65rem; color:var(--text-secondary);">總投入本金</div>
+            <div style="font-size:0.9rem; font-weight:700;">${totalPrincipal.toLocaleString()}</div>
+        </div>
+        <div class="summary-item" style="text-align:right;">
+            <div style="font-size:0.65rem; color:var(--text-secondary);">累積總盈虧</div>
+            <div style="font-size:0.9rem; font-weight:800; color:${totalPnl >= 0 ? '#ff4d4d' : '#00ff00'};">
+                ${totalPnl >= 0 ? '+' : ''}${totalPnl.toLocaleString()} (${totalPct.toFixed(2)}%)
+            </div>
+        </div>
     </div>
   `;
 }
