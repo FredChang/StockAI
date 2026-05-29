@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Register Service Worker for PWA
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      // Swipe the base path from Vite env if possible, or use relative
-      navigator.serviceWorker.register('./sw.js', { scope: './' })
+      // Use relative path for subfolder support
+      navigator.serviceWorker.register('sw.js')
         .then(reg => console.log('SW Registered', reg))
         .catch(err => console.log('SW Failed', err));
     });
