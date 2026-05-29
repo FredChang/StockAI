@@ -1,5 +1,4 @@
 import { CORE_STOCKS } from './stocks.js';
-import ApexCharts from 'apexcharts';
 
 // --- Constants & State ---
 const PROXY_BASE = 'https://api.allorigins.win/get?url=';
@@ -19,15 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initWeights();
   updateWatchlistUI();
   
-  // 延後加載市場數據與 Service Worker，確保進場流暢
+  // 延後執行，確保 UI 先渲染出來，不影響第一眼觀感
   setTimeout(() => {
     refreshMarkets();
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
-  }, 1500);
+  }, 1000);
 
-  // PWA Install
+  // PWA Handle
   let deferredPrompt;
   const installBtn = document.getElementById('pwa-install-btn');
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -48,21 +47,20 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('start-scan').onclick = runScan;
   document.getElementById('weight-toggle').onclick = toggleWeights;
   const closeBtn = document.querySelector('.close-modal');
-  if (closeBtn) {
-    closeBtn.onclick = () => {
-      document.getElementById('chart-modal').style.display = 'none';
-      if (state.currentChart) state.currentChart.destroy();
-    };
-  }
+  if (closeBtn) closeBtn.onclick = () => {
+    document.getElementById('chart-modal').style.display = 'none';
+    if (state.currentChart) {
+      state.currentChart.destroy();
+      state.currentChart = null;
+    }
+  };
 });
 
-// --- UI Actions ---
 window.switchTab = (tab) => {
   state.activeTab = tab;
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes(tab === 'scan' ? '目標' : '監控'));
-  if (btn) btn.classList.add('active');
-  
+  const activeBtn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes(tab === 'scan' ? '目標' : '監控'));
+  if (activeBtn) activeBtn.classList.add('active');
   document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
   const sec = document.getElementById(`${tab}-section`);
   if (sec) sec.classList.add('active');
@@ -70,42 +68,27 @@ window.switchTab = (tab) => {
 
 function initWeights() {
   state.weights.forEach((w, i) => {
-    const slider = document.getElementById(`w${i+1}`);
-    const label = document.getElementById(`v-w${i+1}`);
-    if (slider && label) {
-      slider.value = w;
-      label.innerText = w.toFixed(1);
-      slider.oninput = (e) => {
-        state.weights[i] = parseFloat(e.target.value);
-        label.innerText = state.weights[i].toFixed(1);
-      };
+    const s = document.getElementById(`w${i+1}`), l = document.getElementById(`v-w${i+1}`);
+    if (s && l) {
+      s.value = w; l.innerText = w.toFixed(1);
+      s.oninput = (e) => { state.weights[i] = parseFloat(e.target.value); l.innerText = state.weights[i].toFixed(1); };
     }
   });
 }
 
 function toggleWeights() {
-  const ctrl = document.getElementById('weight-controls');
-  if (ctrl) ctrl.style.display = ctrl.style.display === 'none' ? 'block' : 'none';
-}
-
-// --- Fetch with Timeout ---
-async function fetchWithTimeout(url, options = {}, timeout = 6000) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-  const response = await fetch(url, { ...options, signal: controller.signal });
-  clearTimeout(id);
-  return response;
+  const c = document.getElementById('weight-controls');
+  if (c) c.style.display = c.style.display === 'none' ? 'block' : 'none';
 }
 
 async function proxyFetch(targetUrl, isJson = true) {
   const url = `${PROXY_BASE}${encodeURIComponent(targetUrl)}`;
-  const res = await fetchWithTimeout(url);
+  const res = await fetch(url);
   const data = await res.json();
   const content = data.contents;
   return isJson ? JSON.parse(content) : content;
 }
 
-// --- Market Ticker (Batch Loading) ---
 async function refreshMarkets() {
   const symbols = [
     { s: "^TWII", f: "🇹🇼", n: "台股" }, { s: "^DJI", f: "🇺🇸", n: "道瓊" },
@@ -116,9 +99,10 @@ async function refreshMarkets() {
   ];
   const tickerEl = document.getElementById('market-ticker');
   if (!tickerEl) return;
-  tickerEl.innerHTML = '';
   
-  // 分批加載市場數據 (每批 2 檔) 以防止手機核心卡死
+  // 先清空「載入中」字樣
+  tickerEl.innerHTML = '';
+
   for (let i = 0; i < symbols.length; i += 2) {
     const batch = symbols.slice(i, i + 2);
     await Promise.allSettled(batch.map(async (item) => {
@@ -126,25 +110,26 @@ async function refreshMarkets() {
         const data = await proxyFetch(`${YAHOO_BASE}${item.s}?range=1d&interval=1d`);
         const meta = data.chart.result[0].meta;
         const price = meta.regularMarketPrice;
-        const change = price - (meta.chartPreviousClose || price);
-        const pct = (change / (meta.chartPreviousClose || price)) * 100;
+        const prev = meta.chartPreviousClose || price;
+        const change = price - prev;
+        const pct = (change / prev) * 100;
         
         const div = document.createElement('div');
         div.className = 'market-item';
-        div.innerHTML = `<span>${item.f} ${item.n}</span> <span class="price-text ${change >= 0 ? 'price-up' : 'price-down'}">${price.toLocaleString(undefined, {maximumFractionDigits: 1})} (${pct.toFixed(2)}%)</span>`;
+        div.innerHTML = `<span>${item.f} ${item.n}</span> <span class="price-text ${change >= 0 ? 'price-up' : 'price-down'}">${price.toLocaleString(undefined, {maximumFractionDigits:1})} (${pct.toFixed(2)}%)</span>`;
         tickerEl.appendChild(div);
       } catch (e) {}
     }));
-    await new Promise(r => setTimeout(r, 400)); // 呼吸式加載休息
+    await new Promise(r => setTimeout(r, 300));
   }
+  const t = document.getElementById('update-time');
+  if (t) t.innerText = `更新於: ${new Date().toLocaleTimeString()}`;
 }
 
-// --- Scanning Logic ---
 async function runScan() {
   if (state.isScanning) return;
   state.isScanning = true;
-  const btn = document.getElementById('start-scan');
-  btn.disabled = true;
+  const btn = document.getElementById('start-scan'); btn.disabled = true;
   const statusEl = document.getElementById('progress-status');
   const fill = document.getElementById('progress-fill');
   document.getElementById('progress-container').style.display = 'block';
@@ -156,8 +141,8 @@ async function runScan() {
     const batchSize = 6;
     
     for (let i = 0; i < tickers.length; i += batchSize) {
-      const currentBatch = tickers.slice(i, i + batchSize);
-      await Promise.all(currentBatch.map(async (s) => {
+      const current = tickers.slice(i, i + batchSize);
+      await Promise.all(current.map(async (s) => {
         try {
           const data = await getHistoricalData(s.id);
           if (data && data.length >= 60) {
@@ -168,15 +153,15 @@ async function runScan() {
         completed++;
       }));
       fill.style.width = `${(completed / tickers.length) * 100}%`;
-      statusEl.innerText = `分析中: ${completed}/${tickers.length}`;
-      await new Promise(r => setTimeout(r, 150));
+      statusEl.innerText = `分析強度中: ${completed}/${tickers.length}`;
+      await new Promise(r => setTimeout(r, 100));
     }
     
     state.results = scoreAndRank(results);
     renderResults();
-    statusEl.innerText = `完成！篩選出的 Top 20 精選強勢股`;
+    statusEl.innerText = `完成！篩選 Top 20 精選強勢股`;
   } catch (err) {
-    statusEl.innerText = '系統忙碌中，請稍後嘗試';
+    statusEl.innerText = '連線狀況不穩，請重新掃描';
   } finally {
     state.isScanning = false;
     btn.disabled = false;
@@ -195,7 +180,8 @@ function calculateFeatures(s, c) {
   const rets = []; for (let i = 1; i < n; i++) rets.push((c[i]-c[i-1])/c[i-1]);
   const vol = stdDev(rets.slice(-20)) * Math.sqrt(252) * 100;
   const std20 = stdDev(c.slice(-20));
-  return { ...s, close: cur, ma5: avg(c.slice(-5)), features: [vol, ((ma20+2*std20 - (ma20-2*std20)) / ma20) * 100, (cur/ma60-1)*100, (avg(c.slice(-5))/ma60-1)*100, (cur/ma20-1)*100, (cur/(ma20+2*std20)-1)*100, (cur/c[n-11]-1)*100] };
+  const feats = [vol, ((ma20+2*std20 - (ma20-2*std20)) / ma20) * 100, (cur/ma60-1)*100, (avg(c.slice(-5))/ma60-1)*100, (cur/ma20-1)*100, (cur/(ma20+2*std20)-1)*100, (cur/c[n-11]-1)*100];
+  return { ...s, close: cur, ma5: avg(c.slice(-5)), features: feats };
 }
 
 function scoreAndRank(recs) {
@@ -203,7 +189,7 @@ function scoreAndRank(recs) {
   const prs = recs.map(() => new Array(7).fill(0));
   for (let f = 0; f < 7; f++) {
     const sorted = recs.map((r, i) => ({ v: r.features[f], i })).sort((a,b) => a.v - b.v);
-    sorted.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
+    sorted.forEach((it, rank) => prs[it.i][f] = (rank+1)/n);
   }
   recs.forEach((r, i) => {
     let sc = 0; for (let f = 0; f < 7; f++) sc += prs[i][f] * state.weights[f];
@@ -213,8 +199,8 @@ function scoreAndRank(recs) {
 }
 
 function renderResults() {
-  const listEl = document.getElementById('results-list'); if (!listEl) return;
-  listEl.innerHTML = state.results.map(r => `
+  const el = document.getElementById('results-list'); if (!el) return;
+  el.innerHTML = state.results.map(r => `
     <div class="stock-card" onclick="showStockDetails('${r.id}')">
       <div class="stock-info"><span class="stock-id">${r.code}</span><span class="stock-name">${r.name}</span></div>
       <div style="text-align: center"><div class="price-text">${r.close.toFixed(2)}</div></div>
@@ -232,19 +218,13 @@ window.addToWatchlist = (e, id) => {
 
 function updateWatchlistUI() {
   const l = document.getElementById('watchlist-list'), s = document.getElementById('watchlist-summary'); if (!l || !s) return;
-  if (state.watchlist.length === 0) { s.innerText = '尚無追蹤'; l.innerHTML = ''; return; }
+  if (state.watchlist.length === 0) { s.innerText = '尚無監控點標'; l.innerHTML = ''; return; }
   let tot = 0;
   l.innerHTML = state.watchlist.map(w => {
     const p = w.currentPrice - w.entryPrice, amt = p * w.shares * 1000; tot += amt;
-    return `
-      <div class="stock-card" onclick="showStockDetails('${w.id}')">
-        <div class="stock-info"><span>${w.code}</span> <span>${w.name}</span></div>
-        <div style="text-align: right; color:${p>=0?'var(--danger)':'var(--accent-secondary)'}">${(p/w.entryPrice*100).toFixed(2)}%</div>
-        <button onclick="removeFromWatchlist(event, '${w.id}')">🗑️</button>
-      </div>
-    `;
+    return `<div class="stock-card" onclick="showStockDetails('${w.id}')"><div class="stock-info"><span>${w.code}</span> <span>${w.name}</span></div><div style="text-align: right; color:${p>=0?'var(--danger)':'var(--accent-secondary)'}">${(p/w.entryPrice*100).toFixed(2)}%</div><button onclick="removeFromWatchlist(event, '${w.id}')">🗑️</button></div>`;
   }).join('');
-  s.innerText = `總盈虧: ${tot.toLocaleString()} TWD`;
+  s.innerText = `總損益: ${tot.toLocaleString()} TWD`;
 }
 
 window.removeFromWatchlist = (e, id) => {
@@ -253,19 +233,22 @@ window.removeFromWatchlist = (e, id) => {
 };
 
 window.showStockDetails = (id) => {
-  const stock = state.results.find(r => r.id === id) || state.watchlist.find(w => w.id === id);
-  if (!stock || !stock.history) return;
+  const s = state.results.find(r => r.id === id) || state.watchlist.find(w => w.id === id);
+  if (!s || !s.history) return;
   document.getElementById('chart-modal').style.display = 'block';
-  document.getElementById('modal-title').innerText = `${stock.name} (${stock.code}) 歷史走勢`;
-  const options = {
-    series: [{ name: 'Price', data: stock.history.slice(-30) }],
-    chart: { type: 'line', height: 250, toolbar: { show: false } },
-    colors: ['#39d2c0'], stroke: { curve: 'smooth', width: 3 },
+  document.getElementById('modal-title').innerText = `${s.name} (${s.code}) 30日趨勢`;
+  const opts = {
+    series: [{ name: 'Price', data: s.history.slice(-30) }],
+    chart: { type: 'area', height: 250, toolbar: { show: false } },
+    colors: ['#39d2c0'], stroke: { curve: 'smooth', width: 2 },
+    dataLabels: { enabled: false },
     xaxis: { labels: { show: false } },
-    theme: { mode: 'dark' }
+    theme: { mode: 'dark' },
+    fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.3, opacityTo: 0 } }
   };
   const el = document.getElementById('chart-container'); el.innerHTML = '';
-  state.currentChart = new ApexCharts(el, options); state.currentChart.render();
+  state.currentChart = new window.ApexCharts(el, opts);
+  state.currentChart.render();
 };
 
 function avg(a) { return a.reduce((x,y)=>x+y,0)/a.length; }
