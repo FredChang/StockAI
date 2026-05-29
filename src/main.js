@@ -53,21 +53,23 @@ async function safeFetch(url, isHtml = false) {
   }
 }
 
-async function getFullMarketTickers() {
+async function getFullMarketTickers(statusEl) {
   const tickers = [];
   const modes = [
-    {mode: 2, suffix: '.TW'},   // 上市
-    {mode: 4, suffix: '.TWO'},  // 上櫃
-    {mode: 5, suffix: '.TWO'}   // 興櫃 (Emerging)
+    {mode: 2, suffix: '.TW', n: '上市'}, 
+    {mode: 4, suffix: '.TWO', n: '上櫃'}, 
+    {mode: 5, suffix: '.TWO', n: '興櫃'}
   ];
   
-  for (const {mode, suffix} of modes) {
+  for (const {mode, suffix, n} of modes) {
     try {
+      if (statusEl) statusEl.innerText = `🔍 正在同步${n}市場清單...`;
       const html = await safeFetch(`${TWSE_LIST_URL}${mode}`, true);
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
       const rows = doc.querySelectorAll('tr');
       
+      let count = 0;
       rows.forEach(row => {
         const cells = row.querySelectorAll('td');
         if (cells.length < 5) return;
@@ -75,38 +77,40 @@ async function getFullMarketTickers() {
         const cell0 = cells[0].innerText.trim();
         const category = cells[4].innerText.trim();
         
-        // Match "CODE NAME" or "CODE"
         const match = cell0.match(/^(\d{4,6})\s+(.+)$/);
         if (match) {
           const code = match[1];
           const name = match[2];
-          
-          // Only exclude Warrants and similar derivatives
           if (category.includes('權證') || category.includes('牛熊證') || category.includes('認購') || category.includes('認售')) return;
-          
-          // Stocks (4 digits), ETFs (00xxx), Innovation board, etc.
-          if (code.length === 4 || code.length === 5 || code.startsWith('00')) {
+          if (code.length >= 4) {
              if (!tickers.some(t => t.code === code)) {
                  tickers.push({ id: code + suffix, code, name });
+                 count++;
              }
           }
         }
       });
+      console.log(`${n} synced: ${count} tickers`);
     } catch (e) {
       console.error(`Failed to fetch mode ${mode}`, e);
     }
   }
 
-  // Ensure unique list
   const uniqueTickers = Array.from(new Map(tickers.map(t => [t.code, t])).values());
-  return uniqueTickers.length > 500 ? uniqueTickers : CORE_STOCKS;
+  if (uniqueTickers.length < 300) {
+      console.warn('Scraping failed or too few results, merging CORE_STOCKS');
+      CORE_STOCKS.forEach(s => {
+          if (!uniqueTickers.some(u => u.code === s.code)) uniqueTickers.push(s);
+      });
+  }
+  return uniqueTickers;
 }
 
 async function refreshMarkets() {
   const indices = [
-    { s: "^TWII", n: "台股" }, { s: "^DJI", n: "道瓊" },
-    { s: "^GSPC", n: "S&P500" }, { s: "^SOX", n: "費半" },
-    { s: "BTC-USD", n: "BTC" }, { s: "GC=F", n: "黃金" }
+    { s: "^TWII", n: "台股" }, { s: "^N225", n: "日經" }, { s: "^KS11", n: "韓股" },
+    { s: "^DJI", n: "道瓊" }, { s: "^IXIC", n: "那指" }, { s: "^SOX", n: "費半" },
+    { s: "CL=F", n: "原油" }, { s: "GC=F", n: "黃金" }, { s: "BTC-USD", n: "BTC" }
   ];
   const ticker = document.getElementById('market-ticker');
   if (!ticker) return;
@@ -137,8 +141,7 @@ async function runScan() {
   btn.disabled = true;
 
   try {
-    status.innerText = '🔍 正在同步全台股清單...';
-    let tickers = await getFullMarketTickers();
+    let tickers = await getFullMarketTickers(status);
     const total = tickers.length;
     status.innerText = `📡 取得標的 ${total} 檔，開始 AI 數據分析...`;
 
