@@ -1,10 +1,11 @@
 import { CORE_STOCKS } from './stocks.js';
 
 // --- 全市場精選標的 ---
-const FULL_MARKET_LIST = [...CORE_STOCKS];
+let FULL_MARKET_LIST = [...CORE_STOCKS];
 
 const PROXY_URL = 'https://corsproxy.io/?'; 
 const YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/';
+const TWSE_LIST_URL = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=';
 
 let state = {
   activeTab: 'scan',
@@ -41,15 +42,53 @@ function updateTime() {
     if (el) el.innerText = `更新於: ${new Date().toLocaleTimeString()}`;
 }
 
-async function safeFetch(url) {
+async function safeFetch(url, isHtml = false) {
   try {
     const res = await fetch(PROXY_URL + encodeURIComponent(url));
     if (!res.ok) throw new Error('Fetch Error');
-    return await res.json();
+    return isHtml ? await res.text() : await res.json();
   } catch (e) {
     console.error('Fetch failed:', url, e);
     throw e;
   }
+}
+
+async function getFullMarketTickers() {
+  const tickers = [];
+  const modes = [{mode: 2, suffix: '.TW'}, {mode: 4, suffix: '.TWO'}];
+  
+  for (const {mode, suffix} of modes) {
+    try {
+      const html = await safeFetch(`${TWSE_LIST_URL}${mode}`, true);
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const rows = doc.querySelectorAll('tr');
+      
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length < 5) return;
+        
+        const cell0 = cells[0].innerText.trim();
+        const category = cells[4].innerText.trim();
+        
+        // Filter: "2330 台積電"
+        const match = cell0.match(/^(\d{4,6})\s+(.+)$/);
+        if (match) {
+          const code = match[1];
+          const name = match[2];
+          
+          // Skip warrants, etc.
+          if (category.includes('權證') || category.includes('牛熊證') || category.includes('認購') || category.includes('認售')) return;
+          if (code.length === 4 || code.startsWith('00')) {
+             tickers.push({ id: code + suffix, code, name });
+          }
+        }
+      });
+    } catch (e) {
+      console.error(`Failed to fetch mode ${mode}`, e);
+    }
+  }
+  return tickers.length > 0 ? tickers : CORE_STOCKS;
 }
 
 async function refreshMarkets() {
@@ -87,44 +126,55 @@ async function runScan() {
   btn.disabled = true;
 
   try {
+    status.innerText = '正在抓取全台股清單...';
+    const tickers = await getFullMarketTickers();
+    const total = tickers.length;
+    status.innerText = `取得標的共 ${total} 檔，開始分析數據...`;
+
     let results = [];
     let completed = 0;
-    const tickers = FULL_MARKET_LIST;
-    const total = tickers.length;
     const startTime = Date.now();
+    const batchSize = 15; // Parallel requests
 
-    for (let i = 0; i < total; i++) {
-      const s = tickers[i];
-      try {
-        const data = await safeFetch(`${YAHOO_URL}${s.id}?range=150d&interval=1d`);
-        const res = data.chart.result[0];
-        const quotes = res.indicators.quote[0].close;
-        const validQuotes = quotes.filter(v => v != null);
-        
-        if (validQuotes.length >= 60) {
-          const feat = calculateFeatures(s, validQuotes);
-          if (feat) {
-             results.push({ 
-                 ...feat, 
-                 history: validQuotes,
-                 timestamps: res.timestamp.filter((_, idx) => quotes[idx] != null)
-             });
+    for (let i = 0; i < total; i += batchSize) {
+      const batchIds = tickers.slice(i, i + batchSize);
+      const promises = batchIds.map(async (s) => {
+        try {
+          // Use 150d to ensure MA60 availability
+          const data = await safeFetch(`${YAHOO_URL}${s.id}?range=150d&interval=1d`);
+          const res = data.chart.result[0];
+          const quotes = res.indicators.quote[0].close;
+          const validQuotes = quotes.filter(v => v != null);
+          
+          if (validQuotes.length >= 60) {
+            const feat = calculateFeatures(s, validQuotes);
+            if (feat) {
+               results.push({ 
+                   ...feat, 
+                   history: validQuotes,
+                   timestamps: res.timestamp.filter((_, idx) => quotes[idx] != null)
+               });
+            }
           }
-        }
-      } catch (e) {}
+        } catch (e) {}
+        completed++;
+      });
+
+      await Promise.all(promises);
       
-      completed++;
       const pct = (completed / total) * 100;
       fill.style.width = `${pct}%`;
       const elapsed = (Date.now() - startTime) / 1000;
       const rem = Math.round(((total - completed) * (elapsed / completed)));
-      status.innerText = `分析中: ${s.name} [${pct.toFixed(0)}%] (約剩 ${Math.floor(rem/60)}分${rem%60}秒)`;
-      if (i % 5 === 0) await new Promise(r => setTimeout(r, 50));
+      status.innerText = `全市場掃描: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
+      
+      // Small pause to avoid browser getting too heavy
+      if (i % 30 === 0) await new Promise(r => setTimeout(r, 50));
     }
 
     state.results = scoreAndRank(results);
     renderResults();
-    status.innerText = `完成！列出 Top 20 妖股名單`;
+    status.innerText = `✅ 完成！分析 ${results.length} 檔，列出 Top 20 狙擊名單`;
   } catch (err) {
     status.innerText = '掃描異常，請重試';
     console.error(err);
@@ -136,7 +186,6 @@ async function runScan() {
 
 function calculateFeatures(s, c) {
   const n = c.length;
-  if (n < 60) return null;
   const cur = c[n-1];
   const ma5 = avg(c.slice(-5)), ma20 = avg(c.slice(-20)), ma60 = avg(c.slice(-60));
   const rets = []; for(let i=1; i<n; i++) rets.push((c[i]-c[i-1])/c[i-1]);
@@ -162,28 +211,22 @@ function calculateFeatures(s, c) {
   };
 }
 
-function scoreAndRank(recs) {
+function scoreAndRank(recs, limit = 20) {
   const n = recs.length; if (n === 0) return [];
   const prs = recs.map(() => new Array(7).fill(0));
+  
   for (let f = 0; f < 7; f++) {
     const sorted = recs.map((r, i) => ({ v: r.features[f] || 0, i })).sort((a,b) => a.v - b.v);
     sorted.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
   }
+  
   recs.forEach((r, i) => {
     let sc = 0; for (let f = 0; f < 7; f++) sc += prs[i][f] * state.weights[f];
     r.aiScore = (sc / state.weights.reduce((a,b)=>a+b,0)) * 100;
   });
   
-  const filtered = recs.filter(r => r.close >= r.ma5);
-  if (filtered.length > 0) {
-    const maxScore = Math.max(...filtered.map(r => r.aiScore));
-    filtered.forEach(r => {
-        // Boost scores so top results feel more "premium"
-        r.aiScore = (r.aiScore / maxScore) * 98;
-    });
-  }
-  
-  return filtered.sort((a,b) => b.aiScore - a.aiScore).slice(0, 20);
+  // High-momentum filter: Price above MA5
+  return recs.filter(r => r.close >= r.ma5).sort((a,b) => b.aiScore - a.aiScore).slice(0, limit);
 }
 
 function renderResults() {
@@ -317,12 +360,11 @@ function toggleWatchlist() {
     if (idx >= 0) {
         state.watchlist.splice(idx, 1);
     } else {
-        // Prepare for entry (placeholder values if not in a trade)
         state.watchlist.push({
             ...s,
             entryPrice: s.close,
             currentPrice: s.close,
-            shares: 1,
+            shares: 1, // 預設 1 張
             date: new Date().toISOString()
         });
     }
@@ -388,9 +430,10 @@ function updateWatchlistUI() {
   
   let tot = 0;
   l.innerHTML = state.watchlist.map(w => {
-    const p = w.currentPrice - w.entryPrice;
-    const pct = (p / w.entryPrice * 100);
-    const amt = p * w.shares * 1000; 
+    const pnlPerShare = w.currentPrice - w.entryPrice;
+    const pct = (pnlPerShare / w.entryPrice * 100);
+    // P&L 算法: (現價 - 買價) * 張數 * 1000 (每張 1000 股)
+    const amt = pnlPerShare * w.shares * 1000; 
     tot += amt;
     return `
       <div class="stock-card" onclick="showStockDetails('${w.id}')">
@@ -401,10 +444,19 @@ function updateWatchlistUI() {
         <div style="text-align: right;">
             <div class="price-text">${w.currentPrice.toFixed(2)}</div>
             <div style="color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; font-size: 0.8rem; font-weight: 600;">
-                ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%
+                ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}% (${amt.toLocaleString()} TWD)
             </div>
         </div>
       </div>`;
   }).join('');
-  s.innerText = `監控清單盈虧: ${tot >= 0 ? '+' : ''}${tot.toLocaleString()} TWD`;
+  
+  // 顯示總盈虧
+  s.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:0.8rem;">監控總計: ${state.watchlist.length} 檔</span>
+        <span style="font-weight:800; color:${tot >= 0 ? '#ff4d4d' : '#00ff00'};">
+            ${tot >= 0 ? '+' : ''}${tot.toLocaleString()} TWD
+        </span>
+    </div>
+  `;
 }
