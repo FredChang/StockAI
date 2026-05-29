@@ -105,47 +105,70 @@ async function refreshMarkets() {
   }
 }
 
-// --- 掃描核心：回歸即時抓取 ---
+// --- 掃描核心：全市場抓取 (優化防封鎖邏輯) ---
 async function runScan() {
   if (state.isScanning) return;
   state.isScanning = true;
   const btn = document.getElementById('start-scan');
   btn.disabled = true;
-  const status = document.getElementById('progress-status');
+  const statusEl = document.getElementById('progress-status');
   const fill = document.getElementById('progress-fill');
   document.getElementById('progress-container').style.display = 'block';
   
   try {
-    status.innerText = '正在連線證交所抓取台股標的...';
-    const tickers = await fetchAllTickers();
-    status.innerText = `成功識別 ${tickers.length} 檔標的，開始 AI 動能分析...`;
+    statusEl.innerText = '正在擷取證交所最新名單...';
+    let tickers = await fetchAllTickers();
+    const total = tickers.length;
+    statusEl.innerText = `成功識別 ${total} 檔標的，準備開始分析...`;
     
     let results = [];
     let completed = 0;
-    const batchSize = 6;
+    const batchSize = 3; 
+    const startTime = Date.now();
     
-    for (let i = 0; i < tickers.length; i += batchSize) {
-      const current = tickers.slice(i, i + batchSize);
-      await Promise.all(current.map(async (s) => {
+    for (let i = 0; i < total; i += batchSize) {
+      const currentBatch = tickers.slice(i, i + batchSize);
+      
+      await Promise.all(currentBatch.map(async (s) => {
         try {
           const data = await getHistoricalData(s.id);
-          if (data && data.length >= 60) {
+          if (data && data.length >= 40) {
             const feat = calculateFeatures(s, data);
             if (feat) results.push({ ...feat, history: data });
           }
         } catch (e) {}
         completed++;
       }));
-      fill.style.width = `${(completed / tickers.length) * 100}%`;
-      status.innerText = `深度解析中: ${completed}/${tickers.length}`;
-      await new Promise(r => setTimeout(r, 100));
+      
+      // 計算進度與預估時間
+      const pct = (completed / total) * 100;
+      fill.style.width = `${pct}%`;
+      
+      const timeElapsed = (Date.now() - startTime) / 1000;
+      const timePerStock = timeElapsed / completed;
+      const remainingStocks = total - completed;
+      const secondsLeft = Math.round(remainingStocks * timePerStock);
+      
+      let timeText = '';
+      if (completed > 15) { // 掃描超過 15 檔後開始顯示預估時間
+        const mins = Math.floor(secondsLeft / 60);
+        const secs = secondsLeft % 60;
+        timeText = ` (約剩 ${mins > 0 ? mins + '分 ' : ''}${secs}秒)`;
+      }
+      
+      statusEl.innerText = `全市場分析: ${completed}/${total} [${pct.toFixed(0)}%]${timeText}`;
+      
+      if (completed % 15 === 0) {
+        await new Promise(r => setTimeout(r, 400));
+      }
     }
     
     state.results = scoreAndRank(results);
     renderResults();
-    status.innerText = `掃描完成！列出 Top 20 核心名單`;
+    statusEl.innerText = `掃描完成！列出前 20 檔目標標的`;
+    
   } catch (err) {
-    status.innerText = '連線超時或被證交所阻擋，請稍後重試';
+    statusEl.innerText = '連線異常，請重新點擊掃描';
   } finally {
     state.isScanning = false;
     btn.disabled = false;
