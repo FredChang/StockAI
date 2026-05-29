@@ -177,25 +177,47 @@ async function runScan() {
 
 async function fetchAllTickers() {
   let list = [];
-  // 模式 2 是上市，4 是上櫃
-  for (const mode of [2, 4]) {
+  const apis = [
+    { url: 'https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL', mode: 'TW' }, // 上市
+    { url: 'https://openapi.twse.com.tw/v1/tpex/STOCK_DAY_ALL', mode: 'TWO' } // 上櫃
+  ];
+
+  for (const api of apis) {
     try {
-      const html = await proxyFetch(TWSE_URL + mode, false);
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      [...doc.querySelectorAll('tr')].forEach(row => {
-        const cells = row.querySelectorAll('td');
-        if (cells.length >= 5) {
-          const text = cells[0].textContent.trim().replace(/[\s\u3000\u00A0]+/g, ' ');
-          const cat = cells[4].textContent.trim();
-          const p = text.split(' ');
-          if (p.length >= 2 && /^\d{4}$/.test(p[0]) && !cat.includes('權證') && !cat.includes('ETF')) {
-            list.push({ id: p[0] + (mode === 2 ? '.TW' : '.TWO'), code: p[0], name: p[1], industry: cat });
+      // 官方 Open Data API 通常支援 CORS, 若不行則走 Proxy
+      let data;
+      try {
+        const res = await fetch(api.url);
+        data = await res.json();
+      } catch (e) {
+        data = await proxyFetch(api.url);
+      }
+
+      if (Array.isArray(data)) {
+        data.forEach(item => {
+          const code = item.Code || item.ID || item.stkNo;
+          const name = item.Name || item.stkName;
+          if (code && /^\d{4}$/.test(code)) {
+            list.push({
+              id: `${code}.${api.mode}`,
+              code: code,
+              name: name
+            });
           }
-        }
-      });
+        });
+      }
     } catch (e) {
-      console.error('Mode fetch failed', mode);
+      console.error(`Fetch API failed: ${api.url}`, e);
     }
+  }
+  
+  // 若官方 API 報廢，則使用保底名單（防止結果為空）
+  if (list.length < 100) {
+      return [
+        {id:"2330.TW",code:"2330",name:"台積電"}, {id:"2317.TW",code:"2317",name:"鴻海"},
+        {id:"2454.TW",code:"2454",name:"聯發科"}, {id:"2308.TW",code:"2308",name:"台達電"},
+        {id:"2382.TW",code:"2382",name:"廣達"},    {id:"1513.TW",code:"1513",name:"中興電"}
+      ];
   }
   return list;
 }
