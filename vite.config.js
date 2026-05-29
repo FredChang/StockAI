@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/StockBuy/', // Replace with your repository name if different
+  base: '/StockAI/',
   build: {
     outDir: 'dist',
   }

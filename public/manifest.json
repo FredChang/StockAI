@@ -1,0 +1,21 @@
+{
+  "name": "MANUS AI 妖股雷達",
+  "short_name": "動能雷達",
+  "description": "全自動台股動能掃描與 AI 評分系統",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#39d2c0",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

@@ -18,6 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
   refreshMarkets();
   updateWatchlistUI();
   
+  // Register Service Worker for PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      // Swipe the base path from Vite env if possible, or use relative
+      navigator.serviceWorker.register('./sw.js', { scope: './' })
+        .then(reg => console.log('SW Registered', reg))
+        .catch(err => console.log('SW Failed', err));
+    });
+  }
+
   document.getElementById('start-scan').addEventListener('click', runScan);
   document.getElementById('weight-toggle').addEventListener('click', toggleWeights);
   document.querySelector('.close-modal').addEventListener('click', () => {
@@ -68,9 +78,16 @@ async function refreshMarkets() {
   for (const item of symbols) {
     try {
       const url = `${PROXY}${encodeURIComponent(`${YAHOO_BASE}${item.s}?range=1d&interval=1d`)}`;
+      console.log(`Fetching market: ${item.n}`);
       const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
-      const meta = data.chart.result[0].meta;
+      
+      // AllOrigins JSON structure check
+      let actualData = data;
+      if (data.contents) actualData = JSON.parse(data.contents);
+      
+      const meta = actualData.chart.result[0].meta;
       const price = meta.regularMarketPrice;
       const prev = meta.chartPreviousClose || price;
       const change = price - prev;
@@ -86,7 +103,11 @@ async function refreshMarkets() {
       `;
       tickerEl.appendChild(div);
     } catch (e) {
-      console.error(e);
+      console.error(`Error loading market ${item.n}:`, e);
+      const errDiv = document.createElement('div');
+      errDiv.className = 'market-item';
+      errDiv.innerText = `${item.n} 載入失敗`;
+      tickerEl.appendChild(errDiv);
     }
   }
   document.getElementById('update-time').innerText = `更新於: ${new Date().toLocaleTimeString()}`;
@@ -154,7 +175,10 @@ async function getStockList() {
   for (const mode of modes) {
     const url = `${PROXY}${encodeURIComponent(TWSE_LIST_URL + mode)}`;
     const res = await fetch(url);
-    const html = await res.text();
+    const data = await res.json();
+    
+    // Handle AllOrigins JSON wrapper
+    const html = data.contents || data;
     
     // Simple regex to parse the table
     const rows = html.match(/<tr[^>]*>([\s\S]*?)<\/tr>/gi);
@@ -185,7 +209,9 @@ async function getHistoricalData(ticker) {
   const start = now - (100 * 86400);
   const url = `${PROXY}${encodeURIComponent(`${YAHOO_BASE}${ticker}?period1=${start}&period2=${now}&interval=1d`)}`;
   const res = await fetch(url);
-  const json = await res.json();
+  const data = await res.json();
+  
+  const json = data.contents ? JSON.parse(data.contents) : data;
   const result = json.chart.result[0];
   const closes = result.indicators.quote[0].close;
   return closes.filter(v => v !== null);
