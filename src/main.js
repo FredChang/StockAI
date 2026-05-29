@@ -185,7 +185,12 @@ async function getStockList() {
   let list = [];
   try {
     for (const mode of [2, 4]) {
-      const html = await proxyFetch(TWSE_LIST_URL + mode, false);
+      const url = TWSE_LIST_URL + mode;
+      console.log(`Fetching mode ${mode}...`);
+      
+      const html = await proxyFetch(url, false);
+      if (!html || html.length < 500) continue; // 偵測內容太短可能是被擋
+
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
       const rows = doc.querySelectorAll('tr');
@@ -193,31 +198,43 @@ async function getStockList() {
       rows.forEach(row => {
         const cells = row.querySelectorAll('td');
         if (cells.length >= 5) {
-          const cell0 = cells[0].textContent.trim();
+          const cell0 = cells[0].textContent.trim().replace(/[\s\u3000\u00A0]+/g, ' ');
           const cat = cells[4].textContent.trim();
-          
-          // 移除所有不可見字元與全形空白
-          const cleanText = cell0.replace(/[\s\u3000\u00A0]+/g, ' ');
-          const parts = cleanText.split(' ');
+          const parts = cell0.split(' ');
           
           if (parts.length >= 2 && /^\d{4}$/.test(parts[0])) {
             if (!cat.includes('權證') && !cat.includes('ETF') && !cat.includes('受益證券')) {
               list.push({ 
                 id: parts[0] + (mode === 2 ? '.TW' : '.TWO'), 
-                code: parts[0], 
-                name: parts[1], 
-                industry: cat 
+                code: parts[0], name: parts[1], industry: cat 
               });
             }
           }
         }
       });
-      console.log(`Mode ${mode} loaded: ${list.length} stocks`);
     }
   } catch (e) { 
-    console.error('Stock List Error:', e); 
-    throw new Error('存取證交所清單失敗，請稍後再試');
+    console.error('Fetch Error:', e);
   }
+
+  // --- 最終保底機制 (如果證交所連線失敗) ---
+  if (list.length === 0) {
+    console.warn('Using fallback stock list...');
+    const fallback = [
+      {id:"2330.TW",code:"2330",name:"台積電",industry:"半導體"},
+      {id:"2317.TW",code:"2317",name:"鴻海",industry:"其他電子"},
+      {id:"2454.TW",code:"2454",name:"聯發科",industry:"半導體"},
+      {id:"2308.TW",code:"2308",name:"台達電",industry:"電子零組件"},
+      {id:"2382.TW",code:"2382",name:"廣達",industry:"電腦設備"},
+      {id:"2881.TW",code:"2881",name:"富邦金",industry:"金融業"},
+      {id:"2882.TW",code:"2882",name:"國泰金",industry:"金融業"},
+      {id:"1301.TW",code:"1301",name:"台塑",industry:"塑膠工業"},
+      {id:"2412.TW",code:"2412",name:"中華電",industry:"通信網路"},
+      {id:"2891.TW",code:"2891",name:"中信金",industry:"金融業"}
+    ];
+    return fallback;
+  }
+  
   return list;
 }
 
