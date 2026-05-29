@@ -1,8 +1,7 @@
-import { CORE_STOCKS } from './stocks.js';
-
-// --- Constants & State ---
+// --- 專業版台股動能掃描器 (手機網頁版) ---
 const PROXY_BASE = 'https://api.allorigins.win/get?url=';
 const YAHOO_BASE = 'https://query1.finance.yahoo.com/v8/finance/chart/';
+const TWSE_URL = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=';
 
 let state = {
   activeTab: 'scan',
@@ -13,12 +12,12 @@ let state = {
   currentChart: null
 };
 
-// --- Initialization ---
+// --- 初始化 ---
 document.addEventListener('DOMContentLoaded', () => {
   initWeights();
   updateWatchlistUI();
   
-  // 延後執行，確保 UI 先渲染出來，不影響第一眼觀感
+  // 延後加載市場數據
   setTimeout(() => {
     refreshMarkets();
     if ('serviceWorker' in navigator) {
@@ -26,44 +25,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 1000);
 
-  // PWA Handle
-  let deferredPrompt;
-  const installBtn = document.getElementById('pwa-install-btn');
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    if (installBtn) installBtn.style.display = 'block';
-  });
-
-  if (installBtn) {
-    installBtn.onclick = async () => {
-      if (!deferredPrompt) return;
-      installBtn.style.display = 'none';
-      deferredPrompt.prompt();
-      deferredPrompt = null;
-    };
-  }
-
   document.getElementById('start-scan').onclick = runScan;
   document.getElementById('weight-toggle').onclick = toggleWeights;
   const closeBtn = document.querySelector('.close-modal');
-  if (closeBtn) closeBtn.onclick = () => {
-    document.getElementById('chart-modal').style.display = 'none';
-    if (state.currentChart) {
-      state.currentChart.destroy();
-      state.currentChart = null;
-    }
-  };
+  if (closeBtn) closeBtn.onclick = closeModal;
 });
 
+function closeModal() {
+  document.getElementById('chart-modal').style.display = 'none';
+  if (state.currentChart) { state.currentChart.destroy(); state.currentChart = null; }
+}
+
+// --- 切換分頁 ---
 window.switchTab = (tab) => {
   state.activeTab = tab;
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  const activeBtn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes(tab === 'scan' ? '目標' : '監控'));
-  if (activeBtn) activeBtn.classList.add('active');
+  const targetBtn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes(tab === 'scan' ? '目標' : '監控'));
+  if (targetBtn) targetBtn.classList.add('active');
+  
   document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-  const sec = document.getElementById(`${tab}-section`);
-  if (sec) sec.classList.add('active');
+  const section = document.getElementById(`${tab}-section`);
+  if (section) section.classList.add('active');
 };
 
 function initWeights() {
@@ -81,61 +63,63 @@ function toggleWeights() {
   if (c) c.style.display = c.style.display === 'none' ? 'block' : 'none';
 }
 
+// --- 資料抓取與 Proxy ---
 async function proxyFetch(targetUrl, isJson = true) {
   const url = `${PROXY_BASE}${encodeURIComponent(targetUrl)}`;
   const res = await fetch(url);
   const data = await res.json();
   const content = data.contents;
+  if (!content) throw new Error('Proxy 抓取失敗');
   return isJson ? JSON.parse(content) : content;
 }
 
 async function refreshMarkets() {
-  const symbols = [
+  const indices = [
     { s: "^TWII", f: "🇹🇼", n: "台股" }, { s: "^DJI", f: "🇺🇸", n: "道瓊" },
     { s: "^GSPC", f: "🇺🇸", n: "S&P500" }, { s: "^SOX", f: "🇺🇸", n: "費半" },
     { s: "^IXIC", f: "🇺🇸", n: "NASDQA" }, { s: "^N225", f: "🇯🇵", n: "日經" },
     { s: "^KS11", f: "🇰🇷", n: "韓股" }, { s: "GC=F", f: "🟡", n: "金價" },
     { s: "CL=F", f: "🛢️", n: "油價" }, { s: "BTC-USD", f: "₿", n: "BTC" }
   ];
-  const tickerEl = document.getElementById('market-ticker');
-  if (!tickerEl) return;
-  
-  // 先清空「載入中」字樣
-  tickerEl.innerHTML = '';
+  const ticker = document.getElementById('market-ticker');
+  if (!ticker) return;
+  ticker.innerHTML = '';
 
-  for (let i = 0; i < symbols.length; i += 2) {
-    const batch = symbols.slice(i, i + 2);
+  for (let i = 0; i < indices.length; i += 2) {
+    const batch = indices.slice(i, i + 2);
     await Promise.allSettled(batch.map(async (item) => {
       try {
         const data = await proxyFetch(`${YAHOO_BASE}${item.s}?range=1d&interval=1d`);
         const meta = data.chart.result[0].meta;
         const price = meta.regularMarketPrice;
-        const prev = meta.chartPreviousClose || price;
-        const change = price - prev;
-        const pct = (change / prev) * 100;
+        const change = price - (meta.chartPreviousClose || price);
+        const pct = (change / (meta.chartPreviousClose || price)) * 100;
         
         const div = document.createElement('div');
         div.className = 'market-item';
         div.innerHTML = `<span>${item.f} ${item.n}</span> <span class="price-text ${change >= 0 ? 'price-up' : 'price-down'}">${price.toLocaleString(undefined, {maximumFractionDigits:1})} (${pct.toFixed(2)}%)</span>`;
-        tickerEl.appendChild(div);
+        ticker.appendChild(div);
       } catch (e) {}
     }));
-    await new Promise(r => setTimeout(r, 300));
+    await new Promise(r => setTimeout(r, 400));
   }
-  const t = document.getElementById('update-time');
-  if (t) t.innerText = `更新於: ${new Date().toLocaleTimeString()}`;
 }
 
+// --- 掃描核心：回歸即時抓取 ---
 async function runScan() {
   if (state.isScanning) return;
   state.isScanning = true;
-  const btn = document.getElementById('start-scan'); btn.disabled = true;
-  const statusEl = document.getElementById('progress-status');
+  const btn = document.getElementById('start-scan');
+  btn.disabled = true;
+  const status = document.getElementById('progress-status');
   const fill = document.getElementById('progress-fill');
   document.getElementById('progress-container').style.display = 'block';
   
   try {
-    const tickers = CORE_STOCKS;
+    status.innerText = '正在連線證交所抓取台股標的...';
+    const tickers = await fetchAllTickers();
+    status.innerText = `成功識別 ${tickers.length} 檔標的，開始 AI 動能分析...`;
+    
     let results = [];
     let completed = 0;
     const batchSize = 6;
@@ -153,19 +137,44 @@ async function runScan() {
         completed++;
       }));
       fill.style.width = `${(completed / tickers.length) * 100}%`;
-      statusEl.innerText = `分析強度中: ${completed}/${tickers.length}`;
+      status.innerText = `深度解析中: ${completed}/${tickers.length}`;
       await new Promise(r => setTimeout(r, 100));
     }
     
     state.results = scoreAndRank(results);
     renderResults();
-    statusEl.innerText = `完成！篩選 Top 20 精選強勢股`;
+    status.innerText = `掃描完成！列出 Top 20 核心名單`;
   } catch (err) {
-    statusEl.innerText = '連線狀況不穩，請重新掃描';
+    status.innerText = '連線超時或被證交所阻擋，請稍後重試';
   } finally {
     state.isScanning = false;
     btn.disabled = false;
   }
+}
+
+async function fetchAllTickers() {
+  let list = [];
+  // 模式 2 是上市，4 是上櫃
+  for (const mode of [2, 4]) {
+    try {
+      const html = await proxyFetch(TWSE_URL + mode, false);
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      [...doc.querySelectorAll('tr')].forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 5) {
+          const text = cells[0].textContent.trim().replace(/[\s\u3000\u00A0]+/g, ' ');
+          const cat = cells[4].textContent.trim();
+          const p = text.split(' ');
+          if (p.length >= 2 && /^\d{4}$/.test(p[0]) && !cat.includes('權證') && !cat.includes('ETF')) {
+            list.push({ id: p[0] + (mode === 2 ? '.TW' : '.TWO'), code: p[0], name: p[1], industry: cat });
+          }
+        }
+      });
+    } catch (e) {
+      console.error('Mode fetch failed', mode);
+    }
+  }
+  return list;
 }
 
 async function getHistoricalData(ticker) {
@@ -180,16 +189,17 @@ function calculateFeatures(s, c) {
   const rets = []; for (let i = 1; i < n; i++) rets.push((c[i]-c[i-1])/c[i-1]);
   const vol = stdDev(rets.slice(-20)) * Math.sqrt(252) * 100;
   const std20 = stdDev(c.slice(-20));
-  const feats = [vol, ((ma20+2*std20 - (ma20-2*std20)) / ma20) * 100, (cur/ma60-1)*100, (avg(c.slice(-5))/ma60-1)*100, (cur/ma20-1)*100, (cur/(ma20+2*std20)-1)*100, (cur/c[n-11]-1)*100];
-  return { ...s, close: cur, ma5: avg(c.slice(-5)), features: feats };
+  const up = ma20 + 2 * std20;
+  const f = [vol, ((up - (ma20 - 2 * std20)) / ma20) * 100, (cur/ma60-1)*100, (avg(c.slice(-5))/ma60-1)*100, (cur/ma20-1)*100, (cur/up-1)*100, (cur/c[n-11]-1)*100];
+  return { ...s, close: cur, ma5: avg(c.slice(-5)), features: f };
 }
 
 function scoreAndRank(recs) {
   const n = recs.length; if (n === 0) return [];
   const prs = recs.map(() => new Array(7).fill(0));
   for (let f = 0; f < 7; f++) {
-    const sorted = recs.map((r, i) => ({ v: r.features[f], i })).sort((a,b) => a.v - b.v);
-    sorted.forEach((it, rank) => prs[it.i][f] = (rank+1)/n);
+    const s = recs.map((r, i) => ({ v: r.features[f], i })).sort((a,b) => a.v - b.v);
+    s.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
   }
   recs.forEach((r, i) => {
     let sc = 0; for (let f = 0; f < 7; f++) sc += prs[i][f] * state.weights[f];
@@ -202,8 +212,8 @@ function renderResults() {
   const el = document.getElementById('results-list'); if (!el) return;
   el.innerHTML = state.results.map(r => `
     <div class="stock-card" onclick="showStockDetails('${r.id}')">
-      <div class="stock-info"><span class="stock-id">${r.code}</span><span class="stock-name">${r.name}</span></div>
-      <div style="text-align: center"><div class="price-text">${r.close.toFixed(2)}</div></div>
+      <div class="stock-info"><span>${r.code}</span> <span>${r.name}</span></div>
+      <div style="text-align:center"><div class="price-text">${r.close.toFixed(2)}</div></div>
       <div class="stock-score"><div class="score-badge">${r.aiScore.toFixed(1)}</div><button onclick="addToWatchlist(event,'${r.id}')">➕</button></div>
     </div>
   `).join('');
@@ -211,14 +221,14 @@ function renderResults() {
 
 window.addToWatchlist = (e, id) => {
   e.stopPropagation(); const s = state.results.find(r => r.id === id); if (!s) return;
-  if (state.watchlist.find(w => w.id === id)) return alert('已在清單');
+  if (state.watchlist.find(w => w.id === id)) return alert('已在監控中');
   state.watchlist.push({ ...s, entryPrice: s.close, currentPrice: s.close, shares: 1 });
   localStorage.setItem('watchlist', JSON.stringify(state.watchlist)); updateWatchlistUI();
 };
 
 function updateWatchlistUI() {
   const l = document.getElementById('watchlist-list'), s = document.getElementById('watchlist-summary'); if (!l || !s) return;
-  if (state.watchlist.length === 0) { s.innerText = '尚無監控點標'; l.innerHTML = ''; return; }
+  if (state.watchlist.length === 0) { s.innerText = '尚無追蹤'; l.innerHTML = ''; return; }
   let tot = 0;
   l.innerHTML = state.watchlist.map(w => {
     const p = w.currentPrice - w.entryPrice, amt = p * w.shares * 1000; tot += amt;
@@ -236,17 +246,16 @@ window.showStockDetails = (id) => {
   const s = state.results.find(r => r.id === id) || state.watchlist.find(w => w.id === id);
   if (!s || !s.history) return;
   document.getElementById('chart-modal').style.display = 'block';
-  document.getElementById('modal-title').innerText = `${s.name} (${s.code}) 30日趨勢`;
+  document.getElementById('modal-title').innerText = `${s.name} (${s.code})`;
   const opts = {
     series: [{ name: 'Price', data: s.history.slice(-30) }],
     chart: { type: 'area', height: 250, toolbar: { show: false } },
     colors: ['#39d2c0'], stroke: { curve: 'smooth', width: 2 },
-    dataLabels: { enabled: false },
-    xaxis: { labels: { show: false } },
-    theme: { mode: 'dark' },
+    xaxis: { labels: { show: false } }, theme: { mode: 'dark' },
     fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.3, opacityTo: 0 } }
   };
   const el = document.getElementById('chart-container'); el.innerHTML = '';
+  // 使用 CDN 載入的全域 ApexCharts
   state.currentChart = new window.ApexCharts(el, opts);
   state.currentChart.render();
 };
