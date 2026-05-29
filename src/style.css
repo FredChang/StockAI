@@ -318,3 +318,12 @@ input[type="range"] {
     height: 250px;
     margin-top: 1rem;
 }
+
+.version-tag {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    opacity: 0.5;
+    font-family: monospace;
+}
