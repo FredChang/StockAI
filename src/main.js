@@ -17,7 +17,8 @@ let state = {
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
-  currentTimeframe: '1mo'
+  currentTimeframe: '1mo',
+  preScannedResults: []
 };
 
 // --- 初始化 ---
@@ -75,6 +76,22 @@ async function safeFetch(url, isHtml = false, retries = 2) {
 }
 
 async function getFullMarketTickers(statusEl) {
+  if (statusEl) statusEl.innerText = `📋 [1/3] 同步雲端分析數據...`;
+  try {
+      const res = await fetch('src/scan_results.json?v=' + Date.now());
+      if (res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 500) {
+              state.preScannedResults = list;
+              if (statusEl) statusEl.innerText = `✅ 雲端同步完成！取得 ${list.length} 檔技術分析標的。`;
+              return list;
+          }
+      } else {
+          console.warn('scan_results.json fetch fail, status:', res.status);
+      }
+  } catch (e) { console.error('Cloud Scanned Data Sync Error:', e); }
+
+  if (statusEl) statusEl.innerText = `⚠️ 雲端數據不可用，改採傳統即時同步...`;
   const result = new Map();
   const add = (code, name, ext) => {
     if (code && !result.has(code)) {
@@ -82,32 +99,22 @@ async function getFullMarketTickers(statusEl) {
     }
   };
 
-  // 1. Priority: Fetch pre-synced market universe (from GitHub Action)
-  if (statusEl) statusEl.innerText = `📋 [1/3] 同步市場大局...`;
   try {
-      // Direct path to src/market.json relative to root
       const res = await fetch('src/market.json?v=' + Date.now());
       if (res.ok) {
           const list = await res.json();
           if (Array.isArray(list) && list.length > 500) {
               list.forEach(i => add(i.code, i.name, i.id.includes('.TW') ? '.TW' : '.TWO'));
-              if (statusEl) statusEl.innerText = `✅ GitHub雲端同步完成！取得 ${result.size} 檔標的。`;
               return Array.from(result.values());
           }
-      } else {
-          console.warn('Market.json fetch fail, status:', res.status);
       }
-  } catch (e) { console.error('Cloud Sync Error:', e); }
+  } catch (e) {}
 
-  // 2. Fallback: Traditional Real-time Sync (Listed)
   try {
     const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL', false, 1);
     if (Array.isArray(data)) data.forEach(i => add(i.Code, i.Name, '.TW'));
   } catch (e) {}
 
-  // 3. Fallback: OTC/Emerging Chain
-  const now = new Date();
-  const dateStr = `${now.getFullYear()-1911}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
   const otcSources = [
     async () => {
       const url = `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.tpex.org.tw/openapi/v1/t13n04nd')}`;
@@ -171,11 +178,29 @@ async function runScan() {
     const total = tickers.length;
     status.innerText = `📡 取得標的 ${total} 檔，開始 AI 數據分析...`;
 
+    // 1. If we have cloud pre-scanned results, run instant local scoring
+    if (state.preScannedResults && state.preScannedResults.length > 0) {
+      // Visual feedback animation
+      for (let p = 0; p <= 100; p += 10) {
+        fill.style.width = `${p}%`;
+        status.innerText = `AI 權重評分計算中... [${p}%]`;
+        await new Promise(r => setTimeout(r, 45));
+      }
+
+      state.results = scoreAndRank(state.preScannedResults);
+      renderResults();
+
+      const monitorContainer = document.getElementById('monitor-all-container');
+      if (monitorContainer) monitorContainer.style.display = 'block';
+
+      status.innerText = `✅ 掃描完成！共分析 ${state.preScannedResults.length} 檔，篩選出 TOP 20`;
+      return;
+    }
+
+    // 2. Fallback: Slow client-side real-time sync with proxy
     let results = [];
     let completed = 0;
     const startTime = Date.now();
-    // Speed optimization: Increased concurrency to 15, slightly shorter wait.
-    // Performance: Increased to 50 concurrent with 0.5s delay.
     const batchSize = 50; 
     for (let i = 0; i < total; i += batchSize) {
       if (!state.isScanning) break;
@@ -216,7 +241,6 @@ async function runScan() {
     state.results = scoreAndRank(results);
     renderResults();
     
-    // Show Monitor All button after scan
     const monitorContainer = document.getElementById('monitor-all-container');
     if (monitorContainer) monitorContainer.style.display = 'block';
 

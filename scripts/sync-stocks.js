@@ -57,6 +57,44 @@ async function fetchAndParseISIN(mode, headers, tickers) {
   console.log(`[ISIN] ${label} Success: Added ${added} stocks. (Total so far: ${tickers.size})`);
 }
 
+function avg(a) { return a.reduce((x, y) => x + y, 0) / a.length; }
+function stdDev(a) { const m = avg(a); return Math.sqrt(a.reduce((x, y) => x + Math.pow(y - m, 2), 0) / a.length); }
+
+function calculateFeatures(s, c) {
+  const n = c.length;
+  if (n < 60) return null;
+  const cur = c[n - 1];
+  const ma5 = avg(c.slice(-5));
+  const ma20 = avg(c.slice(-20));
+  const ma60 = avg(c.slice(-60));
+  
+  const rets = [];
+  for (let i = 1; i < n; i++) rets.push((c[i] - c[i - 1]) / c[i - 1]);
+  const vol = stdDev(rets.slice(-20)) * Math.sqrt(252) * 100;
+  
+  const std20 = stdDev(c.slice(-20));
+  const up = ma20 + 2 * std20;
+  const low = ma20 - 2 * std20;
+  const bbWidth = ((up - low) / ma20) * 100;
+  
+  return {
+    id: s.id,
+    code: s.code,
+    name: s.name,
+    close: cur,
+    ma5,
+    features: [
+      vol,
+      bbWidth,
+      (cur / ma60 - 1) * 100,
+      (ma5 / ma60 - 1) * 100,
+      (cur / ma20 - 1) * 100,
+      (cur / up - 1) * 100,
+      (cur / c[n - 11] - 1) * 100
+    ]
+  };
+}
+
 async function sync() {
   console.log('--- Stock Sync Process Start ---');
   const tickers = new Map();
@@ -66,33 +104,92 @@ async function sync() {
     'Accept-Language': 'zh-TW,zh;q=0.9,en;q=0.8'
   };
 
-  // 1. Scrape TWSE Listed (上市, strMode=2)
+  // 1. Scrape ISIN Listed & OTC
   try {
     await fetchAndParseISIN(2, headers, tickers);
-  } catch (e) {
-    console.error('[TWSE ISIN Error]:', e.message);
-  }
-
-  // 2. Scrape TPEx OTC (上櫃, strMode=4)
-  try {
     await fetchAndParseISIN(4, headers, tickers);
   } catch (e) {
-    console.error('[TPEx ISIN Error]:', e.message);
+    console.error('[ISIN Scrape Error]:', e.message);
   }
 
   const list = Array.from(tickers.values());
   const filePath = path.join(process.cwd(), 'src', 'market.json');
   
-  if (list.length > 1500) { // Require at least 1500 stocks to succeed
-    fs.writeFileSync(filePath, JSON.stringify(list, null, 2));
-    console.log(`--- Sync SUCCESS ---`);
-    console.log(`Final Tickers: ${list.length}`);
-    console.log(`File saved to: ${filePath}`);
-  } else {
+  if (list.length < 1500) {
     console.error(`--- Sync FAILED: Too few stocks found (${list.length}) ---`);
+    process.exit(1);
+  }
+
+  fs.writeFileSync(filePath, JSON.stringify(list, null, 2));
+  console.log(`[Universe] Saved ${list.length} stocks to: ${filePath}`);
+
+  // 2. Fetch Yahoo Finance Spark data & calculate features
+  console.log(`[Yahoo Spark] Fetching prices for ${list.length} stocks...`);
+  const scanResults = [];
+  const batchSize = 20;
+  let successCount = 0;
+  let failCount = 0;
+
+  for (let i = 0; i < list.length; i += batchSize) {
+    const chunk = list.slice(i, i + batchSize);
+    const symbols = chunk.map(s => s.id).join(',');
+    const url = `https://query1.finance.yahoo.com/v7/finance/spark?symbols=${symbols}&range=150d&interval=1d`;
+
+    try {
+      const res = await fetch(url, { headers });
+      if (res.ok) {
+        const data = await res.json();
+        const results = data.spark.result;
+        for (const item of results) {
+          const s = chunk.find(c => c.id === item.symbol);
+          if (!s) continue;
+          
+          const resp = item.response && item.response[0];
+          if (resp && resp.timestamp && resp.indicators && resp.indicators.quote) {
+            const closes = resp.indicators.quote[0].close;
+            const validCloses = closes.filter(v => v != null);
+            if (validCloses.length >= 60) {
+              const feat = calculateFeatures(s, validCloses);
+              if (feat) {
+                scanResults.push(feat);
+                successCount++;
+                continue;
+              }
+            }
+          }
+          failCount++;
+        }
+      } else {
+        console.error(`[Yahoo Spark Error] Batch starting at ${i} HTTP Status: ${res.status}`);
+        failCount += chunk.length;
+      }
+    } catch (e) {
+      console.error(`[Yahoo Spark Error] Batch starting at ${i}:`, e.message);
+      failCount += chunk.length;
+    }
+
+    // Progress update
+    if ((i + batchSize) % 200 === 0 || (i + batchSize) >= list.length) {
+      const pct = Math.min(100, Math.round(((i + batchSize) / list.length) * 100));
+      console.log(`[Yahoo Spark Progress] ${pct}% completed. Success: ${successCount}, Fail: ${failCount}`);
+    }
+
+    // Delay 150ms to be rate limit friendly
+    await new Promise(resolve => setTimeout(resolve, 150));
+  }
+
+  const resultsPath = path.join(process.cwd(), 'src', 'scan_results.json');
+  if (scanResults.length > 1000) {
+    fs.writeFileSync(resultsPath, JSON.stringify(scanResults, null, 2));
+    console.log(`--- Sync SUCCESS ---`);
+    console.log(`Scanned Tickers: ${scanResults.length} / ${list.length}`);
+    console.log(`File saved to: ${resultsPath}`);
+  } else {
+    console.error(`--- Sync FAILED: Too few successfully analyzed stocks (${scanResults.length}) ---`);
     process.exit(1);
   }
 }
 
 sync();
+
 
