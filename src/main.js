@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.4.1-Nitro',
+  version: 'v2.5.0-Nitro',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -78,7 +78,7 @@ async function safeFetch(url, isHtml = false, retries = 2) {
 async function getFullMarketTickers(statusEl) {
   if (statusEl) statusEl.innerText = `📋 [1/3] 同步雲端分析數據...`;
   try {
-      const res = await fetch('src/scan_results.json?v=' + Date.now());
+      const res = await fetch('scan_results.json?v=' + Date.now());
       if (res.ok) {
           const list = await res.json();
           if (Array.isArray(list) && list.length > 500) {
@@ -100,7 +100,7 @@ async function getFullMarketTickers(statusEl) {
   };
 
   try {
-      const res = await fetch('src/market.json?v=' + Date.now());
+      const res = await fetch('market.json?v=' + Date.now());
       if (res.ok) {
           const list = await res.json();
           if (Array.isArray(list) && list.length > 500) {

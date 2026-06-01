@@ -113,7 +113,7 @@ async function sync() {
   }
 
   const list = Array.from(tickers.values());
-  const filePath = path.join(process.cwd(), 'src', 'market.json');
+  const filePath = path.join(process.cwd(), 'public', 'market.json');
   
   if (list.length < 1500) {
     console.error(`--- Sync FAILED: Too few stocks found (${list.length}) ---`);
@@ -178,7 +178,7 @@ async function sync() {
     await new Promise(resolve => setTimeout(resolve, 150));
   }
 
-  const resultsPath = path.join(process.cwd(), 'src', 'scan_results.json');
+  const resultsPath = path.join(process.cwd(), 'public', 'scan_results.json');
   if (scanResults.length > 1000) {
     fs.writeFileSync(resultsPath, JSON.stringify(scanResults, null, 2));
     console.log(`--- Sync SUCCESS ---`);
