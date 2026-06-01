@@ -76,8 +76,8 @@ async function getFullMarketTickers(statusEl) {
           const cell0 = cells[0].textContent.trim(); // Use textContent for broader compatibility
           const cat = cells[4].textContent.trim();
           
-          // Match "CODE   NAME" - handle any combination of whitespace
-          const match = cell0.match(/^(\d{4,6})\s+(.+)$/);
+          // Match "CODE   NAME" - flexible regex for whitespace and code length
+          const match = cell0.match(/(\d{4,6})\s+(.+)/);
           if (match) {
             const code = match[1];
             const name = match[2];
@@ -155,41 +155,54 @@ async function runScan() {
     let results = [];
     let completed = 0;
     const startTime = Date.now();
-    const batchSize = 15;
-
+    const batchSize = 50; // Increased batch size for multi-ticker API
     for (let i = 0; i < total; i += batchSize) {
-      const batchIds = tickers.slice(i, i + batchSize);
-      const promises = batchIds.map(async (s) => {
-        try {
-          const data = await safeFetch(`${YAHOO_URL}${s.id}?range=150d&interval=1d`);
-          const res = data.chart.result[0];
-          const quotes = res.indicators.quote[0].close;
-          const validQuotes = quotes.filter(v => v != null);
-          
-          if (validQuotes.length >= 60) {
-            const feat = calculateFeatures(s, validQuotes);
-            if (feat) {
-               results.push({ 
-                   ...feat, 
-                   history: validQuotes,
-                   timestamps: res.timestamp.filter((_, idx) => quotes[idx] != null)
-               });
-            }
-          }
-        } catch (e) {}
-        completed++;
-      });
-
-      await Promise.all(promises);
+      if (!state.isScanning) break;
       
+      const batchTickers = tickers.slice(i, i + batchSize);
+      const symbolsStr = batchTickers.map(s => s.id).join(',');
+      
+      try {
+        // Use multi-ticker spark API to reduce 2124 requests to ~43 requests
+        const data = await safeFetch(`${YAHOO_URL.replace('v8/finance/chart/', 'v7/finance/spark')}?symbols=${symbolsStr}&range=6mo&interval=1d`);
+        
+        if (data && data.spark && data.spark.result) {
+          data.spark.result.forEach(item => {
+            try {
+              const res = item.response[0];
+              const ticker = item.symbol;
+              const stock = batchTickers.find(s => s.id === ticker);
+              if (!stock || !res || !res.indicators) return;
+
+              const quotes = res.indicators.quote[0].close;
+              const validQuotes = quotes.filter(v => v != null);
+              
+              if (validQuotes.length >= 60) {
+                const feat = calculateFeatures(stock, validQuotes);
+                if (feat) {
+                  results.push({ 
+                    ...feat, 
+                    history: validQuotes,
+                    timestamps: res.timestamp.filter((_, idx) => quotes[idx] != null)
+                  });
+                }
+              }
+            } catch (e) {}
+          });
+        }
+      } catch (e) {
+        console.warn(`Batch ${i} failed`, e);
+      }
+
+      completed += batchTickers.length;
       const pct = (completed / total) * 100;
       fill.style.width = `${pct}%`;
       const elapsed = (Date.now() - startTime) / 1000;
       const rem = Math.round(((total - completed) * (elapsed / completed)));
       status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
       
-      // Throttle to prevent rate limiting
-      await new Promise(r => setTimeout(r, 100));
+      // Throttle between batches
+      await new Promise(r => setTimeout(r, 200));
     }
 
     state.results = scoreAndRank(results);
