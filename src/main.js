@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.3.1-Resilient',
+  version: 'v2.3.2-Ultra',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -89,36 +89,39 @@ async function getFullMarketTickers(statusEl) {
     if (Array.isArray(data)) data.forEach(i => add(i.Code, i.Name, '.TW'));
   } catch (e) {}
 
-  // 2. TPEx OTC & Emerging (上櫃與興櫃) - Robust multiple fetching
+  // 2. TPEx OTC & Emerging (上櫃與興櫃) - Ultimate redundancy
   const otcSources = [
-    // Layer 1: Codetabs Proxy
+    // Layer 1: Codetabs Proxy with Daily Result
     async () => {
       const url = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
       const r = await fetch(url);
       const d = await r.json();
       if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
     },
-    // Layer 2: AllOrigins Proxy
+    // Layer 2: AllOrigins with OpenAPI (Alternative endpoint)
     async () => {
-      const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
+      const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.tpex.org.tw/openapi/v1/t13n04nd');
       const r = await fetch(url);
       const j = await r.json();
       const d = JSON.parse(j.contents);
-      if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
+      if (Array.isArray(d)) d.forEach(i => add(i.SecuritiesCode || i.Code, i.SecuritiesName || i.Name, '.TWO'));
     },
-    // Layer 3: ISIN Mode 4 Scraping
+    // Layer 3: ISIN Page Mode 4 (OTC) - Hard Scrape with robust AllOrigins
     async () => {
-      const html = await safeFetch('https://isin.twse.com.tw/isin/C_public.jsp?strMode=4', true, 2);
-      const m = html.matchAll(/(\d{4,6})(?:\s|&nbsp;)+([^\s<]+)/g);
+      const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://isin.twse.com.tw/isin/C_public.jsp?strMode=4');
+      const r = await fetch(url);
+      const j = await r.json();
+      const html = j.contents;
+      const m = html.matchAll(/(\d{4,6})(?:\s|&nbsp;|\s)+([^\s<]+)/g);
       for (const res of m) add(res[1], res[2], '.TWO');
     }
   ];
 
   for (const f of otcSources) {
-    try { await f(); if (result.size > 1800) break; } catch (e) {}
+    try { await f(); if (result.size > 2000) break; } catch (e) {}
   }
 
-  // 3. Last fallback and UI Update
+  // 3. Last fallback
   CORE_STOCKS.forEach(s => add(s.code, s.name, s.id.includes('.TW') ? '.TW' : '.TWO'));
   
   const finalSize = result.size;
@@ -251,6 +254,35 @@ function monitorAllResults() {
     } else {
         alert('監控清單已包含全部 TOP 20 標的。');
     }
+}
+
+async function refreshWatchlistQuotes() {
+  if (state.watchlist.length === 0) return;
+  const btn = document.getElementById('refresh-watchlist-btn');
+  if (btn) btn.disabled = true;
+  
+  let updated = 0;
+  const batchSize = 10;
+  for (let i = 0; i < state.watchlist.length; i += batchSize) {
+    const batch = state.watchlist.slice(i, i + batchSize);
+    const promises = batch.map(async (stock) => {
+      try {
+        const data = await safeFetch(`${YAHOO_URL}${stock.id}?range=1d&interval=1d`);
+        const res = data.chart.result[0];
+        const cur = res.indicators.quote[0].close[0];
+        if (cur != null) {
+          stock.currentPrice = cur;
+          updated++;
+        }
+      } catch (e) {}
+    });
+    await Promise.all(promises);
+  }
+  
+  localStorage.setItem('watchlist', JSON.stringify(state.watchlist));
+  updateWatchlistUI();
+  if (btn) btn.disabled = false;
+  alert(`價格刷新完成！共更新 ${updated} 檔標的。`);
 }
 
 function clearWatchlist() {
@@ -485,6 +517,9 @@ function initWeights() {
   
   const c = document.getElementById('clear-watchlist-btn');
   if(c) c.addEventListener('click', clearWatchlist);
+  
+  const r = document.getElementById('refresh-watchlist-btn');
+  if(r) r.addEventListener('click', refreshWatchlistQuotes);
 }
 
 function toggleWeights() {
