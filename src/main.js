@@ -44,7 +44,9 @@ function updateTime() {
 
 async function safeFetch(url, isHtml = false) {
   try {
-    const res = await fetch(PROXY_URL + encodeURIComponent(url));
+    const separator = url.includes('?') ? '&' : '?';
+    const finalUrl = `${url}${separator}cb=${Date.now()}`;
+    const res = await fetch(PROXY_URL + encodeURIComponent(finalUrl));
     if (!res.ok) throw new Error('Fetch Error');
     return isHtml ? await res.text() : await res.json();
   } catch (e) {
@@ -71,17 +73,18 @@ async function getFullMarketTickers(statusEl) {
       rows.forEach(row => {
         const cells = row.querySelectorAll('td');
         if (cells.length >= 5) {
-          const cell0 = cells[0].innerText.trim();
-          const cat = cells[4].innerText.trim();
+          const cell0 = cells[0].textContent.trim(); // Use textContent for broader compatibility
+          const cat = cells[4].textContent.trim();
           
-          // Match "CODE   NAME" - handles multiple spaces/tabs
-          const parts = cell0.split(/\s+/);
-          if (parts.length >= 2) {
-            const code = parts[0];
-            const name = parts[1];
+          // Match "CODE   NAME" - handle any combination of whitespace
+          const match = cell0.match(/^(\d{4,6})\s+(.+)$/);
+          if (match) {
+            const code = match[1];
+            const name = match[2];
             
-            // Filter logic from WPF version
+            // Filter logic from WPF version: 4 digits or starting with 00 (ETFs)
             if ((code.length === 4 || code.startsWith('00')) && /^\d+$/.test(code)) {
+              // Exclude warrants and certificates
               if (!cat.includes('權證') && !cat.includes('牛熊證') && !cat.includes('認購') && !cat.includes('認售')) {
                 const id = code + (mode === 2 ? '.TW' : '.TWO');
                 if (!tickers.some(t => t.id === id)) {
@@ -185,7 +188,8 @@ async function runScan() {
       const rem = Math.round(((total - completed) * (elapsed / completed)));
       status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
       
-      if (i % 30 === 0) await new Promise(r => setTimeout(r, 50));
+      // Throttle to prevent rate limiting
+      await new Promise(r => setTimeout(r, 100));
     }
 
     state.results = scoreAndRank(results);
