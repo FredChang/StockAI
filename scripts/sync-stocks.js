@@ -1,8 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function sync() {
-  console.log('Starting stock sync...');
+  console.log('Starting stock sync (ESM)...');
   const tickers = new Map();
 
   const add = (code, name, ext) => {
