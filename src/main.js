@@ -75,21 +75,42 @@ async function safeFetch(url, isHtml = false, retries = 2) {
   }
 }
 
+async function fetchCloudJson(filename) {
+  const cacheBust = '?v=' + Date.now();
+  // 1. Try public/filename (covers raw repo deployment and local dev server)
+  try {
+      const res = await fetch('public/' + filename + cacheBust);
+      if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 500) {
+              return data;
+          }
+      }
+  } catch (e) {
+      console.warn(`Failed to fetch public/${filename}, trying root:`, e);
+  }
+
+  // 2. Try root filename (covers compiled/bundled environment)
+  const res = await fetch(filename + cacheBust);
+  if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 500) {
+          return data;
+      }
+  }
+  throw new Error(`Failed to load ${filename} from all paths`);
+}
+
 async function getFullMarketTickers(statusEl) {
   if (statusEl) statusEl.innerText = `📋 [1/3] 同步雲端分析數據...`;
   try {
-      const res = await fetch('scan_results.json?v=' + Date.now());
-      if (res.ok) {
-          const list = await res.json();
-          if (Array.isArray(list) && list.length > 500) {
-              state.preScannedResults = list;
-              if (statusEl) statusEl.innerText = `✅ 雲端同步完成！取得 ${list.length} 檔技術分析標的。`;
-              return list;
-          }
-      } else {
-          console.warn('scan_results.json fetch fail, status:', res.status);
-      }
-  } catch (e) { console.error('Cloud Scanned Data Sync Error:', e); }
+      const list = await fetchCloudJson('scan_results.json');
+      state.preScannedResults = list;
+      if (statusEl) statusEl.innerText = `✅ 雲端同步完成！取得 ${list.length} 檔技術分析標的。`;
+      return list;
+  } catch (e) { 
+      console.error('Cloud Scanned Data Sync Error:', e); 
+  }
 
   if (statusEl) statusEl.innerText = `⚠️ 雲端數據不可用，改採傳統即時同步...`;
   const result = new Map();
@@ -100,15 +121,12 @@ async function getFullMarketTickers(statusEl) {
   };
 
   try {
-      const res = await fetch('market.json?v=' + Date.now());
-      if (res.ok) {
-          const list = await res.json();
-          if (Array.isArray(list) && list.length > 500) {
-              list.forEach(i => add(i.code, i.name, i.id.includes('.TW') ? '.TW' : '.TWO'));
-              return Array.from(result.values());
-          }
-      }
-  } catch (e) {}
+      const list = await fetchCloudJson('market.json');
+      list.forEach(i => add(i.code, i.name, i.id.includes('.TW') ? '.TW' : '.TWO'));
+      return Array.from(result.values());
+  } catch (e) {
+      console.warn('Cloud market.json Sync Error:', e);
+  }
 
   try {
     const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL', false, 1);
@@ -581,9 +599,9 @@ function updateWatchlistUI() {
   let totalPrincipal = 0;
   
   l.innerHTML = state.watchlist.map(w => {
-    const curP = w.currentPrice || 0;
-    const entP = w.entryPrice || curP || 0;
-    const shares = w.shares || 0;
+    const curP = Number(w.currentPrice) || 0;
+    const entP = Number(w.entryPrice) || curP || 0;
+    const shares = Number(w.shares) || 0;
     
     const pnlPerShare = curP - entP;
     const pct = entP === 0 ? 0 : (pnlPerShare / entP * 100);
@@ -612,18 +630,22 @@ function updateWatchlistUI() {
       </div>`;
   }).join('');
   
-  const totalPct = (totalPnl / totalPrincipal) * 100;
+  const totalPct = totalPrincipal === 0 ? 0 : (totalPnl / totalPrincipal) * 100;
+  
+  const pctText = isNaN(totalPct) || !isFinite(totalPct) ? '0.00' : totalPct.toFixed(2);
+  const principalText = isNaN(totalPrincipal) ? '0' : Math.round(totalPrincipal).toLocaleString();
+  const pnlText = isNaN(totalPnl) ? '0' : Math.round(totalPnl).toLocaleString();
   
   s.innerHTML = `
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
         <div class="summary-item">
             <div style="font-size:0.65rem; color:var(--text-secondary);">總投入本金</div>
-            <div style="font-size:0.9rem; font-weight:700;">${Math.round(totalPrincipal).toLocaleString()}</div>
+            <div style="font-size:0.9rem; font-weight:700;">${principalText}</div>
         </div>
         <div class="summary-item" style="text-align:right;">
             <div style="font-size:0.65rem; color:var(--text-secondary);">累積總盈虧</div>
             <div style="font-size:0.9rem; font-weight:800; color:${totalPnl >= 0 ? '#ff4d4d' : '#00ff00'};">
-                ${totalPnl >= 0 ? '+' : ''}${Math.round(totalPnl).toLocaleString()} (${totalPct.toFixed(2)}%)
+                ${totalPnl >= 0 ? '+' : ''}${pnlText} (${pctText}%)
             </div>
         </div>
     </div>
