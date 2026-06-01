@@ -2,7 +2,7 @@ name: Stock Universe Sync
 
 on:
   schedule:
-    - cron: '0 1-5 * * 1-5' # 台北時間 9:00-13:00 每小時執行一次 (周一至周五)
+    - cron: '0 1-6 * * 1-5' # 台北時間 9:00-14:00 每小時執行一次 (周一至周五)
   workflow_dispatch: # Allow manual trigger
   push:
     branches:

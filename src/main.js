@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.5.0-Nitro',
+  version: 'v2.5.1-Nitro',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -618,12 +618,12 @@ function updateWatchlistUI() {
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
         <div class="summary-item">
             <div style="font-size:0.65rem; color:var(--text-secondary);">總投入本金</div>
-            <div style="font-size:0.9rem; font-weight:700;">${totalPrincipal.toLocaleString()}</div>
+            <div style="font-size:0.9rem; font-weight:700;">${Math.round(totalPrincipal).toLocaleString()}</div>
         </div>
         <div class="summary-item" style="text-align:right;">
             <div style="font-size:0.65rem; color:var(--text-secondary);">累積總盈虧</div>
             <div style="font-size:0.9rem; font-weight:800; color:${totalPnl >= 0 ? '#ff4d4d' : '#00ff00'};">
-                ${totalPnl >= 0 ? '+' : ''}${totalPnl.toLocaleString()} (${totalPct.toFixed(2)}%)
+                ${totalPnl >= 0 ? '+' : ''}${Math.round(totalPnl).toLocaleString()} (${totalPct.toFixed(2)}%)
             </div>
         </div>
     </div>
