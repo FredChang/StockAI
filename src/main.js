@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.4.0-SyncEngine',
+  version: 'v2.4.1-Nitro',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -85,16 +85,19 @@ async function getFullMarketTickers(statusEl) {
   // 1. Priority: Fetch pre-synced market universe (from GitHub Action)
   if (statusEl) statusEl.innerText = `📋 [1/3] 同步市場大局...`;
   try {
-      const res = await fetch('./src/market.json?v=' + Date.now());
+      // Direct path to src/market.json relative to root
+      const res = await fetch('src/market.json?v=' + Date.now());
       if (res.ok) {
           const list = await res.json();
-          list.forEach(i => add(i.code, i.name, i.id.includes('.TW') ? '.TW' : '.TWO'));
-          if (result.size > 2000) {
+          if (Array.isArray(list) && list.length > 500) {
+              list.forEach(i => add(i.code, i.name, i.id.includes('.TW') ? '.TW' : '.TWO'));
               if (statusEl) statusEl.innerText = `✅ GitHub雲端同步完成！取得 ${result.size} 檔標的。`;
               return Array.from(result.values());
           }
+      } else {
+          console.warn('Market.json fetch fail, status:', res.status);
       }
-  } catch (e) { console.warn('Pre-sync file not found yet'); }
+  } catch (e) { console.error('Cloud Sync Error:', e); }
 
   // 2. Fallback: Traditional Real-time Sync (Listed)
   try {
@@ -172,7 +175,8 @@ async function runScan() {
     let completed = 0;
     const startTime = Date.now();
     // Speed optimization: Increased concurrency to 15, slightly shorter wait.
-    const batchSize = 20; 
+    // Performance: Increased to 50 concurrent with 0.5s delay.
+    const batchSize = 50; 
     for (let i = 0; i < total; i += batchSize) {
       if (!state.isScanning) break;
       const batchIds = tickers.slice(i, i + batchSize);
@@ -206,7 +210,7 @@ async function runScan() {
       const rem = Math.round(((total - completed) * (elapsed / completed)));
       status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
       
-      await new Promise(r => setTimeout(r, 600));
+      await new Promise(r => setTimeout(r, 500));
     }
 
     state.results = scoreAndRank(results);
