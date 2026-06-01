@@ -13,6 +13,8 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
+  version: 'v2.2.4-Full',
+  lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo'
@@ -42,65 +44,71 @@ function updateTime() {
     if (el) el.innerText = `更新於: ${new Date().toLocaleTimeString()}`;
 }
 
-async function safeFetch(url, isHtml = false) {
-  try {
-    const separator = url.includes('?') ? '&' : '?';
-    const finalUrl = `${url}${separator}cb=${Date.now()}`;
-    const res = await fetch(PROXY_URL + encodeURIComponent(finalUrl));
-    if (!res.ok) throw new Error('Fetch Error');
-    return isHtml ? await res.text() : await res.json();
-  } catch (e) {
-    console.error('Fetch failed:', url, e);
-    throw e;
+async function safeFetch(url, isHtml = false, retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const separator = url.includes('?') ? '&' : '?';
+      const finalUrl = `${url}${separator}cb=${Date.now()}_${i}`;
+      const res = await fetch(PROXY_URL + encodeURIComponent(finalUrl));
+      if (!res.ok) {
+          if (res.status === 429 && i < retries) {
+              await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+              continue;
+          }
+          throw new Error(`Fetch Error: ${res.status}`);
+      }
+      return isHtml ? await res.text() : await res.json();
+    } catch (e) {
+      if (i === retries) {
+          console.error('Fetch failed after retries:', url, e);
+          throw e;
+      }
+      await new Promise(r => setTimeout(r, 500));
+    }
   }
 }
 
 async function getFullMarketTickers(statusEl) {
   const tickers = [];
-  const modes = [2, 4]; // 2 for Listed, 4 for OTC
   
-  for (const mode of modes) {
-    try {
-      const label = mode === 2 ? '上市' : '上櫃';
-      if (statusEl) statusEl.innerText = `📋 [1/3] 正在抓取${label}清單...`;
-      
-      const html = await safeFetch(`${TWSE_LIST_URL}${mode}`, true);
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const rows = doc.querySelectorAll('tr');
-      
-      let modeCount = 0;
-      rows.forEach(row => {
-        const cells = row.querySelectorAll('td');
-        if (cells.length >= 5) {
-          const cell0 = cells[0].textContent.trim(); // Use textContent for broader compatibility
-          const cat = cells[4].textContent.trim();
-          
-          // Match "CODE   NAME" - flexible regex for whitespace and code length
-          const match = cell0.match(/(\d{4,6})\s+(.+)/);
-          if (match) {
-            const code = match[1];
-            const name = match[2];
-            
-            // Filter logic from WPF version: 4 digits or starting with 00 (ETFs)
-            if ((code.length === 4 || code.startsWith('00')) && /^\d+$/.test(code)) {
-              // Exclude warrants and certificates
-              if (!cat.includes('權證') && !cat.includes('牛熊證') && !cat.includes('認購') && !cat.includes('認售')) {
-                const id = code + (mode === 2 ? '.TW' : '.TWO');
-                if (!tickers.some(t => t.id === id)) {
-                  tickers.push({ id, code, name });
-                  modeCount++;
-                }
-              }
-            }
-          }
+  // 1. TWSE Listed (上市)
+  try {
+    if (statusEl) statusEl.innerText = `📋 [1/3] 正在同步上市櫃清單...`;
+    const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL');
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        if (item.Code && (item.Code.length === 4 || item.Code.startsWith('00'))) {
+          tickers.push({ id: item.Code + '.TW', code: item.Code, name: item.Name });
         }
       });
-      console.log(`${label} synced:`, modeCount);
-    } catch (e) {
-      console.warn(`Mode ${mode} fetch failed, using fallback`, e);
     }
-  }
+  } catch (e) { console.warn('TWSE API fail'); }
+
+  // 2. TPEx OTC (上櫃)
+  try {
+    const data = await safeFetch('https://www.tpex.org.tw/openapi/v1/t13n04nd');
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        const code = item.SecuritiesCode || item.Code;
+        if (code && (code.length === 4 || code.startsWith('00')) && !tickers.some(t => t.code === code)) {
+          tickers.push({ id: code + '.TWO', code, name: item.SecuritiesName || item.Name });
+        }
+      });
+    }
+  } catch (e) { console.warn('TPEx OTC fail'); }
+
+  // 3. TPEx Emerging (興櫃) - to match desktop count completeness
+  try {
+    const data = await safeFetch('https://www.tpex.org.tw/openapi/v1/t13n04d1');
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        const code = item.SecuritiesCode || item.Code;
+        if (code && !tickers.some(t => t.code === code)) {
+          tickers.push({ id: code + '.TWO', code, name: item.SecuritiesName || item.Name });
+        }
+      });
+    }
+  } catch (e) { console.warn('TPEx Emerging fail'); }
 
   // Fallback to static list if still low
   if (tickers.length < 1500) {
@@ -155,7 +163,7 @@ async function runScan() {
     let results = [];
     let completed = 0;
     const startTime = Date.now();
-    const batchSize = 50; // Increased batch size for multi-ticker API
+    const batchSize = 25; // Smaller batch size to be safer with Yahoo
     for (let i = 0; i < total; i += batchSize) {
       if (!state.isScanning) break;
       
@@ -163,16 +171,19 @@ async function runScan() {
       const symbolsStr = batchTickers.map(s => s.id).join(',');
       
       try {
-        // Use multi-ticker spark API to reduce 2124 requests to ~43 requests
-        const data = await safeFetch(`${YAHOO_URL.replace('v8/finance/chart/', 'v7/finance/spark')}?symbols=${symbolsStr}&range=6mo&interval=1d`);
+        // Multi-ticker API: Use v7 spark
+        const url = `${YAHOO_URL.replace('v8/finance/chart/', 'v7/finance/spark')}?symbols=${symbolsStr}&range=6mo&interval=1d`;
+        const data = await safeFetch(url, false, 3); // 3 retries for Yahoo
         
         if (data && data.spark && data.spark.result) {
           data.spark.result.forEach(item => {
             try {
-              const res = item.response[0];
+              const res = item.response ? item.response[0] : null;
+              if (!res || !res.indicators) return;
+              
               const ticker = item.symbol;
               const stock = batchTickers.find(s => s.id === ticker);
-              if (!stock || !res || !res.indicators) return;
+              if (!stock) return;
 
               const quotes = res.indicators.quote[0].close;
               const validQuotes = quotes.filter(v => v != null);
@@ -191,7 +202,7 @@ async function runScan() {
           });
         }
       } catch (e) {
-        console.warn(`Batch ${i} failed`, e);
+        console.warn(`Batch ${i} failed after retries`);
       }
 
       completed += batchTickers.length;
@@ -201,8 +212,8 @@ async function runScan() {
       const rem = Math.round(((total - completed) * (elapsed / completed)));
       status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
       
-      // Throttle between batches
-      await new Promise(r => setTimeout(r, 200));
+      // Increased throttle between batches to avoid 429
+      await new Promise(r => setTimeout(r, 600));
     }
 
     state.results = scoreAndRank(results);
