@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.3.2-Ultra',
+  version: 'v2.3.3-Turbo',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -83,35 +83,35 @@ async function getFullMarketTickers(statusEl) {
   };
 
   // 1. TWSE Listed (上市)
-  if (statusEl) statusEl.innerText = `📋 [1/3] 同步上市櫃清單...`;
   try {
-    const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL', false, 3);
+    if (statusEl) statusEl.innerText = `📋 [1/3] 同步上市清單...`;
+    const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL', false, 1);
     if (Array.isArray(data)) data.forEach(i => add(i.Code, i.Name, '.TW'));
   } catch (e) {}
 
-  // 2. TPEx OTC & Emerging (上櫃與興櫃) - Ultimate redundancy
+  // 2. TPEx OTC & Emerging (上櫃與興櫃)
   const otcSources = [
-    // Layer 1: Codetabs Proxy with Daily Result
+    // Source A: TPEx Official API via Codetabs
     async () => {
-      const url = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
+      if (statusEl) statusEl.innerText = `📋 [2/3] 同步上櫃清單 (源 A)...`;
+      const url = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://www.tpex.org.tw/openapi/v1/t13n04nd');
       const r = await fetch(url);
       const d = await r.json();
-      if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
+      if (Array.isArray(d)) d.forEach(i => add(i.SecuritiesCode || i.Code, i.SecuritiesName || i.Name, '.TWO'));
     },
-    // Layer 2: AllOrigins with OpenAPI (Alternative endpoint)
+    // Source B: Daily JSON via AllOrigins
     async () => {
-      const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.tpex.org.tw/openapi/v1/t13n04nd');
+      if (statusEl) statusEl.innerText = `📋 [2/3] 同步上櫃清單 (源 B)...`;
+      const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
       const r = await fetch(url);
       const j = await r.json();
       const d = JSON.parse(j.contents);
-      if (Array.isArray(d)) d.forEach(i => add(i.SecuritiesCode || i.Code, i.SecuritiesName || i.Name, '.TWO'));
+      if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
     },
-    // Layer 3: ISIN Page Mode 4 (OTC) - Hard Scrape with robust AllOrigins
+    // Source C: ISIN Parsing (Robust Scraper) - Direct fallback
     async () => {
-      const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://isin.twse.com.tw/isin/C_public.jsp?strMode=4');
-      const r = await fetch(url);
-      const j = await r.json();
-      const html = j.contents;
+      if (statusEl) statusEl.innerText = `📋 [2/3] 同步上櫃清單 (源 C)...`;
+      const html = await safeFetch('https://isin.twse.com.tw/isin/C_public.jsp?strMode=4', true, 1);
       const m = html.matchAll(/(\d{4,6})(?:\s|&nbsp;|\s)+([^\s<]+)/g);
       for (const res of m) add(res[1], res[2], '.TWO');
     }
@@ -121,7 +121,7 @@ async function getFullMarketTickers(statusEl) {
     try { await f(); if (result.size > 2000) break; } catch (e) {}
   }
 
-  // 3. Last fallback
+  // 3. Fallback from Core + ensuring count
   CORE_STOCKS.forEach(s => add(s.code, s.name, s.id.includes('.TW') ? '.TW' : '.TWO'));
   
   const finalSize = result.size;
@@ -206,7 +206,7 @@ async function runScan() {
       const rem = Math.round(((total - completed) * (elapsed / completed)));
       status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
       
-      await new Promise(r => setTimeout(r, 450));
+      await new Promise(r => setTimeout(r, 300));
     }
 
     state.results = scoreAndRank(results);
