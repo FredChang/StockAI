@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.2.4-Full',
+  version: 'v2.2.5-Full',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -71,54 +71,61 @@ async function safeFetch(url, isHtml = false, retries = 2) {
 async function getFullMarketTickers(statusEl) {
   const tickers = [];
   
-  // 1. TWSE Listed (上市)
-  try {
-    if (statusEl) statusEl.innerText = `📋 [1/3] 正在同步上市櫃清單...`;
-    const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL');
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        if (item.Code && (item.Code.length === 4 || item.Code.startsWith('00'))) {
-          tickers.push({ id: item.Code + '.TW', code: item.Code, name: item.Name });
-        }
-      });
-    }
-  } catch (e) { console.warn('TWSE API fail'); }
+  // Combine multiple reliable sources to reach 2,100+ tickers
+  const sources = [
+    { name: '上市', url: 'https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL' },
+    { name: '上櫃', url: 'https://www.tpex.org.tw/openapi/v1/t13n04nd' },
+    { name: '興櫃', url: 'https://www.tpex.org.tw/openapi/v1/t13n04d1' }
+  ];
 
-  // 2. TPEx OTC (上櫃)
-  try {
-    const data = await safeFetch('https://www.tpex.org.tw/openapi/v1/t13n04nd');
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        const code = item.SecuritiesCode || item.Code;
-        if (code && (code.length === 4 || code.startsWith('00')) && !tickers.some(t => t.code === code)) {
-          tickers.push({ id: code + '.TWO', code, name: item.SecuritiesName || item.Name });
-        }
-      });
+  for (const src of sources) {
+    try {
+      if (statusEl) statusEl.innerText = `📋 [1/3] 正在同步${src.name}清單...`;
+      const data = await safeFetch(src.url, false, 5); // Persistent retries for index
+      if (Array.isArray(data)) {
+        data.forEach(item => {
+          const code = item.Code || item.SecuritiesCode;
+          const name = item.Name || item.SecuritiesName;
+          if (code && !tickers.some(t => t.code === code)) {
+            // Filter logic: 4 digits (stocks) or 00xxxx (ETFs)
+            if (code.length === 4 || code.startsWith('00')) {
+                const id = code + (src.name === '上市' ? '.TW' : '.TWO');
+                tickers.push({ id, code, name });
+            }
+          }
+        });
+      }
+    } catch (e) {
+      console.warn(`${src.name} API fail, trying backup`);
     }
-  } catch (e) { console.warn('TPEx OTC fail'); }
-
-  // 3. TPEx Emerging (興櫃) - to match desktop count completeness
-  try {
-    const data = await safeFetch('https://www.tpex.org.tw/openapi/v1/t13n04d1');
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        const code = item.SecuritiesCode || item.Code;
-        if (code && !tickers.some(t => t.code === code)) {
-          tickers.push({ id: code + '.TWO', code, name: item.SecuritiesName || item.Name });
-        }
-      });
-    }
-  } catch (e) { console.warn('TPEx Emerging fail'); }
-
-  // Fallback to static list if still low
-  if (tickers.length < 1500) {
-      CORE_STOCKS.forEach(s => {
-          if (!tickers.some(t => t.code === s.code)) tickers.push(s);
-      });
   }
 
-  const uniqueTickers = Array.from(new Map(tickers.map(t => [t.code, t])).values());
-  return uniqueTickers;
+  // Backup: If OpenAPI still fails, use ISIN list as final fallback
+  if (tickers.length < 1800) {
+    [2, 4].forEach(async mode => {
+        try {
+            const html = await safeFetch(`${TWSE_LIST_URL}${mode}`, true, 3);
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            doc.querySelectorAll('tr').forEach(row => {
+               const cells = row.querySelectorAll('td');
+               if (cells.length >= 2) {
+                   const match = cells[0].textContent.match(/(\d{4,6})\s+(.+)/);
+                   if (match && !tickers.some(t => t.code === match[1])) {
+                       tickers.push({ id: match[1] + (mode === 2 ? '.TW' : '.TWO'), code: match[1], name: match[2] });
+                   }
+               }
+            });
+        } catch(e) {}
+    });
+  }
+
+  // Final merge with CORE_STOCKS ensuring no duplicates
+  CORE_STOCKS.forEach(s => {
+    if (!tickers.some(t => t.code === s.code)) tickers.push(s);
+  });
+
+  return Array.from(new Map(tickers.map(t => [t.code, t])).values());
 }
 
 async function refreshMarkets() {
@@ -163,57 +170,48 @@ async function runScan() {
     let results = [];
     let completed = 0;
     const startTime = Date.now();
-    const batchSize = 25; // Smaller batch size to be safer with Yahoo
+    // Reverting to single-ticker fetch for maximum reliability, mimicking desktop version's 3-5min duration.
+    const batchSize = 10; // Process 10 concurrently, then wait.
     for (let i = 0; i < total; i += batchSize) {
       if (!state.isScanning) break;
+      const batchIds = tickers.slice(i, i + batchSize);
       
-      const batchTickers = tickers.slice(i, i + batchSize);
-      const symbolsStr = batchTickers.map(s => s.id).join(',');
-      
-      try {
-        // Multi-ticker API: Use v7 spark
-        const url = `${YAHOO_URL.replace('v8/finance/chart/', 'v7/finance/spark')}?symbols=${symbolsStr}&range=6mo&interval=1d`;
-        const data = await safeFetch(url, false, 3); // 3 retries for Yahoo
-        
-        if (data && data.spark && data.spark.result) {
-          data.spark.result.forEach(item => {
-            try {
-              const res = item.response ? item.response[0] : null;
-              if (!res || !res.indicators) return;
-              
-              const ticker = item.symbol;
-              const stock = batchTickers.find(s => s.id === ticker);
-              if (!stock) return;
-
-              const quotes = res.indicators.quote[0].close;
-              const validQuotes = quotes.filter(v => v != null);
-              
-              if (validQuotes.length >= 60) {
-                const feat = calculateFeatures(stock, validQuotes);
-                if (feat) {
-                  results.push({ 
-                    ...feat, 
-                    history: validQuotes,
-                    timestamps: res.timestamp.filter((_, idx) => quotes[idx] != null)
-                  });
-                }
-              }
-            } catch (e) {}
-          });
+      const promises = batchIds.map(async (s) => {
+        try {
+          // Individual request for each stock is safer via Proxy
+          const data = await safeFetch(`${YAHOO_URL}${s.id}?range=150d&interval=1d`, false, 3);
+          const res = data.chart.result[0];
+          const quotes = res.indicators.quote[0].close;
+          const validQuotes = quotes.filter(v => v != null);
+          
+          if (validQuotes.length >= 60) {
+            const feat = calculateFeatures(s, validQuotes);
+            if (feat) {
+               results.push({ 
+                   ...feat, 
+                   history: validQuotes,
+                   timestamps: res.timestamp.filter((_, idx) => quotes[idx] != null)
+               });
+            }
+          }
+        } catch (e) {
+          console.warn(`Stock ${s.code} failed`);
         }
-      } catch (e) {
-        console.warn(`Batch ${i} failed after retries`);
-      }
+        completed++;
+      });
 
-      completed += batchTickers.length;
+      await Promise.all(promises);
+      
       const pct = (completed / total) * 100;
       fill.style.width = `${pct}%`;
       const elapsed = (Date.now() - startTime) / 1000;
       const rem = Math.round(((total - completed) * (elapsed / completed)));
-      status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
+      status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (預計還需 ${Math.floor(rem/60)}分${rem%60}秒)`;
       
-      // Increased throttle between batches to avoid 429
-      await new Promise(r => setTimeout(r, 600));
+      // Delay to mimic desktop timing and avoid IP block
+      // 2100 stocks / 10 per batch = 210 batches. 
+      // 210 * (0.8s) = 168 seconds (approx 3 minutes).
+      await new Promise(r => setTimeout(r, 800));
     }
 
     state.results = scoreAndRank(results);
