@@ -12,7 +12,7 @@ let state = {
   isScanning: false,
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
-  weights: [1.0, 1.5, 0.8, 2.0, 1.2, 1.5, 1.8],
+  weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo'
@@ -55,51 +55,57 @@ async function safeFetch(url, isHtml = false) {
 
 async function getFullMarketTickers(statusEl) {
   const tickers = [];
+  const modes = [2, 4]; // 2 for Listed, 4 for OTC
   
-  // 1. 上市公司 (TWSE OpenAPI)
-  try {
-    if (statusEl) statusEl.innerText = `🔍 正在解析 1,100+ 上市標的...`;
-    const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL');
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        if (item.Code && item.Code.length >= 4) {
-          tickers.push({ id: item.Code + '.TW', code: item.Code, name: item.Name });
+  for (const mode of modes) {
+    try {
+      const label = mode === 2 ? '上市' : '上櫃';
+      if (statusEl) statusEl.innerText = `📋 [1/3] 正在抓取${label}清單...`;
+      
+      const html = await safeFetch(`${TWSE_LIST_URL}${mode}`, true);
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const rows = doc.querySelectorAll('tr');
+      
+      let modeCount = 0;
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 5) {
+          const cell0 = cells[0].innerText.trim();
+          const cat = cells[4].innerText.trim();
+          
+          // Match "CODE   NAME" - handles multiple spaces/tabs
+          const parts = cell0.split(/\s+/);
+          if (parts.length >= 2) {
+            const code = parts[0];
+            const name = parts[1];
+            
+            // Filter logic from WPF version
+            if ((code.length === 4 || code.startsWith('00')) && /^\d+$/.test(code)) {
+              if (!cat.includes('權證') && !cat.includes('牛熊證') && !cat.includes('認購') && !cat.includes('認售')) {
+                const id = code + (mode === 2 ? '.TW' : '.TWO');
+                if (!tickers.some(t => t.id === id)) {
+                  tickers.push({ id, code, name });
+                  modeCount++;
+                }
+              }
+            }
+          }
         }
       });
+      console.log(`${label} synced:`, modeCount);
+    } catch (e) {
+      console.warn(`Mode ${mode} fetch failed, using fallback`, e);
     }
-    console.log('TWSE synced:', tickers.length);
-  } catch (e) {
-    console.warn('TWSE API failed', e);
   }
 
-  // 2. 上櫃與興櫃 (使用 TPEx OpenAPI 或備援邏輯)
-  try {
-    if (statusEl) statusEl.innerText = `🔍 正在解析 900+ 上櫃與興櫃標的...`;
-    // TPEx OpenData: OTC Stock Quotes
-    const data = await safeFetch('https://www.tpex.org.tw/openapi/v1/t13n04nd');
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        const code = item.SecuritiesCode || item.Code;
-        const name = item.SecuritiesName || item.Name;
-        if (code && code.length >= 4 && !tickers.some(t => t.code === code)) {
-          tickers.push({ id: code + '.TWO', code: code, name: name });
-        }
-      });
-    }
-    console.log('TPEx synced total:', tickers.length);
-  } catch (e) {
-    console.warn('TPEx API failed', e);
-  }
-
-  // 3. 確保名單完整度 (補足新創板、ETF等)
+  // Fallback to static list if still low
   if (tickers.length < 1500) {
-      console.warn('OpenAPI coverage incomplete, merging static list');
       CORE_STOCKS.forEach(s => {
           if (!tickers.some(t => t.code === s.code)) tickers.push(s);
       });
   }
 
-  // Ensure unique list
   const uniqueTickers = Array.from(new Map(tickers.map(t => [t.code, t])).values());
   return uniqueTickers;
 }
@@ -196,11 +202,22 @@ async function runScan() {
 
 function calculateFeatures(s, c) {
   const n = c.length;
+  if (n < 60) return null;
+  
   const cur = c[n-1];
   const ma5 = avg(c.slice(-5)), ma20 = avg(c.slice(-20)), ma60 = avg(c.slice(-60));
-  const rets = []; for(let i=1; i<n; i++) rets.push((c[i]-c[i-1])/c[i-1]);
-  const vol = stdDev(rets.slice(-20)) * 15.8;
-  const std20 = stdDev(c.slice(-20)), up = ma20 + 2 * std20;
+  
+  const rets = []; 
+  for(let i=1; i<n; i++) rets.push((c[i]-c[i-1])/c[i-1]);
+  
+  // Align with WPF: stdDev * Math.sqrt(252) * 100
+  const vol = stdDev(rets.slice(-20)) * Math.sqrt(252) * 100;
+  
+  const std20 = stdDev(c.slice(-20)); 
+  const up = ma20 + 2 * std20;
+  const low = ma20 - 2 * std20;
+  
+  const bbWidth = ((up - low) / ma20) * 100;
   
   return { 
       ...s, 
@@ -211,7 +228,7 @@ function calculateFeatures(s, c) {
       ma5, ma20, ma60,
       features: [
           vol, 
-          ((up - (ma20 - 2 * std20)) / ma20) * 100, 
+          bbWidth, 
           (cur / ma60 - 1) * 100, 
           (ma5 / ma60 - 1) * 100, 
           (cur / ma20 - 1) * 100, 
