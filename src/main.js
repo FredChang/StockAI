@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.3.3-Turbo',
+  version: 'v2.4.0-SyncEngine',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -82,50 +82,50 @@ async function getFullMarketTickers(statusEl) {
     }
   };
 
-  // 1. TWSE Listed (上市)
+  // 1. Priority: Fetch pre-synced market universe (from GitHub Action)
+  if (statusEl) statusEl.innerText = `📋 [1/3] 同步市場大局...`;
   try {
-    if (statusEl) statusEl.innerText = `📋 [1/3] 同步上市清單...`;
+      const res = await fetch('./src/market.json?v=' + Date.now());
+      if (res.ok) {
+          const list = await res.json();
+          list.forEach(i => add(i.code, i.name, i.id.includes('.TW') ? '.TW' : '.TWO'));
+          if (result.size > 2000) {
+              if (statusEl) statusEl.innerText = `✅ 預同步完成！取得 ${result.size} 檔標的。`;
+              return Array.from(result.values());
+          }
+      }
+  } catch (e) { console.warn('Pre-sync file not found yet'); }
+
+  // 2. Fallback: Traditional Real-time Sync (Listed)
+  try {
     const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL', false, 1);
     if (Array.isArray(data)) data.forEach(i => add(i.Code, i.Name, '.TW'));
   } catch (e) {}
 
-  // 2. TPEx OTC & Emerging (上櫃與興櫃)
+  // 3. Fallback: OTC/Emerging Chain
+  const now = new Date();
+  const dateStr = `${now.getFullYear()-1911}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
   const otcSources = [
-    // Source A: TPEx Official API via Codetabs
     async () => {
-      if (statusEl) statusEl.innerText = `📋 [2/3] 同步上櫃清單 (源 A)...`;
-      const url = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://www.tpex.org.tw/openapi/v1/t13n04nd');
-      const r = await fetch(url);
-      const d = await r.json();
-      if (Array.isArray(d)) d.forEach(i => add(i.SecuritiesCode || i.Code, i.SecuritiesName || i.Name, '.TWO'));
-    },
-    // Source B: Daily JSON via AllOrigins
-    async () => {
-      if (statusEl) statusEl.innerText = `📋 [2/3] 同步上櫃清單 (源 B)...`;
-      const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.tpex.org.tw/openapi/v1/t13n04nd')}`;
       const r = await fetch(url);
       const j = await r.json();
       const d = JSON.parse(j.contents);
-      if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
+      if (Array.isArray(d)) d.forEach(i => add(i.SecuritiesCode || i.Code, i.SecuritiesName || i.Name, '.TWO'));
     },
-    // Source C: ISIN Parsing (Robust Scraper) - Direct fallback
     async () => {
-      if (statusEl) statusEl.innerText = `📋 [2/3] 同步上櫃清單 (源 C)...`;
-      const html = await safeFetch('https://isin.twse.com.tw/isin/C_public.jsp?strMode=4', true, 1);
-      const m = html.matchAll(/(\d{4,6})(?:\s|&nbsp;|\s)+([^\s<]+)/g);
+      const url = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent('https://isin.twse.com.tw/isin/C_public.jsp?strMode=4')}`;
+      const r = await fetch(url);
+      const html = await r.text();
+      const m = html.matchAll(/(\d{4,6})(?:\s|&nbsp;|　)+([^<\s]+)/g);
       for (const res of m) add(res[1], res[2], '.TWO');
     }
   ];
 
-  for (const f of otcSources) {
-    try { await f(); if (result.size > 2000) break; } catch (e) {}
-  }
-
-  // 3. Fallback from Core + ensuring count
+  await Promise.allSettled(otcSources.map(f => f().catch(() => {})));
   CORE_STOCKS.forEach(s => add(s.code, s.name, s.id.includes('.TW') ? '.TW' : '.TWO'));
   
-  const finalSize = result.size;
-  if (statusEl) statusEl.innerText = `✅ 同步完成！取得標的共 ${finalSize} 檔。`;
+  if (statusEl) statusEl.innerText = `✅ 同步完成！取得標的共 ${result.size} 檔。`;
   return Array.from(result.values());
 }
 
@@ -172,7 +172,7 @@ async function runScan() {
     let completed = 0;
     const startTime = Date.now();
     // Speed optimization: Increased concurrency to 15, slightly shorter wait.
-    const batchSize = 15; 
+    const batchSize = 20; 
     for (let i = 0; i < total; i += batchSize) {
       if (!state.isScanning) break;
       const batchIds = tickers.slice(i, i + batchSize);
@@ -206,7 +206,7 @@ async function runScan() {
       const rem = Math.round(((total - completed) * (elapsed / completed)));
       status.innerText = `掃描中: ${completed}/${total} [${pct.toFixed(0)}%] (剩約 ${Math.floor(rem/60)}分${rem%60}秒)`;
       
-      await new Promise(r => setTimeout(r, 300));
+      await new Promise(r => setTimeout(r, 600));
     }
 
     state.results = scoreAndRank(results);
