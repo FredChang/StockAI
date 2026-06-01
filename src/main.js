@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.2.6-Full',
+  version: 'v2.2.8-Full',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -71,55 +71,54 @@ async function safeFetch(url, isHtml = false, retries = 2) {
 async function getFullMarketTickers(statusEl) {
   const tickers = [];
   
-  // Strategy: Use multiple sources and multiple proxies to bypass blocks
-  const urls = [
-    // TWSE Listed
-    { n: '上市(API)', u: 'https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL', p: PROXY_URL },
-    // TPEx OTC - often blocked, try secondary proxy if primary fails
-    { n: '上櫃(API)', u: 'https://www.tpex.org.tw/openapi/v1/t13n04nd', p: 'https://api.allorigins.win/get?url=' },
-    // TPEx Emerging
-    { n: '興櫃(API)', u: 'https://www.tpex.org.tw/openapi/v1/t13n04d1', p: 'https://api.allorigins.win/get?url=' }
-  ];
-
-  for (const src of urls) {
-    try {
-      if (statusEl) statusEl.innerText = `📋 [1/3] 同步${src.n}...`;
-      
-      let data;
-      if (src.p.includes('allorigins')) {
-          const res = await fetch(src.p + encodeURIComponent(src.u + '?cb=' + Date.now()));
-          const json = await res.json();
-          data = JSON.parse(json.contents);
-      } else {
-          data = await safeFetch(src.u, false, 3);
-      }
-
-      if (Array.isArray(data)) {
-        data.forEach(item => {
-          const code = (item.Code || item.SecuritiesCode || '').trim();
-          const name = (item.Name || item.SecuritiesName || '').trim();
-          if (code && (code.length === 4 || code.startsWith('00'))) {
-            const id = code + (src.n.includes('上市') ? '.TW' : '.TWO');
-            if (!tickers.some(t => t.code === code)) {
-              tickers.push({ id, code, name });
-            }
-          }
-        });
-      }
-    } catch (e) {
-      console.warn(`${src.n} fail`, e);
-    }
-  }
-
-  // Final check: If still under 2000, force merge CORE_STOCKS and check ISIN
-  if (tickers.length < 2000) {
-      console.warn('Universe incomplete, merging core stocks');
-      CORE_STOCKS.forEach(s => {
-          if (!tickers.some(t => t.code === s.code)) tickers.push(s);
+  // 1. TWSE Listed (上市) - Direct OpenAPI
+  try {
+    if (statusEl) statusEl.innerText = `📋 [1/3] 同步上市櫃清單...`;
+    const data = await safeFetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL');
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        if (item.Code && (item.Code.length === 4 || item.Code.startsWith('00'))) {
+          tickers.push({ id: item.Code + '.TW', code: item.Code, name: item.Name });
+        }
       });
+    }
+  } catch (e) { console.warn('TWSE API fail'); }
+
+  // 2. TPEx OTC (上櫃) - Using more robust Daily Quotes JSON (via AllOrigins to bypass OpenAPI strictness)
+  try {
+    const otcUrl = 'https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json';
+    const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(otcUrl));
+    const json = await res.json();
+    const data = JSON.parse(json.contents);
+    if (data && data.aaData) {
+      data.aaData.forEach(row => {
+        const code = (row[0] || '').trim();
+        const name = (row[1] || '').trim();
+        if (code && (code.length === 4 || code.startsWith('00')) && !tickers.some(t => t.code === code)) {
+          tickers.push({ id: code + '.TWO', code, name });
+        }
+      });
+    }
+  } catch (e) {
+      console.warn('OTC JSON fail, attempting OpenAPI backup');
+      try {
+          const data = await safeFetch('https://www.tpex.org.tw/openapi/v1/t13n04nd');
+          if (Array.isArray(data)) {
+            data.forEach(item => {
+                const c = item.SecuritiesCode;
+                if (!tickers.some(t => t.code === c)) tickers.push({ id: c + '.TWO', code: c, name: item.SecuritiesName });
+            });
+          }
+      } catch(e2) {}
   }
 
-  // Deduplicate
+  // 3. Ensuring Emerging (興櫃) - merged from CORE_STOCKS if slow
+  CORE_STOCKS.forEach(s => {
+    if (!tickers.some(t => t.code === s.code)) {
+        tickers.push(s);
+    }
+  });
+
   return Array.from(new Map(tickers.map(t => [t.code, t])).values());
 }
 
@@ -205,6 +204,11 @@ async function runScan() {
 
     state.results = scoreAndRank(results);
     renderResults();
+    
+    // Show Monitor All button after scan
+    const monitorContainer = document.getElementById('monitor-all-container');
+    if (monitorContainer) monitorContainer.style.display = 'block';
+
     status.innerText = `✅ 掃描完成！共分析 ${results.length} 檔，篩選出 TOP 20`;
   } catch (err) {
     status.innerText = '❌ 掃描異常，請重試';
@@ -213,6 +217,36 @@ async function runScan() {
     state.isScanning = false;
     btn.disabled = false;
   }
+}
+
+function monitorAllResults() {
+    if (!state.results.length) return;
+    const currentResults = state.results;
+    let addedCount = 0;
+    
+    currentResults.forEach(stock => {
+        if (!state.watchlist.some(w => w.code === stock.code)) {
+            state.watchlist.push({
+                id: stock.id,
+                code: stock.code,
+                name: stock.name,
+                currentPrice: stock.price,
+                entryPrice: stock.price,
+                shares: 1,
+                addDate: new Date().toLocaleDateString(),
+                addedAt: Date.now()
+            });
+            addedCount++;
+        }
+    });
+    
+    if (addedCount > 0) {
+        localStorage.setItem('watchlist', JSON.stringify(state.watchlist));
+        updateWatchlistUI();
+        alert(`已成功將 ${addedCount} 檔標的加入監控清單！`);
+    } else {
+        alert('監控清單已包含全部 TOP 20 標的。');
+    }
 }
 
 function calculateFeatures(s, c) {
@@ -431,6 +465,8 @@ function initWeights() {
         }; 
     }
   });
+  const m = document.getElementById('monitor-all-btn');
+  if(m) m.addEventListener('click', monitorAllResults);
 }
 
 function toggleWeights() {
