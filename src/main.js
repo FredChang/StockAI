@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.2.9-Ultra',
+  version: 'v2.3.0-Extreme',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -83,9 +83,16 @@ async function getFullMarketTickers(statusEl) {
     if (Array.isArray(data)) data.forEach(i => add(i.Code, i.Name, '.TW'));
   } catch (e) {}
 
-  // 2. TPEx OTC & Emerging (上櫃與興櫃) - Chain of fallback sources
+  // 2. TPEx OTC & Emerging (上櫃與興櫃) - Multiple layers including direct CSV fallback
   const otcSources = [
-    // Source A: Daily Report JSON via AllOrigins
+    // Source A: Daily Report JSON via Codetabs (faster)
+    async () => {
+      const url = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
+      const res = await fetch(url);
+      const d = await res.json();
+      if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
+    },
+    // Source B: Daily Report JSON via AllOrigins
     async () => {
       const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
       const res = await fetch(url);
@@ -93,35 +100,28 @@ async function getFullMarketTickers(statusEl) {
       const d = JSON.parse(j.contents);
       if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
     },
-    // Source B: ISIN Page Mode 4 (OTC) - RAW Regex parsing (Robust)
+    // Source C: ISIN Page Mode 4 (OTC) - Scraper fallback
     async () => {
       const html = await safeFetch('https://isin.twse.com.tw/isin/C_public.jsp?strMode=4', true, 2);
-      // Handle both standard space and &nbsp; in HTML
       const matches = html.matchAll(/(\d{4,6})(?:\s|&nbsp;)+([^\s<]+)/g);
       for (const m of matches) {
-          if (m[1].length === 4 || m[1].startsWith('00')) add(m[1], m[2], '.TWO');
+          const code = m[1];
+          if (code.length === 4 || code.startsWith('00')) add(code, m[2], '.TWO');
       }
-    },
-    // Source C: TPEx OpenAPI via secondary proxy
-    async () => {
-      const url = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://www.tpex.org.tw/openapi/v1/t13n04nd');
-      const res = await fetch(url);
-      const d = await res.json();
-      if (Array.isArray(d)) d.forEach(i => add(item.SecuritiesCode || item.Code, item.SecuritiesName || item.Name, '.TWO'));
     }
   ];
 
   for (const fetcher of otcSources) {
     try {
       await fetcher();
-      if (result.size > 1800) break; // We found the OTC stocks, move on
-    } catch (e) { console.warn('OTC Source Fail', e); }
+      if (result.size > 1800) break;
+    } catch (e) {}
   }
 
-  // 3. Final Fallback from CORE_STOCKS
+  // 3. Final Fallback from CORE_STOCKS + ensure count
   CORE_STOCKS.forEach(s => add(s.code, s.name, s.id.includes('.TW') ? '.TW' : '.TWO'));
-
-  console.log(`Universe Sync Done: ${result.size} tickers`);
+  
+  if (statusEl) statusEl.innerText = `✅ 同步完成！取得標的共 ${result.size} 檔。`;
   return Array.from(result.values());
 }
 
@@ -233,8 +233,8 @@ function monitorAllResults() {
                 id: stock.id,
                 code: stock.code,
                 name: stock.name,
-                currentPrice: stock.price,
-                entryPrice: stock.price,
+                currentPrice: stock.close,
+                entryPrice: stock.close,
                 shares: 1,
                 addDate: new Date().toLocaleDateString(),
                 addedAt: Date.now()
@@ -249,6 +249,17 @@ function monitorAllResults() {
         alert(`已成功將 ${addedCount} 檔標的加入監控清單！`);
     } else {
         alert('監控清單已包含全部 TOP 20 標的。');
+    }
+}
+
+function clearWatchlist() {
+    if (state.watchlist.length === 0) return;
+    if (confirm('確定要移除監控清單中的所有標的嗎？此動作無法復原。')) {
+        state.watchlist = [];
+        localStorage.setItem('watchlist', '[]');
+        updateWatchlistUI();
+        updateWatchlistBtnUI();
+        alert('監控清單已清空。');
     }
 }
 
@@ -470,6 +481,9 @@ function initWeights() {
   });
   const m = document.getElementById('monitor-all-btn');
   if(m) m.addEventListener('click', monitorAllResults);
+  
+  const c = document.getElementById('clear-watchlist-btn');
+  if(c) c.addEventListener('click', clearWatchlist);
 }
 
 function toggleWeights() {
