@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.3.0-Extreme',
+  version: 'v2.3.1-Resilient',
   lastUpdate: '2026.06.01',
   currentChart: null,
   selectedStock: null,
@@ -22,15 +22,21 @@ let state = {
 
 // --- 初始化 ---
 document.addEventListener('DOMContentLoaded', () => {
-  initWeights();
-  updateWatchlistUI();
-  updateTime();
-  setInterval(updateTime, 1000);
-  setTimeout(refreshMarkets, 1000);
+  try { initWeights(); } catch(e) { console.error('Weights fail', e); }
+  try { updateWatchlistUI(); } catch(e) { console.error('Watchlist UI fail', e); }
+  try {
+    updateTime();
+    setInterval(updateTime, 1000);
+    setTimeout(refreshMarkets, 800);
+  } catch(e) { console.error('Ticker fail', e); }
+  const scanBtn = document.getElementById('start-scan');
+  if (scanBtn) scanBtn.onclick = runScan;
   
-  document.getElementById('start-scan').onclick = runScan;
-  document.getElementById('weight-toggle').onclick = toggleWeights;
-  document.getElementById('add-to-watchlist-btn').onclick = toggleWatchlist;
+  const weightToggle = document.getElementById('weight-toggle');
+  if (weightToggle) weightToggle.onclick = toggleWeights;
+  
+  const watchBtn = document.getElementById('add-to-watchlist-btn');
+  if (watchBtn) watchBtn.onclick = toggleWatchlist;
   
   const cb = document.querySelector('.close-modal');
   if (cb) cb.onclick = () => {
@@ -83,45 +89,40 @@ async function getFullMarketTickers(statusEl) {
     if (Array.isArray(data)) data.forEach(i => add(i.Code, i.Name, '.TW'));
   } catch (e) {}
 
-  // 2. TPEx OTC & Emerging (上櫃與興櫃) - Multiple layers including direct CSV fallback
+  // 2. TPEx OTC & Emerging (上櫃與興櫃) - Robust multiple fetching
   const otcSources = [
-    // Source A: Daily Report JSON via Codetabs (faster)
+    // Layer 1: Codetabs Proxy
     async () => {
       const url = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
-      const res = await fetch(url);
-      const d = await res.json();
+      const r = await fetch(url);
+      const d = await r.json();
       if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
     },
-    // Source B: Daily Report JSON via AllOrigins
+    // Layer 2: AllOrigins Proxy
     async () => {
       const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/otc_quotes_no1430_result.php?l=zh-tw&o=json');
-      const res = await fetch(url);
-      const j = await res.json();
+      const r = await fetch(url);
+      const j = await r.json();
       const d = JSON.parse(j.contents);
       if (d && d.aaData) d.aaData.forEach(r => add(r[0].trim(), r[1].trim(), '.TWO'));
     },
-    // Source C: ISIN Page Mode 4 (OTC) - Scraper fallback
+    // Layer 3: ISIN Mode 4 Scraping
     async () => {
       const html = await safeFetch('https://isin.twse.com.tw/isin/C_public.jsp?strMode=4', true, 2);
-      const matches = html.matchAll(/(\d{4,6})(?:\s|&nbsp;)+([^\s<]+)/g);
-      for (const m of matches) {
-          const code = m[1];
-          if (code.length === 4 || code.startsWith('00')) add(code, m[2], '.TWO');
-      }
+      const m = html.matchAll(/(\d{4,6})(?:\s|&nbsp;)+([^\s<]+)/g);
+      for (const res of m) add(res[1], res[2], '.TWO');
     }
   ];
 
-  for (const fetcher of otcSources) {
-    try {
-      await fetcher();
-      if (result.size > 1800) break;
-    } catch (e) {}
+  for (const f of otcSources) {
+    try { await f(); if (result.size > 1800) break; } catch (e) {}
   }
 
-  // 3. Final Fallback from CORE_STOCKS + ensure count
+  // 3. Last fallback and UI Update
   CORE_STOCKS.forEach(s => add(s.code, s.name, s.id.includes('.TW') ? '.TW' : '.TWO'));
   
-  if (statusEl) statusEl.innerText = `✅ 同步完成！取得標的共 ${result.size} 檔。`;
+  const finalSize = result.size;
+  if (statusEl) statusEl.innerText = `✅ 同步完成！取得標的共 ${finalSize} 檔。`;
   return Array.from(result.values());
 }
 
@@ -517,10 +518,14 @@ function updateWatchlistUI() {
   let totalPrincipal = 0;
   
   l.innerHTML = state.watchlist.map(w => {
-    const pnlPerShare = w.currentPrice - w.entryPrice;
-    const pct = (pnlPerShare / w.entryPrice * 100);
-    const principal = w.entryPrice * w.shares * 1000;
-    const amt = pnlPerShare * w.shares * 1000; 
+    const curP = w.currentPrice || 0;
+    const entP = w.entryPrice || curP || 0;
+    const shares = w.shares || 0;
+    
+    const pnlPerShare = curP - entP;
+    const pct = entP === 0 ? 0 : (pnlPerShare / entP * 100);
+    const principal = entP * shares * 1000;
+    const amt = pnlPerShare * shares * 1000; 
     
     totalPnl += amt;
     totalPrincipal += principal;
@@ -533,12 +538,12 @@ function updateWatchlistUI() {
             <span style="font-size:0.6rem; color:var(--text-secondary); margin-top:4px;">📅 加入: ${w.addDate || '--'}</span>
         </div>
         <div style="text-align: right;">
-            <div class="price-text">${w.currentPrice.toFixed(2)}</div>
+            <div class="price-text">${curP.toFixed(2)}</div>
             <div style="color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; font-size: 0.8rem; font-weight: 700;">
                 ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%
             </div>
             <div style="font-size:0.7rem; color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; opacity:0.8;">
-                ${amt.toLocaleString()} TWD
+                ${Math.round(amt).toLocaleString()} TWD
             </div>
         </div>
       </div>`;
