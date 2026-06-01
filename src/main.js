@@ -90,7 +90,7 @@ async function getFullMarketTickers(statusEl) {
           const list = await res.json();
           list.forEach(i => add(i.code, i.name, i.id.includes('.TW') ? '.TW' : '.TWO'));
           if (result.size > 2000) {
-              if (statusEl) statusEl.innerText = `✅ 預同步完成！取得 ${result.size} 檔標的。`;
+              if (statusEl) statusEl.innerText = `✅ GitHub雲端同步完成！取得 ${result.size} 檔標的。`;
               return Array.from(result.values());
           }
       }
