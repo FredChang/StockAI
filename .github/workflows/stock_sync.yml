@@ -26,8 +26,13 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Run sync script
-        run: node scripts/sync-stocks.js
+      - name: Run sync script (retry up to 3 times)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          retry_wait_seconds: 60
+          command: node scripts/sync-stocks.js
 
       - name: Commit and push changes
         env:
