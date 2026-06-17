@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.6.0-Nitro',
+  version: 'v2.6.1-Nitro',
   lastUpdate: '2026.06.17',
   currentChart: null,
   selectedStock: null,
