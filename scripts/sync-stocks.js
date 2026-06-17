@@ -129,7 +129,7 @@ function calculateFeatures(s, c) {
   };
 }
 
-function parseYahooBatch(chunk, data) {
+function parseYahooBatch(chunk, data, peMap, revMap) {
   const results = [];
   let failCount = 0;
   const items = data?.spark?.result;
@@ -148,7 +148,13 @@ function parseYahooBatch(chunk, data) {
       if (validCloses.length >= 60) {
         const feat = calculateFeatures(s, validCloses);
         if (feat) {
-          results.push(feat);
+          const peData = peMap.get(s.code) || { pe: null, pb: null, dy: null };
+          const revData = revMap.get(s.code) || { rev: null, revYm: null, revYoY: null, revMoM: null, revCumYoY: null };
+          results.push({
+            ...feat,
+            ...peData,
+            ...revData
+          });
           continue;
         }
       }
@@ -158,7 +164,7 @@ function parseYahooBatch(chunk, data) {
   return { results, failCount };
 }
 
-async function fetchYahooBatch(chunk, headers, hostIndex) {
+async function fetchYahooBatch(chunk, headers, hostIndex, peMap, revMap) {
   const host = YAHOO_HOSTS[hostIndex % YAHOO_HOSTS.length];
   const symbols = chunk.map(s => s.id).join(',');
   const url = `https://${host}/v7/finance/spark?symbols=${symbols}&range=150d&interval=1d`;
@@ -169,7 +175,102 @@ async function fetchYahooBatch(chunk, headers, hostIndex) {
     throw new Error(`HTTP ${res.status}`);
   }
   const data = await res.json();
-  return parseYahooBatch(chunk, data);
+  return parseYahooBatch(chunk, data, peMap, revMap);
+}
+
+async function fetchPEData() {
+  const peMap = new Map(); // code -> { pe, pb, dy }
+
+  // 1. TWSE PE/PB/Yield
+  try {
+    console.log("[PE] Fetching TWSE PE/PB/Yield...");
+    const url = "https://openapi.twse.com.tw/v1/exchangeReport/BWIBBU_ALL";
+    const res = await fetchWithRetry(url, {}, { label: "TWSE PE API", retries: 3, baseDelayMs: 1000 });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach(item => {
+        if (!item.Code) return;
+        const pe = item.PEratio && !isNaN(item.PEratio) ? parseFloat(item.PEratio) : null;
+        const pb = item.PBratio && !isNaN(item.PBratio) ? parseFloat(item.PBratio) : null;
+        const dy = item.DividendYield && !isNaN(item.DividendYield) ? parseFloat(item.DividendYield) : null;
+        peMap.set(item.Code, { pe, pb, dy });
+      });
+      console.log(`[PE] TWSE success: ${data.length} items.`);
+    }
+  } catch (e) {
+    console.error("[PE] TWSE fetch error:", e.message);
+  }
+
+  // 2. TPEX PE/PB/Yield
+  try {
+    console.log("[PE] Fetching TPEX PE/PB/Yield...");
+    const url = "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_peratio_analysis";
+    const res = await fetchWithRetry(url, {}, { label: "TPEX PE API", retries: 3, baseDelayMs: 1000 });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach(item => {
+        const code = item.SecuritiesCompanyCode;
+        if (!code) return;
+        const pe = item.PriceEarningRatio && !isNaN(item.PriceEarningRatio) ? parseFloat(item.PriceEarningRatio) : null;
+        const pb = item.PriceBookRatio && !isNaN(item.PriceBookRatio) ? parseFloat(item.PriceBookRatio) : null;
+        const dy = item.YieldRatio && !isNaN(item.YieldRatio) ? parseFloat(item.YieldRatio) : null;
+        peMap.set(code, { pe, pb, dy });
+      });
+      console.log(`[PE] TPEX success: ${data.length} items.`);
+    }
+  } catch (e) {
+    console.error("[PE] TPEX fetch error:", e.message);
+  }
+
+  return peMap;
+}
+
+async function fetchRevenueData() {
+  const revMap = new Map(); // code -> { rev, revYm, revYoY, revMoM, revCumYoY }
+
+  const parseRevItem = (item) => {
+    const code = item["公司代號"];
+    if (!code) return;
+    const rev = item["營業收入-當月營收"] ? parseInt(item["營業收入-當月營收"]) : null;
+    let revYm = item["資料年月"] || "";
+    if (revYm.length === 5) {
+      revYm = revYm.slice(0, 3) + "/" + revYm.slice(3);
+    }
+    const revYoY = item["營業收入-去年同月增減(%)"] ? parseFloat(item["營業收入-去年同月增減(%)"]) : null;
+    const revMoM = item["營業收入-上月比較增減(%)"] ? parseFloat(item["營業收入-上月比較增減(%)"]) : null;
+    const revCumYoY = item["累計營業收入-前期比較增減(%)"] ? parseFloat(item["累計營業收入-前期比較增減(%)"]) : null;
+    revMap.set(code, { rev, revYm, revYoY, revMoM, revCumYoY });
+  };
+
+  // 1. TWSE Monthly Revenue
+  try {
+    console.log("[Revenue] Fetching TWSE Monthly Revenue...");
+    const url = "https://openapi.twse.com.tw/v1/opendata/t187ap05_L";
+    const res = await fetchWithRetry(url, {}, { label: "TWSE Revenue API", retries: 3, baseDelayMs: 1500 });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach(parseRevItem);
+      console.log(`[Revenue] TWSE success: ${data.length} items.`);
+    }
+  } catch (e) {
+    console.error("[Revenue] TWSE fetch error:", e.message);
+  }
+
+  // 2. TPEX Monthly Revenue
+  try {
+    console.log("[Revenue] Fetching TPEX Monthly Revenue...");
+    const url = "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap05_O";
+    const res = await fetchWithRetry(url, {}, { label: "TPEX Revenue API", retries: 3, baseDelayMs: 1500 });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach(parseRevItem);
+      console.log(`[Revenue] TPEX success: ${data.length} items.`);
+    }
+  } catch (e) {
+    console.error("[Revenue] TPEX fetch error:", e.message);
+  }
+
+  return revMap;
 }
 
 async function sync() {
@@ -208,6 +309,10 @@ async function sync() {
   fs.writeFileSync(filePath, JSON.stringify(list, null, 2));
   console.log(`[Universe] Saved ${list.length} stocks to: ${filePath}`);
 
+  // Fetch fundamental PE and Revenue data
+  const peMap = await fetchPEData();
+  const revMap = await fetchRevenueData();
+
   // 2. Fetch Yahoo Finance Spark data & calculate features
   console.log(`[Yahoo Spark] Fetching prices for ${list.length} stocks...`);
   const scanResults = [];
@@ -221,7 +326,7 @@ async function sync() {
     const chunk = list.slice(i, i + batchSize);
 
     try {
-      const { results, failCount: batchFails } = await fetchYahooBatch(chunk, headers, batchIndex);
+      const { results, failCount: batchFails } = await fetchYahooBatch(chunk, headers, batchIndex, peMap, revMap);
       scanResults.push(...results);
       successCount += results.length;
       failCount += batchFails;
@@ -250,7 +355,7 @@ async function sync() {
     for (let j = 0; j < failedChunks.length; j++) {
       const { chunk, startIndex } = failedChunks[j];
       try {
-        const { results, failCount: batchFails } = await fetchYahooBatch(chunk, headers, batchIndex + j + 1);
+        const { results, failCount: batchFails } = await fetchYahooBatch(chunk, headers, batchIndex + j + 1, peMap, revMap);
         scanResults.push(...results);
         successCount += results.length;
         failCount -= chunk.length;
@@ -278,6 +383,24 @@ async function sync() {
   for (const r of scanResults) mergedMap.set(r.id, r);
   const merged = Array.from(mergedMap.values());
   const staleCount = merged.length - freshCount;
+
+  // Enrich ALL merged stocks with the latest fundamental metrics
+  for (const r of merged) {
+    const peData = peMap.get(r.code);
+    if (peData) {
+      r.pe = peData.pe;
+      r.pb = peData.pb;
+      r.dy = peData.dy;
+    }
+    const revData = revMap.get(r.code);
+    if (revData) {
+      r.rev = revData.rev;
+      r.revYm = revData.revYm;
+      r.revYoY = revData.revYoY;
+      r.revMoM = revData.revMoM;
+      r.revCumYoY = revData.revCumYoY;
+    }
+  }
 
   if (merged.length > 1000) {
     fs.writeFileSync(resultsPath, JSON.stringify(merged, null, 2));

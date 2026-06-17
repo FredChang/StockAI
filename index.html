@@ -13,12 +13,15 @@
 <body>
     <button id="pwa-install-btn" style="display:none; position:fixed; top:1rem; right:1rem; z-index:2000; background:#39d2c0; color:#000; border:none; padding:10px 15px; border-radius:12px; font-weight:700; box-shadow:0 10px 15px -3px rgba(0,0,0,0.3);">📲 安裝應用程式</button>
     <div class="app-container">
-        <header>
-            <div id="market-ticker" class="market-ticker">
-                <!-- Market indices will be injected here -->
-                <div class="market-item">載入市場數據中...</div>
+        <header style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem;">
+            <div style="flex: 1;">
+                <div id="market-ticker" class="market-ticker">
+                    <!-- Market indices will be injected here -->
+                    <div class="market-item">載入市場數據中...</div>
+                </div>
+                <div id="update-time" style="font-size: 0.65rem; color: var(--text-secondary); margin-top: 0.5rem;">更新於: --:--:--</div>
             </div>
-            <div id="update-time" style="font-size: 0.65rem; color: var(--text-secondary); margin-top: 0.5rem;">更新於: --:--:--</div>
+            <button id="open-settings-btn" style="background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.25rem; padding: 5px; line-height: 1; margin-left: 10px;">⚙️</button>
         </header>
 
         <div class="tabs">
@@ -99,7 +102,7 @@
             </div>
         </section>
         
-        <div class="version-tag">AI Stock Scanner v2.5.1-Nitro (2026.06.01)</div>
+        <div class="version-tag">AI Stock Scanner v2.6.0-Nitro (2026.06.17)</div>
     </div>
 
     <!-- Chart Modal -->
@@ -116,12 +119,41 @@
                     <button class="tf-btn" onclick="updateChartTimeframe('1y')">1Y</button>
                 </div>
             </div>
-            <div id="chart-container" style="width: 100%; height: 250px; background: #0f172a; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
+            <div id="chart-container" style="width: 100%; height: 200px; background: #0f172a; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
                 圖表功能載入中...
+            </div>
+            
+            <!-- Financial Details Section -->
+            <div id="financial-details-section" style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                <h4 style="font-size: 0.85rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 5px; color: var(--text-primary);">📊 財務與營收指標</h4>
+                <div id="financial-grid" class="financial-grid">
+                    <!-- PE, PB, Yield, and Revenue metrics cards will be injected here -->
+                </div>
+                
+                <div style="margin-top: 1.2rem; display: flex; flex-direction: column; gap: 8px;">
+                    <h4 style="font-size: 0.85rem; margin-bottom: 0.2rem; display: flex; align-items: center; gap: 5px; color: var(--text-primary);">🔮 智慧診斷與評估</h4>
+                    <div id="analysis-output-panel" style="background: #0f172a; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-size: 0.8rem; line-height: 1.5; color: var(--text-primary); max-height: 200px; overflow-y: auto; text-align: left;">
+                        <!-- AI analysis text will be injected here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script type="module" src="src/main.js?v=2.5.1"></script>
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-settings-modal" id="close-settings-btn" style="float: right; cursor: pointer; font-size: 1.5rem; color: var(--text-secondary);">&times;</span>
+            <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; color: var(--text-primary);">⚙️ 系統設定</h3>
+            <div class="settings-group" style="margin-bottom: 1.5rem; text-align: left;">
+                <label for="gemini-api-key" style="display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Google Gemini API Key (選填，啟用 AI 深度診斷)</label>
+                <input type="password" id="gemini-api-key" placeholder="輸入 AIzaSy..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: #0f172a; color: var(--text-primary); box-sizing: border-box; font-size: 0.85rem;">
+                <p style="font-size: 0.65rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.35;">API Key 將安全地儲存在您本地瀏覽器的 LocalStorage 中，不會上傳到任何第三方伺服器。</p>
+            </div>
+            <button id="save-settings-btn" class="btn-primary" style="width: 100%; padding: 10px; border-radius: 8px; font-weight: 700;">儲存設定</button>
+        </div>
+    </div>
+
+    <script type="module" src="src/main.js?v=2.6.0"></script>
 </body>
 </html>
