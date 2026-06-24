@@ -1,0 +1,41 @@
+name: Stock Universe Sync
+
+on:
+  schedule:
+    - cron: '15 1-6 * * 1-5' # 台北時間 9:15-14:15 每小時執行一次 (避開整點高峰期防延遲/遺漏)
+  workflow_dispatch: # Allow manual trigger
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Run sync script
+        run: node scripts/sync-stocks.js
+        timeout-minutes: 15
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/market.json public/scan_results.json
+          git commit -m "chore: sync stock universe and scan results [$(date '+%Y-%m-%d %H:%M:%S')] [skip ci]" || exit 0
+          git push origin main
