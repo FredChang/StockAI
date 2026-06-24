@@ -13,8 +13,8 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.6.1-Nitro',
-  lastUpdate: '2026.06.17',
+  version: 'v2.6.2-Nitro',
+  lastUpdate: '2026.06.24',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo',
@@ -45,7 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.currentChart) { state.currentChart.destroy(); state.currentChart = null; }
   };
 
-
+  const searchInput = document.getElementById('watchlist-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      updateWatchlistUI();
+    });
+  }
+  const searchClearBtn = document.getElementById('watchlist-search-clear-btn');
+  if (searchClearBtn) {
+    searchClearBtn.addEventListener('click', () => {
+      if (searchInput) {
+        searchInput.value = '';
+        updateWatchlistUI();
+      }
+    });
+  }
 });
 
 function updateTime() {
@@ -595,46 +609,79 @@ window.switchTab = (t) => {
 function updateWatchlistUI() {
   const l = document.getElementById('watchlist-list'), s = document.getElementById('watchlist-summary');
   if (!l || !s) return;
+  
+  const searchContainer = document.getElementById('watchlist-search-container');
+  const searchInput = document.getElementById('watchlist-search-input');
+  const searchClearBtn = document.getElementById('watchlist-search-clear-btn');
+  
   if (state.watchlist.length === 0) { 
       s.innerText = '尚無追蹤標的'; 
       l.innerHTML = '<div style="text-align: center; padding: 3rem 1rem; color: var(--text-secondary);">點擊股票加入監控</div>'; 
+      if (searchContainer) searchContainer.style.display = 'none';
+      if (searchInput) searchInput.value = '';
+      if (searchClearBtn) searchClearBtn.style.display = 'none';
       return; 
   }
+  
+  if (searchContainer) searchContainer.style.display = 'flex';
   
   let totalPnl = 0;
   let totalPrincipal = 0;
   
-  l.innerHTML = state.watchlist.map(w => {
+  state.watchlist.forEach(w => {
     const curP = Number(w.currentPrice) || 0;
     const entP = Number(w.entryPrice) || curP || 0;
     const shares = Number(w.shares) || 0;
-    
-    const pnlPerShare = curP - entP;
-    const pct = entP === 0 ? 0 : (pnlPerShare / entP * 100);
     const principal = entP * shares * 1000;
-    const amt = pnlPerShare * shares * 1000; 
+    const amt = (curP - entP) * shares * 1000;
     
     totalPnl += amt;
     totalPrincipal += principal;
-    
-    return `
-      <div class="stock-card" onclick="showStockDetails('${w.id}')">
-        <div class="stock-info">
-            <span class="stock-id">${w.code}</span> 
-            <span class="stock-name">${w.name}</span>
-            <span style="font-size:0.6rem; color:var(--text-secondary); margin-top:4px;">📅 加入: ${w.addDate || '--'}</span>
-        </div>
-        <div style="text-align: right;">
-            <div class="price-text">${curP.toFixed(2)}</div>
-            <div style="color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; font-size: 0.8rem; font-weight: 700;">
-                ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%
-            </div>
-            <div style="font-size:0.7rem; color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; opacity:0.8;">
-                ${Math.round(amt).toLocaleString()} TWD
-            </div>
-        </div>
-      </div>`;
-  }).join('');
+  });
+  
+  const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  if (searchClearBtn) {
+    searchClearBtn.style.display = query ? 'inline-block' : 'none';
+  }
+  
+  const filteredList = query 
+    ? state.watchlist.filter(w => 
+        (w.code && w.code.toLowerCase().includes(query)) || 
+        (w.name && w.name.toLowerCase().includes(query))
+      )
+    : state.watchlist;
+  
+  if (filteredList.length === 0) {
+    l.innerHTML = '<div style="text-align: center; padding: 3rem 1rem; color: var(--text-secondary);">無符合搜尋條件的標的</div>';
+  } else {
+    l.innerHTML = filteredList.map(w => {
+      const curP = Number(w.currentPrice) || 0;
+      const entP = Number(w.entryPrice) || curP || 0;
+      const shares = Number(w.shares) || 0;
+      
+      const pnlPerShare = curP - entP;
+      const pct = entP === 0 ? 0 : (pnlPerShare / entP * 100);
+      const amt = pnlPerShare * shares * 1000; 
+      
+      return `
+        <div class="stock-card" onclick="showStockDetails('${w.id}')">
+          <div class="stock-info">
+              <span class="stock-id">${w.code}</span> 
+              <span class="stock-name">${w.name}</span>
+              <span style="font-size:0.6rem; color:var(--text-secondary); margin-top:4px;">📅 加入: ${w.addDate || '--'}</span>
+          </div>
+          <div style="text-align: right;">
+              <div class="price-text">${curP.toFixed(2)}</div>
+              <div style="color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; font-size: 0.8rem; font-weight: 700;">
+                  ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%
+              </div>
+              <div style="font-size:0.7rem; color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; opacity:0.8;">
+                  ${Math.round(amt).toLocaleString()} TWD
+              </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
   
   const totalPct = totalPrincipal === 0 ? 0 : (totalPnl / totalPrincipal) * 100;
   

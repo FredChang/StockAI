@@ -90,6 +90,11 @@
             <div id="watchlist-summary" class="controls-card" style="padding: 1rem; border-color: var(--accent-color);">
                 載入中...
             </div>
+            <div id="watchlist-search-container" style="margin: 0.8rem 0; display: none; align-items: center; background: rgba(30, 41, 59, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 2px 12px; gap: 8px;">
+                <span style="color: var(--text-secondary); font-size: 0.9rem;">🔍</span>
+                <input type="text" id="watchlist-search-input" placeholder="搜尋監控個股代碼或名稱..." style="flex: 1; border: none; background: transparent; color: var(--text-primary); font-size: 0.85rem; padding: 10px 0; outline: none; box-sizing: border-box;">
+                <button id="watchlist-search-clear-btn" style="display: none; background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.1rem; padding: 0 4px; outline: none;">✕</button>
+            </div>
             <div id="watchlist-list">
                 <!-- Watchlist cards -->
             </div>
@@ -99,7 +104,7 @@
             </div>
         </section>
         
-        <div class="version-tag">AI Stock Scanner v2.6.1-Nitro (2026.06.17)</div>
+        <div class="version-tag">AI Stock Scanner v2.6.2-Nitro (2026.06.24)</div>
     </div>
 
     <!-- Chart Modal -->
@@ -130,6 +135,6 @@
         </div>
     </div>
 
-    <script type="module" src="src/main.js?v=2.6.1"></script>
+    <script type="module" src="src/main.js?v=2.6.2"></script>
 </body>
 </html>
