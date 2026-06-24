@@ -13,7 +13,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.6.2-Nitro',
+  version: 'v2.6.3-Nitro',
   lastUpdate: '2026.06.24',
   currentChart: null,
   selectedStock: null,
@@ -59,6 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
         updateWatchlistUI();
       }
     });
+  }
+
+  // Pre-fetch all market tickers for global search
+  try {
+    getFullMarketTickers().then(() => {
+      if (searchInput && searchInput.value.trim()) {
+        updateWatchlistUI();
+      }
+    });
+  } catch (e) {
+    console.error('Ticker pre-fetch fail', e);
   }
 });
 
@@ -431,7 +442,10 @@ function renderResults() {
 }
 
 window.showStockDetails = async (id) => {
-  const s = state.results.find(r => r.id === id) || state.watchlist.find(w => w.id === id) || CORE_STOCKS.find(f => f.id === id);
+  const s = state.results.find(r => r.id === id) || 
+            state.watchlist.find(w => w.id === id) || 
+            state.preScannedResults.find(p => p.id === id) || 
+            CORE_STOCKS.find(f => f.id === id);
   if (!s) return;
   
   state.selectedStock = s;
@@ -541,8 +555,8 @@ function toggleWatchlist() {
         const now = new Date();
         state.watchlist.push({
             ...s,
-            entryPrice: s.close,
-            currentPrice: s.close,
+            entryPrice: s.close || s.currentPrice || 0,
+            currentPrice: s.close || s.currentPrice || 0,
             shares: 1,
             addDate: now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
         });
@@ -614,17 +628,7 @@ function updateWatchlistUI() {
   const searchInput = document.getElementById('watchlist-search-input');
   const searchClearBtn = document.getElementById('watchlist-search-clear-btn');
   
-  if (state.watchlist.length === 0) { 
-      s.innerText = '尚無追蹤標的'; 
-      l.innerHTML = '<div style="text-align: center; padding: 3rem 1rem; color: var(--text-secondary);">點擊股票加入監控</div>'; 
-      if (searchContainer) searchContainer.style.display = 'none';
-      if (searchInput) searchInput.value = '';
-      if (searchClearBtn) searchClearBtn.style.display = 'none';
-      return; 
-  }
-  
-  if (searchContainer) searchContainer.style.display = 'flex';
-  
+  // Calculate watchlist totals if there are elements, otherwise show 0
   let totalPnl = 0;
   let totalPrincipal = 0;
   
@@ -639,29 +643,120 @@ function updateWatchlistUI() {
     totalPrincipal += principal;
   });
   
+  const totalPct = totalPrincipal === 0 ? 0 : (totalPnl / totalPrincipal) * 100;
+  
+  const pctText = isNaN(totalPct) || !isFinite(totalPct) ? '0.00' : totalPct.toFixed(2);
+  const principalText = isNaN(totalPrincipal) ? '0' : Math.round(totalPrincipal).toLocaleString();
+  const pnlText = isNaN(totalPnl) ? '0' : Math.round(totalPnl).toLocaleString();
+  
+  if (state.watchlist.length === 0) {
+    s.innerHTML = `
+      <div style="display:grid; grid-template-columns: 1fr; text-align: center;">
+          <div style="font-size:0.65rem; color:var(--text-secondary);">累積總盈虧</div>
+          <div style="font-size:0.9rem; font-weight:800; color:var(--text-secondary);">尚無追蹤標的</div>
+      </div>
+    `;
+  } else {
+    s.innerHTML = `
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="summary-item">
+              <div style="font-size:0.65rem; color:var(--text-secondary);">總投入本金</div>
+              <div style="font-size:0.9rem; font-weight:700;">${principalText}</div>
+          </div>
+          <div class="summary-item" style="text-align:right;">
+              <div style="font-size:0.65rem; color:var(--text-secondary);">累積總盈虧</div>
+              <div style="font-size:0.9rem; font-weight:800; color:${totalPnl >= 0 ? '#ff4d4d' : '#00ff00'};">
+                  ${totalPnl >= 0 ? '+' : ''}${pnlText} (${pctText}%)
+              </div>
+          </div>
+      </div>
+    `;
+  }
+  
   const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
   if (searchClearBtn) {
     searchClearBtn.style.display = query ? 'inline-block' : 'none';
   }
   
-  const filteredList = query 
-    ? state.watchlist.filter(w => 
-        (w.code && w.code.toLowerCase().includes(query)) || 
-        (w.name && w.name.toLowerCase().includes(query))
-      )
-    : state.watchlist;
+  // If search query is empty
+  if (!query) {
+    if (state.watchlist.length === 0) {
+      l.innerHTML = `
+        <div style="text-align: center; padding: 3rem 1rem; color: var(--text-secondary);">
+          <div style="font-size: 2rem; margin-bottom: 0.8rem;">📈</div>
+          <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary);">點擊上方的搜尋欄輸入代碼或名稱，<br>即可搜尋全市場個股並加入監控。</div>
+        </div>
+      `;
+    } else {
+      l.innerHTML = state.watchlist.map(w => {
+        const curP = Number(w.currentPrice) || 0;
+        const entP = Number(w.entryPrice) || curP || 0;
+        const shares = Number(w.shares) || 0;
+        
+        const pnlPerShare = curP - entP;
+        const pct = entP === 0 ? 0 : (pnlPerShare / entP * 100);
+        const amt = pnlPerShare * shares * 1000; 
+        
+        return `
+          <div class="stock-card" onclick="showStockDetails('${w.id}')">
+            <div class="stock-info">
+                <span class="stock-id">${w.code}</span> 
+                <span class="stock-name">${w.name}</span>
+                <span style="font-size:0.6rem; color:var(--text-secondary); margin-top:4px;">📅 加入: ${w.addDate || '--'}</span>
+            </div>
+            <div style="text-align: right;">
+                <div class="price-text">${curP.toFixed(2)}</div>
+                <div style="color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; font-size: 0.8rem; font-weight: 700;">
+                    ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%
+                </div>
+                <div style="font-size:0.7rem; color:${pct >= 0 ? '#ff4d4d' : '#00ff00'}; opacity:0.8;">
+                    ${Math.round(amt).toLocaleString()} TWD
+                </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+    return;
+  }
   
-  if (filteredList.length === 0) {
-    l.innerHTML = '<div style="text-align: center; padding: 3rem 1rem; color: var(--text-secondary);">無符合搜尋條件的標的</div>';
-  } else {
-    l.innerHTML = filteredList.map(w => {
+  // Search active: filter watchlist
+  const watchlistMatches = state.watchlist.filter(w => 
+    (w.code && w.code.toLowerCase().includes(query)) || 
+    (w.name && w.name.toLowerCase().includes(query))
+  );
+  
+  // Search active: filter all market tickers (preScannedResults fallback to CORE_STOCKS)
+  const searchUniverse = (state.preScannedResults && state.preScannedResults.length > 0)
+    ? state.preScannedResults
+    : CORE_STOCKS;
+    
+  // Exclude already monitored stocks
+  const watchlistIds = new Set(state.watchlist.map(w => w.id));
+  const rawMarketMatches = searchUniverse.filter(m => 
+    !watchlistIds.has(m.id) &&
+    ((m.code && m.code.toLowerCase().includes(query)) || 
+     (m.name && m.name.toLowerCase().includes(query)))
+  );
+  
+  // Limit all-market results to top 15
+  const marketMatches = rawMarketMatches.slice(0, 15);
+  
+  let html = '';
+  
+  // Section 1: Watchlist matches
+  if (watchlistMatches.length > 0) {
+    html += `
+      <div style="font-size: 0.75rem; color: var(--accent-color); font-weight: bold; margin: 0.5rem 0 0.5rem 0; padding-left: 4px; display: flex; align-items: center; gap: 4px;">
+        📌 已加入監控 (${watchlistMatches.length})
+      </div>
+    `;
+    html += watchlistMatches.map(w => {
       const curP = Number(w.currentPrice) || 0;
       const entP = Number(w.entryPrice) || curP || 0;
       const shares = Number(w.shares) || 0;
-      
       const pnlPerShare = curP - entP;
       const pct = entP === 0 ? 0 : (pnlPerShare / entP * 100);
-      const amt = pnlPerShare * shares * 1000; 
+      const amt = pnlPerShare * shares * 1000;
       
       return `
         <div class="stock-card" onclick="showStockDetails('${w.id}')">
@@ -683,26 +778,40 @@ function updateWatchlistUI() {
     }).join('');
   }
   
-  const totalPct = totalPrincipal === 0 ? 0 : (totalPnl / totalPrincipal) * 100;
+  // Section 2: All market matches
+  if (marketMatches.length > 0) {
+    const showLimitNotice = rawMarketMatches.length > 15;
+    html += `
+      <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: bold; margin: 1.2rem 0 0.5rem 0; padding-left: 4px; display: flex; align-items: center; justify-content: space-between;">
+        <span>🌐 全市場搜尋結果 (${marketMatches.length}${showLimitNotice ? '+' : ''})</span>
+        ${showLimitNotice ? '<span style="font-size: 0.6rem; opacity: 0.7; font-weight: normal;">僅顯示前 15 筆</span>' : ''}
+      </div>
+    `;
+    html += marketMatches.map(m => {
+      const price = Number(m.close) || Number(m.currentPrice) || 0;
+      const priceText = price > 0 ? price.toFixed(2) : '--';
+      return `
+        <div class="stock-card" onclick="showStockDetails('${m.id}')" style="border-left: 3px solid var(--text-secondary); opacity: 0.95;">
+          <div class="stock-info">
+              <span class="stock-id">${m.code}</span> 
+              <span class="stock-name">${m.name}</span>
+              <span style="font-size:0.6rem; color:var(--text-secondary); margin-top:4px;">🔍 點擊查看詳情</span>
+          </div>
+          <div style="text-align: right; display: flex; flex-direction: column; justify-content: center; align-items: flex-end;">
+              <div class="price-text" style="font-size: 0.9rem;">${priceText}</div>
+              <div style="font-size:0.65rem; color: var(--accent-color); margin-top: 4px; font-weight: bold;">
+                + 加入監控
+              </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
   
-  const pctText = isNaN(totalPct) || !isFinite(totalPct) ? '0.00' : totalPct.toFixed(2);
-  const principalText = isNaN(totalPrincipal) ? '0' : Math.round(totalPrincipal).toLocaleString();
-  const pnlText = isNaN(totalPnl) ? '0' : Math.round(totalPnl).toLocaleString();
+  if (watchlistMatches.length === 0 && marketMatches.length === 0) {
+    html = '<div style="text-align: center; padding: 3rem 1rem; color: var(--text-secondary);">無符合搜尋條件的標的</div>';
+  }
   
-  s.innerHTML = `
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-        <div class="summary-item">
-            <div style="font-size:0.65rem; color:var(--text-secondary);">總投入本金</div>
-            <div style="font-size:0.9rem; font-weight:700;">${principalText}</div>
-        </div>
-        <div class="summary-item" style="text-align:right;">
-            <div style="font-size:0.65rem; color:var(--text-secondary);">累積總盈虧</div>
-            <div style="font-size:0.9rem; font-weight:800; color:${totalPnl >= 0 ? '#ff4d4d' : '#00ff00'};">
-                ${totalPnl >= 0 ? '+' : ''}${pnlText} (${pctText}%)
-            </div>
-        </div>
-    </div>
-  `;
+  l.innerHTML = html;
 }
 
 function renderFinancialGrid(s) {
