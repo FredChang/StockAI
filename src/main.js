@@ -13,8 +13,8 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.6.3-Nitro',
-  lastUpdate: '2026.06.24',
+  version: 'v2.7.0-Nitro',
+  lastUpdate: '2026.06.29',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo',
@@ -814,6 +814,92 @@ function updateWatchlistUI() {
   l.innerHTML = html;
 }
 
+function calculateFairPE(s) {
+  const pe = s.pe, pb = s.pb, dy = s.dy;
+  // Use cumulative YoY revenue growth as primary growth proxy, fallback to single-month
+  const growthRate = (s.revCumYoY != null && !isNaN(s.revCumYoY)) ? s.revCumYoY
+                   : (s.revYoY != null && !isNaN(s.revYoY)) ? s.revYoY
+                   : null;
+
+  const methods = [];
+
+  // Method 1: PEG-based Fair PE
+  // Fair PE ≈ earnings growth rate (PEG=1 principle)
+  // Clamp growth to [3, 60] to avoid extreme outliers
+  if (growthRate != null && !isNaN(growthRate)) {
+    const clampedGrowth = Math.max(3, Math.min(60, Math.abs(growthRate)));
+    // If growth is negative, fair PE should be discounted
+    const pegFairPE = growthRate >= 0
+      ? clampedGrowth * 1.0   // PEG=1 baseline
+      : clampedGrowth * 0.6;  // Negative growth → significant discount
+    methods.push({ value: pegFairPE, weight: 0.40, name: 'PEG' });
+  }
+
+  // Method 2: Dividend Yield inverse method
+  // If DY=5%, implies market expects PE ≈ 20; adjust with payout ratio estimate
+  if (dy != null && !isNaN(dy) && dy > 0) {
+    // Estimated payout ratio from DY and PE: payout ≈ DY * PE / 100
+    // Fair PE ≈ payout_ratio / target_yield, target_yield = market avg ~4%
+    const estimatedPayout = pe != null && !isNaN(pe) && pe > 0
+      ? Math.min(1.0, (dy * pe) / 100)
+      : 0.5; // assume 50% payout if PE unavailable
+    const targetYield = 0.04; // 4% market average yield for TW
+    const dyFairPE = estimatedPayout / targetYield;
+    // Clamp to reasonable range
+    const clampedDyPE = Math.max(5, Math.min(40, dyFairPE));
+    methods.push({ value: clampedDyPE, weight: 0.30, name: 'DY' });
+  }
+
+  // Method 3: PB-ROE method
+  // ROE ≈ PB / PE, Fair PE ≈ PB / target_ROE
+  // Use industry benchmark ROE ~10% as target
+  if (pb != null && !isNaN(pb) && pb > 0 && pe != null && !isNaN(pe) && pe > 0) {
+    const impliedROE = pb / pe; // decimal form
+    // Fair PE = PB / benchmark_ROE; benchmark ~10%
+    const benchmarkROE = 0.10;
+    const pbrFairPE = pb / benchmarkROE;
+    // Also consider: if actual ROE > benchmark, allow premium
+    const roePremium = impliedROE > benchmarkROE
+      ? 1.0 + (impliedROE - benchmarkROE) * 3 // mild premium for high ROE
+      : 1.0;
+    const adjustedPbrPE = Math.max(5, Math.min(50, pbrFairPE * Math.min(roePremium, 2.0)));
+    methods.push({ value: adjustedPbrPE, weight: 0.30, name: 'PB-ROE' });
+  }
+
+  if (methods.length === 0) return null;
+
+  // Normalize weights
+  const totalWeight = methods.reduce((sum, m) => sum + m.weight, 0);
+  const fairPE = methods.reduce((sum, m) => sum + m.value * (m.weight / totalWeight), 0);
+
+  // Determine valuation verdict
+  let verdict, verdictColor, verdictIcon;
+  if (pe != null && !isNaN(pe) && pe > 0) {
+    const ratio = pe / fairPE;
+    if (ratio < 0.75) {
+      verdict = '明顯低估'; verdictColor = '#00ff88'; verdictIcon = '🟢';
+    } else if (ratio < 0.95) {
+      verdict = '偏低估'; verdictColor = '#39d2c0'; verdictIcon = '🔵';
+    } else if (ratio <= 1.10) {
+      verdict = '合理區間'; verdictColor = '#f0b90b'; verdictIcon = '🟡';
+    } else if (ratio <= 1.35) {
+      verdict = '偏高估'; verdictColor = '#ff8c00'; verdictIcon = '🟠';
+    } else {
+      verdict = '明顯高估'; verdictColor = '#ff4d4d'; verdictIcon = '🔴';
+    }
+  } else {
+    verdict = '無法判定'; verdictColor = '#94a3b8'; verdictIcon = '⚪';
+  }
+
+  return {
+    fairPE: Math.round(fairPE * 10) / 10,
+    verdict,
+    verdictColor,
+    verdictIcon,
+    methods: methods.map(m => m.name).join('+')
+  };
+}
+
 function renderFinancialGrid(s) {
   const grid = document.getElementById('financial-grid');
   if (!grid) return;
@@ -839,6 +925,43 @@ function renderFinancialGrid(s) {
     return `<span style="color: ${color}; font-weight: bold;">${sign}${pct.toFixed(1)}%</span>`;
   };
 
+  const fairPEResult = calculateFairPE(s);
+
+  const renderFairPECard = () => {
+    if (!fairPEResult) {
+      return `
+    <div class="financial-card financial-card-fair-pe">
+        <div class="financial-card-title">🎯 合理本益比 (Fair P/E)</div>
+        <div class="financial-card-value" style="color: #94a3b8;">--</div>
+        <div class="financial-card-sub">數據不足，無法估算</div>
+    </div>`;
+    }
+    const { fairPE, verdict, verdictColor, verdictIcon, methods } = fairPEResult;
+    const currentPE = formatPE(s.pe);
+    const premium = (s.pe != null && !isNaN(s.pe) && s.pe > 0)
+      ? ((s.pe / fairPE - 1) * 100).toFixed(1)
+      : null;
+    const premiumText = premium != null
+      ? `<span style="color:${verdictColor}; font-weight:700;">${premium >= 0 ? '+' : ''}${premium}%</span>`
+      : '';
+
+    return `
+    <div class="financial-card financial-card-fair-pe" style="border-color: ${verdictColor}33;">
+        <div class="financial-card-title">🎯 合理本益比 (Fair P/E)</div>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <div class="financial-card-value" style="color: ${verdictColor};">${fairPE.toFixed(1)}</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary);">
+            目前 ${currentPE} ${premiumText}
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 5px; margin-top: 2px;">
+          <span style="font-size: 0.7rem;">${verdictIcon}</span>
+          <span style="font-size: 0.7rem; font-weight: 700; color: ${verdictColor};">${verdict}</span>
+          <span style="font-size: 0.55rem; color: var(--text-secondary); margin-left: auto;">模型: ${methods}</span>
+        </div>
+    </div>`;
+  };
+
   grid.innerHTML = `
     <div class="financial-card">
         <div class="financial-card-title">本益比 (P/E)</div>
@@ -860,6 +983,7 @@ function renderFinancialGrid(s) {
         <div class="financial-card-value">${formatRevenue(s.rev)}</div>
         <div class="financial-card-sub">年增: ${formatChange(s.revYoY)} | 月增: ${formatChange(s.revMoM)}</div>
     </div>
+    ${renderFairPECard()}
   `;
 }
 

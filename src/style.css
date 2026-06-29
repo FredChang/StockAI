@@ -367,6 +367,25 @@ input[type="range"] {
   margin-top: auto;
 }
 
+.financial-card-fair-pe {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(57, 210, 192, 0.06) 100%);
+  border: 1px solid rgba(57, 210, 192, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.financial-card-fair-pe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, #39d2c0, #f0b90b);
+  border-radius: 3px 0 0 3px;
+}
+
 .close-settings-modal {
   position: absolute;
   top: 1rem;
