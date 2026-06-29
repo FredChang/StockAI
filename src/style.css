@@ -394,3 +394,33 @@ input[type="range"] {
   color: var(--text-secondary);
   cursor: pointer;
 }
+
+/* Strategy Selector */
+.strategy-btn {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.strategy-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--text-primary);
+  background: rgba(57, 210, 192, 0.1);
+}
+
+.strategy-btn.active {
+  background: linear-gradient(135deg, var(--accent-color) 0%, #059669 100%);
+  border-color: transparent;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(57, 210, 192, 0.25);
+}

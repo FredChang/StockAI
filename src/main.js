@@ -7,12 +7,32 @@ const PROXY_URL = 'https://corsproxy.io/?';
 const YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/';
 const TWSE_LIST_URL = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=';
 
+const STRATEGIES = {
+  momentum: {
+    name: '熱門股',
+    weights: [0, 10, 0, 35, 15, 15, 25]
+  },
+  high: {
+    name: '高風險',
+    weights: [30, 20, 10, 15, 10, 15, 0]
+  },
+  medium: {
+    name: '中風險',
+    weights: [-10, 10, 20, 30, 20, 0, 10]
+  },
+  low: {
+    name: '低風險',
+    weights: [-30, -20, -15, 20, -15, 0, 0]
+  }
+};
+
 let state = {
   activeTab: 'scan',
   isScanning: false,
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
-  weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
+  selectedStrategy: 'momentum',
+  weights: [0, 10, 0, 35, 15, 15, 25],
   version: 'v2.7.0-Nitro',
   lastUpdate: '2026.06.29',
   currentChart: null,
@@ -32,9 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch(e) { console.error('Ticker fail', e); }
   const scanBtn = document.getElementById('start-scan');
   if (scanBtn) scanBtn.onclick = runScan;
-  
-  const weightToggle = document.getElementById('weight-toggle');
-  if (weightToggle) weightToggle.onclick = toggleWeights;
   
   const watchBtn = document.getElementById('add-to-watchlist-btn');
   if (watchBtn) watchBtn.onclick = toggleWatchlist;
@@ -416,9 +433,20 @@ function scoreAndRank(recs, limit = 20) {
     sorted.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
   }
   
+  const sumAbs = state.weights.reduce((a,b) => a + Math.abs(b), 0);
+  
   recs.forEach((r, i) => {
-    let sc = 0; for (let f = 0; f < 7; f++) sc += prs[i][f] * state.weights[f];
-    r.aiScore = (sc / state.weights.reduce((a,b)=>a+b,0)) * 100;
+    let sc = 0;
+    for (let f = 0; f < 7; f++) {
+      const w = state.weights[f];
+      const absW = Math.abs(w);
+      if (w >= 0) {
+        sc += prs[i][f] * w;
+      } else {
+        sc += (1 - prs[i][f]) * absW;
+      }
+    }
+    r.aiScore = sumAbs === 0 ? 0 : (sc / sumAbs) * 100;
   });
   
   // Return only top 20 carefully
@@ -582,16 +610,6 @@ function updateWatchlistBtnUI() {
 }
 
 function initWeights() {
-  state.weights.forEach((w, i) => {
-    const s = document.getElementById(`w${i+1}`), l = document.getElementById(`v-w${i+1}`);
-    if(s && l){ 
-        s.value=w; l.innerText=w.toFixed(1); 
-        s.oninput=(e)=>{
-            state.weights[i]=parseFloat(e.target.value); 
-            l.innerText=state.weights[i].toFixed(1);
-        }; 
-    }
-  });
   const m = document.getElementById('monitor-all-btn');
   if(m) m.addEventListener('click', monitorAllResults);
   
@@ -600,11 +618,6 @@ function initWeights() {
   
   const r = document.getElementById('refresh-watchlist-btn');
   if(r) r.addEventListener('click', refreshWatchlistQuotes);
-}
-
-function toggleWeights() {
-  const c = document.getElementById('weight-controls');
-  if(c) c.style.display = c.style.display==='none'?'block':'none';
 }
 
 function avg(a) { return a.reduce((x,y)=>x+y,0)/a.length; }
@@ -618,6 +631,25 @@ window.switchTab = (t) => {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   const targetSection = document.getElementById(`${t}-section`);
   if (targetSection) targetSection.classList.add('active');
+};
+
+window.selectStrategy = (key) => {
+  if (!STRATEGIES[key]) return;
+  state.selectedStrategy = key;
+  state.weights = STRATEGIES[key].weights;
+  
+  // Update UI active class
+  document.querySelectorAll('.strategy-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  const activeBtn = document.getElementById(`strat-${key}`);
+  if (activeBtn) activeBtn.classList.add('active');
+  
+  // If we already have preScannedResults, re-score and re-rank to update results instantly
+  if (state.preScannedResults && state.preScannedResults.length > 0) {
+    state.results = scoreAndRank(state.preScannedResults);
+    renderResults();
+  }
 };
 
 function updateWatchlistUI() {
