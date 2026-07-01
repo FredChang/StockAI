@@ -7,37 +7,13 @@ const PROXY_URL = 'https://corsproxy.io/?';
 const YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/';
 const TWSE_LIST_URL = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=';
 
-const STRATEGIES = {
-  momentum: {
-    name: '熱門股',
-    weights: [0, 10, 0, 35, 15, 15, 25, 0, 0, 0, 0],
-    targets: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-  },
-  high: {
-    name: '高風險',
-    weights: [30, 20, 10, 15, 10, 15, 0, 0, 0, 0, 0],
-    targets: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-  },
-  medium: {
-    name: '中風險',
-    weights: [15, 10, 0, 20, 0, 0, 0, 20, 10, 10, 15],
-    targets: [0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5, 0.2, 0.2, 0.8, 1.0]
-  },
-  low: {
-    name: '低風險',
-    weights: [20, 10, 0, 10, 0, 0, 0, 20, 10, 30, 0],
-    targets: [0, 0, 0, 1, 0, 0, 0, 0.1, 0.1, 1.0, 0.5]
-  }
-};
-
 let state = {
   activeTab: 'scan',
   isScanning: false,
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
-  selectedStrategy: 'momentum',
-  weights: [0, 10, 0, 35, 15, 15, 25, 0, 0, 0, 0],
-  version: 'v2.8.0-Nitro',
+  weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
+  version: 'v2.9.0-Nitro',
   lastUpdate: '2026.07.01',
   currentChart: null,
   selectedStock: null,
@@ -56,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch(e) { console.error('Ticker fail', e); }
   const scanBtn = document.getElementById('start-scan');
   if (scanBtn) scanBtn.onclick = runScan;
+  
+  const weightToggle = document.getElementById('weight-toggle');
+  if (weightToggle) weightToggle.onclick = toggleWeights;
   
   const watchBtn = document.getElementById('add-to-watchlist-btn');
   if (watchBtn) watchBtn.onclick = toggleWatchlist;
@@ -428,55 +407,21 @@ function calculateFeatures(s, c) {
   };
 }
 
-function getFactorValue(r, f) {
-  if (f < 7) return r.features[f] || 0;
-  if (f === 7) { // PE Ratio
-    const pe = Number(r.pe);
-    return (isNaN(pe) || pe <= 0) ? 999 : pe;
-  }
-  if (f === 8) { // PB Ratio
-    const pb = Number(r.pb);
-    return (isNaN(pb) || pb <= 0) ? 99 : pb;
-  }
-  if (f === 9) { // Dividend Yield
-    const dy = Number(r.dy);
-    return (isNaN(dy) || dy < 0) ? 0 : dy;
-  }
-  if (f === 10) { // Revenue YoY Growth
-    const revYoY = Number(r.revYoY);
-    const revCumYoY = Number(r.revCumYoY);
-    if (!isNaN(revYoY)) return revYoY;
-    if (!isNaN(revCumYoY)) return revCumYoY;
-    return -999;
-  }
-  return 0;
-}
-
 function scoreAndRank(recs, limit = 20) {
   const n = recs.length; if (n === 0) return [];
-  const prs = recs.map(() => new Array(11).fill(0));
+  const prs = recs.map(() => new Array(7).fill(0));
   
-  for (let f = 0; f < 11; f++) {
-    const sorted = recs.map((r, i) => ({ v: getFactorValue(r, f), i })).sort((a,b) => a.v - b.v);
+  for (let f = 0; f < 7; f++) {
+    const sorted = recs.map((r, i) => ({ v: r.features[f] || 0, i })).sort((a,b) => a.v - b.v);
     sorted.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
   }
   
-  const strategy = STRATEGIES[state.selectedStrategy];
-  const sumWeights = strategy.weights.reduce((a,b) => a + b, 0);
-  
   recs.forEach((r, i) => {
     let sc = 0;
-    for (let f = 0; f < 11; f++) {
-      const w = strategy.weights[f];
-      const t = strategy.targets[f];
-      
-      const dist = Math.abs(prs[i][f] - t);
-      const maxDist = Math.max(t, 1 - t);
-      const contribution = maxDist === 0 ? 1 : (1 - dist / maxDist);
-      
-      sc += contribution * w;
+    for (let f = 0; f < 7; f++) {
+      sc += prs[i][f] * state.weights[f];
     }
-    r.aiScore = sumWeights === 0 ? 0 : (sc / sumWeights) * 100;
+    r.aiScore = (sc / state.weights.reduce((a,b)=>a+b,0)) * 100;
   });
   
   // Return only top 20 carefully
@@ -518,6 +463,7 @@ window.showStockDetails = async (id) => {
   // Find full fundamental info if available in pre-scanned results
   const fullInfo = state.preScannedResults.find(p => p.id === id) || s;
   renderFinancialGrid(fullInfo);
+  renderOutlookSection(fullInfo);
 
   renderChart(s.id, '1mo');
 };
@@ -640,6 +586,19 @@ function updateWatchlistBtnUI() {
 }
 
 function initWeights() {
+  state.weights.forEach((w, i) => {
+    const s = document.getElementById(`w${i+1}`);
+    const l = document.getElementById(`v-w${i+1}`);
+    if (s && l) { 
+        s.value = w;
+        l.innerText = w.toFixed(0); 
+        s.oninput = (e) => {
+            state.weights[i] = parseFloat(e.target.value); 
+            l.innerText = state.weights[i].toFixed(0);
+        }; 
+    }
+  });
+
   const m = document.getElementById('monitor-all-btn');
   if(m) m.addEventListener('click', monitorAllResults);
   
@@ -648,6 +607,11 @@ function initWeights() {
   
   const r = document.getElementById('refresh-watchlist-btn');
   if(r) r.addEventListener('click', refreshWatchlistQuotes);
+}
+
+function toggleWeights() {
+  const c = document.getElementById('weight-controls');
+  if (c) c.style.display = c.style.display === 'none' ? 'block' : 'none';
 }
 
 function avg(a) { return a.reduce((x,y)=>x+y,0)/a.length; }
@@ -661,25 +625,6 @@ window.switchTab = (t) => {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   const targetSection = document.getElementById(`${t}-section`);
   if (targetSection) targetSection.classList.add('active');
-};
-
-window.selectStrategy = (key) => {
-  if (!STRATEGIES[key]) return;
-  state.selectedStrategy = key;
-  state.weights = STRATEGIES[key].weights;
-  
-  // Update UI active class
-  document.querySelectorAll('.strategy-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  const activeBtn = document.getElementById(`strat-${key}`);
-  if (activeBtn) activeBtn.classList.add('active');
-  
-  // If we already have preScannedResults, re-score and re-rank to update results instantly
-  if (state.preScannedResults && state.preScannedResults.length > 0) {
-    state.results = scoreAndRank(state.preScannedResults);
-    renderResults();
-  }
 };
 
 function updateWatchlistUI() {
@@ -1049,4 +994,137 @@ function renderFinancialGrid(s) {
   `;
 }
 
+function generateAIOutlook(s) {
+  const highlights = [];
+  
+  // 1. Revenue YoY
+  const revYoY = Number(s.revYoY);
+  const revCumYoY = Number(s.revCumYoY);
+  const growth = !isNaN(revYoY) ? revYoY : (!isNaN(revCumYoY) ? revCumYoY : null);
+  if (growth !== null) {
+    if (growth >= 20) {
+      highlights.push(`📈 <b>營收爆發</b>：近期累計營收年增率達 \${growth.toFixed(1)}%，出貨強勁，成長動能極高，看好未來盈餘上升。`);
+    } else if (growth >= 5) {
+      highlights.push(`📈 <b>營收穩健</b>：營收維持正成長（年增 \${growth.toFixed(1)}%），產業需求穩定，未來獲利具備基本支撐。`);
+    } else if (growth <= -15) {
+      highlights.push(`📉 <b>營收衰退</b>：營收面臨顯著衰退（年減 \${Math.abs(growth).toFixed(1)}%），庫存消化較慢或行業面臨淡季，短期須審慎。`);
+    } else {
+      highlights.push(`↔️ <b>營收持平</b>：營收年增率在微幅波動區間（\${growth >= 0 ? '+' : ''}\${growth.toFixed(1)}%），表現平穩，靜待新訂單動能。`);
+    }
+  } else {
+    highlights.push(`ℹ️ <b>營收看點</b>：近期營收數據缺漏，需持續追蹤交易所每月公佈之最新營業收入。`);
+  }
+  
+  // 2. PE & Valuation
+  const pe = Number(s.pe);
+  const fairPE = calculateFairPE(s)?.fairPE;
+  if (!isNaN(pe) && pe > 0 && fairPE) {
+    const ratio = pe / fairPE;
+    if (ratio < 0.8) {
+      highlights.push(`🟢 <b>估值吸引力</b>：目前本益比為 \${pe.toFixed(1)} 倍，低於模型估算之合理本益比 \${fairPE.toFixed(1)} 倍，股價具備估值優勢與安全邊際。`);
+    } else if (ratio > 1.3) {
+      if (pe > 100) {
+        highlights.push(`🔴 <b>溢價轉機</b>：目前本益比高達 \${pe.toFixed(0)} 倍，偏離合理區間，股價大漲主要反映市場對未來業績「轉機與庫存觸底」之強烈預期。`);
+      } else {
+        highlights.push(`🟠 <b>估值偏高</b>：本益比 \${pe.toFixed(1)} 倍高於合理本益比 \${fairPE.toFixed(1)} 倍，多頭情緒亢奮，追高需注意修正風險。`);
+      }
+    } else {
+      highlights.push(`🟡 <b>合理區間</b>：本益比 \${pe.toFixed(1)} 倍與合理本益比 \${fairPE.toFixed(1)} 倍相當，股價合理反映其資產價值與獲利水準。`);
+    }
+  } else {
+    highlights.push(`ℹ️ <b>估值看點</b>：目前無有效盈餘數據（本益比為負值或無數據），反映公司可能正處於虧損谷底或轉型期，操作宜留意轉機時程。`);
+  }
+  
+  // 3. Dividend Yield
+  const dy = Number(s.dy);
+  if (!isNaN(dy) && dy >= 4.5) {
+    highlights.push(`🛡️ <b>高息防守</b>：目前現金殖利率高達 \${dy.toFixed(2)}%，股利配發優渥，在大盤震盪時具備極佳的下檔防守能力。`);
+  } else if (!isNaN(dy) && dy > 0 && dy < 3.0) {
+    highlights.push(`⚡ <b>輕裝前行</b>：殖利率較低（\${dy.toFixed(2)}%），反映公司保留較多現金進行資本支出或擴產，成長性重於股息分配。`);
+  }
+  
+  return highlights;
+}
 
+async function fetchLiveNews(symbol) {
+  const queryUrl = `https://query1.finance.yahoo.com/v1/finance/search?q=\${symbol}`;
+  const proxies = [
+    queryUrl,
+    `https://api.allorigins.win/raw?url=\${encodeURIComponent(queryUrl)}`,
+    `https://corsproxy.io/?\${encodeURIComponent(queryUrl)}`
+  ];
+  
+  for (const url of proxies) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.news && data.news.length > 0) {
+          return data.news.slice(0, 3).map(n => ({
+            title: n.title,
+            publisher: n.publisher,
+            link: n.link,
+            time: new Date(n.providerPublishTime * 1000).toLocaleDateString()
+          }));
+        }
+      }
+    } catch (e) {
+      // Silently try next proxy
+    }
+  }
+  return [];
+}
+
+async function renderOutlookSection(s) {
+  const container = document.getElementById('outlook-container');
+  if (!container) return;
+  
+  container.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.8rem;">載入未來看點與即時消息中...</div>';
+  
+  const highlights = generateAIOutlook(s);
+  let html = `
+    <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 0.75rem; color: var(--accent-color); font-weight: bold; display: flex; align-items: center; gap: 4px;">
+        🔮 AI 未來看點評估
+      </div>
+      <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.8rem; line-height: 1.5; color: var(--text-primary); display: flex; flex-direction: column; gap: 6px;">
+        \${highlights.map(h => \`<li>\${h}</li>\`).join('')}
+      </ul>
+    </div>
+  `;
+  
+  try {
+    const news = await fetchLiveNews(s.id);
+    if (news && news.length > 0) {
+      html += `
+        <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+          <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: bold; display: flex; align-items: center; gap: 4px;">
+            📰 即時市場新聞與公告
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            \${news.map((n, idx) => \`
+              <a href="\${n.link}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px;">
+                <div style="font-size: 0.8rem; color: var(--text-primary); font-weight: 600; line-height: 1.4;">
+                  \${n.title}
+                </div>
+                <div style="font-size: 0.65rem; color: var(--text-secondary);">
+                  📢 \${n.publisher} • 📅 \${n.time}
+                </div>
+              </a>
+            \`).join('<div style="height: 1px; background: var(--border-color); margin: 2px 0;"></div>')}
+          </div>
+        </div>
+      `;
+    } else {
+      html += `
+        <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; text-align: center; color: var(--text-secondary); font-size: 0.75rem; margin-top: 8px;">
+          📅 暫無即時市場新聞，建議點擊上方「+ 加入監控」追蹤最新股價與盈虧變動。
+        </div>
+      `;
+    }
+  } catch (e) {
+    console.error('Render news error:', e);
+  }
+  
+  container.innerHTML = html;
+}
