@@ -8,8 +8,8 @@
     <link rel="manifest" href="/StockAI/assets/manifest-BxB5Zljs.webmanifest?v=2.5.1">
     <link rel="icon" href="/StockAI/assets/icon-CNzFRXmK.svg" type="image/svg+xml">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script type="module" crossorigin src="/StockAI/assets/index-DsRnjQST.js"></script>
-  <link rel="stylesheet" crossorigin href="/StockAI/assets/index-nWsLJrNV.css">
+  <script type="module" crossorigin src="/StockAI/assets/index-BRhMJhLw.js"></script>
+  <link rel="stylesheet" crossorigin href="/StockAI/assets/index-BDq1vPAG.css">
 </head>
 <body>
     <button id="pwa-install-btn" style="display:none; position:fixed; top:1rem; right:1rem; z-index:2000; background:#39d2c0; color:#000; border:none; padding:10px 15px; border-radius:12px; font-weight:700; box-shadow:0 10px 15px -3px rgba(0,0,0,0.3);">📲 安裝應用程式</button>
@@ -30,14 +30,63 @@
         <!-- Scan Section -->
         <section id="scan-section" class="section active">
             <div class="controls-card">
-                <h3 style="font-size: 0.9rem; margin-bottom: 0.8rem;">🎯 選擇掃描策略</h3>
-                <div class="strategy-selector" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem;">
-                    <button class="strategy-btn active" onclick="selectStrategy('momentum')" id="strat-momentum">🔥 熱門股</button>
-                    <button class="strategy-btn" onclick="selectStrategy('high')" id="strat-high">⚡ 高風險</button>
-                    <button class="strategy-btn" onclick="selectStrategy('medium')" id="strat-medium">⚖️ 中風險</button>
-                    <button class="strategy-btn" onclick="selectStrategy('low')" id="strat-low">🛡️ 低風險</button>
+                <div id="weight-toggle" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+                    <h3 style="font-size: 0.9rem; margin: 0; display: flex; align-items: center; gap: 5px;">⚙️ AI 權重配置</h3>
+                    <span id="weight-toggle-arrow" style="font-size: 0.8rem; color: var(--text-secondary);">展開/收合</span>
                 </div>
-                <button id="start-scan" class="btn-primary">開始全市場掃描</button>
+                
+                <div id="weight-controls" style="display: none; margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>歷史波動率</span>
+                            <span id="v-w1">0</span>
+                        </div>
+                        <input type="range" id="w1" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>布林帶寬度</span>
+                            <span id="v-w2">0</span>
+                        </div>
+                        <input type="range" id="w2" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>偏離 MA60</span>
+                            <span id="v-w3">0</span>
+                        </div>
+                        <input type="range" id="w3" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>趨勢強度</span>
+                            <span id="v-w4">0</span>
+                        </div>
+                        <input type="range" id="w4" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>偏離 MA20</span>
+                            <span id="v-w5">0</span>
+                        </div>
+                        <input type="range" id="w5" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>偏離 BB 上軌</span>
+                            <span id="v-w6">0</span>
+                        </div>
+                        <input type="range" id="w6" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>ROC 10日</span>
+                            <span id="v-w7">0</span>
+                        </div>
+                        <input type="range" id="w7" min="0" max="100" step="1">
+                    </div>
+                </div>
+                <button id="start-scan" class="btn-primary" style="margin-top: 1rem;">開始全市場掃描</button>
             </div>
 
             <div id="progress-container" class="progress-container">
@@ -78,7 +127,7 @@
             </div>
         </section>
         
-        <div class="version-tag">AI Stock Scanner v2.8.0-Nitro (2026.07.01)</div>
+        <div class="version-tag">AI Stock Scanner v2.9.0-Nitro (2026.07.01)</div>
     </div>
 
     <!-- Chart Modal -->
@@ -107,6 +156,14 @@
                 </div>
             </div>
         </div>
+            
+            <!-- Future Highlights & News Section -->
+            <div id="outlook-section" style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                <h4 style="font-size: 0.85rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 5px; color: var(--text-primary);">🔮 未來看點與即時消息</h4>
+                <div id="outlook-container" style="display: flex; flex-direction: column; gap: 10px;">
+                    <!-- AI Outlook and News items will be injected here -->
+                </div>
+            </div>
     </div>
 
 </body>
