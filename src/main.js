@@ -1003,13 +1003,13 @@ function generateAIOutlook(s) {
   const growth = !isNaN(revYoY) ? revYoY : (!isNaN(revCumYoY) ? revCumYoY : null);
   if (growth !== null) {
     if (growth >= 20) {
-      highlights.push(`📈 <b>營收爆發</b>：近期累計營收年增率達 \${growth.toFixed(1)}%，出貨強勁，成長動能極高，看好未來盈餘上升。`);
+      highlights.push(`📈 <b>營收爆發</b>：近期累計營收年增率達 ${growth.toFixed(1)}%，出貨強勁，成長動能極高，看好未來盈餘上升。`);
     } else if (growth >= 5) {
-      highlights.push(`📈 <b>營收穩健</b>：營收維持正成長（年增 \${growth.toFixed(1)}%），產業需求穩定，未來獲利具備基本支撐。`);
+      highlights.push(`📈 <b>營收穩健</b>：營收維持正成長（年增 ${growth.toFixed(1)}%），產業需求穩定，未來獲利具備基本支撐。`);
     } else if (growth <= -15) {
-      highlights.push(`📉 <b>營收衰退</b>：營收面臨顯著衰退（年減 \${Math.abs(growth).toFixed(1)}%），庫存消化較慢或行業面臨淡季，短期須審慎。`);
+      highlights.push(`📉 <b>營收衰退</b>：營收面臨顯著衰退（年減 ${Math.abs(growth).toFixed(1)}%），庫存消化較慢或行業面臨淡季，短期須審慎。`);
     } else {
-      highlights.push(`↔️ <b>營收持平</b>：營收年增率在微幅波動區間（\${growth >= 0 ? '+' : ''}\${growth.toFixed(1)}%），表現平穩，靜待新訂單動能。`);
+      highlights.push(`↔️ <b>營收持平</b>：營收年增率在微幅波動區間（${growth >= 0 ? '+' : ''}${growth.toFixed(1)}%），表現平穩，靜待新訂單動能。`);
     }
   } else {
     highlights.push(`ℹ️ <b>營收看點</b>：近期營收數據缺漏，需持續追蹤交易所每月公佈之最新營業收入。`);
@@ -1021,15 +1021,15 @@ function generateAIOutlook(s) {
   if (!isNaN(pe) && pe > 0 && fairPE) {
     const ratio = pe / fairPE;
     if (ratio < 0.8) {
-      highlights.push(`🟢 <b>估值吸引力</b>：目前本益比為 \${pe.toFixed(1)} 倍，低於模型估算之合理本益比 \${fairPE.toFixed(1)} 倍，股價具備估值優勢與安全邊際。`);
+      highlights.push(`🟢 <b>估值吸引力</b>：目前本益比為 ${pe.toFixed(1)} 倍，低於模型估算之合理本益比 ${fairPE.toFixed(1)} 倍，股價具備估值優勢與安全邊際。`);
     } else if (ratio > 1.3) {
       if (pe > 100) {
-        highlights.push(`🔴 <b>溢價轉機</b>：目前本益比高達 \${pe.toFixed(0)} 倍，偏離合理區間，股價大漲主要反映市場對未來業績「轉機與庫存觸底」之強烈預期。`);
+        highlights.push(`🔴 <b>溢價轉機</b>：目前本益比高達 ${pe.toFixed(0)} 倍，偏離合理區間，股價大漲主要反映市場對未來業績「轉機與庫存觸底」之強烈預期。`);
       } else {
-        highlights.push(`🟠 <b>估值偏高</b>：本益比 \${pe.toFixed(1)} 倍高於合理本益比 \${fairPE.toFixed(1)} 倍，多頭情緒亢奮，追高需注意修正風險。`);
+        highlights.push(`🟠 <b>估值偏高</b>：本益比 ${pe.toFixed(1)} 倍高於合理本益比 ${fairPE.toFixed(1)} 倍，多頭情緒亢奮，追高需注意修正風險。`);
       }
     } else {
-      highlights.push(`🟡 <b>合理區間</b>：本益比 \${pe.toFixed(1)} 倍與合理本益比 \${fairPE.toFixed(1)} 倍相當，股價合理反映其資產價值與獲利水準。`);
+      highlights.push(`🟡 <b>合理區間</b>：本益比 ${pe.toFixed(1)} 倍與合理本益比 ${fairPE.toFixed(1)} 倍相當，股價合理反映其資產價值與獲利水準。`);
     }
   } else {
     highlights.push(`ℹ️ <b>估值看點</b>：目前無有效盈餘數據（本益比為負值或無數據），反映公司可能正處於虧損谷底或轉型期，操作宜留意轉機時程。`);
@@ -1038,20 +1038,20 @@ function generateAIOutlook(s) {
   // 3. Dividend Yield
   const dy = Number(s.dy);
   if (!isNaN(dy) && dy >= 4.5) {
-    highlights.push(`🛡️ <b>高息防守</b>：目前現金殖利率高達 \${dy.toFixed(2)}%，股利配發優渥，在大盤震盪時具備極佳的下檔防守能力。`);
+    highlights.push(`🛡️ <b>高息防守</b>：目前現金殖利率高達 ${dy.toFixed(2)}%，股利配發優渥，在大盤震盪時具備極佳的下檔防守能力。`);
   } else if (!isNaN(dy) && dy > 0 && dy < 3.0) {
-    highlights.push(`⚡ <b>輕裝前行</b>：殖利率較低（\${dy.toFixed(2)}%），反映公司保留較多現金進行資本支出或擴產，成長性重於股息分配。`);
+    highlights.push(`⚡ <b>輕裝前行</b>：殖利率較低（${dy.toFixed(2)}%），反映公司保留較多現金進行資本支出或擴產，成長性重於股息分配。`);
   }
   
   return highlights;
 }
 
 async function fetchLiveNews(symbol) {
-  const queryUrl = `https://query1.finance.yahoo.com/v1/finance/search?q=\${symbol}`;
+  const queryUrl = `https://query1.finance.yahoo.com/v1/finance/search?q=${symbol}`;
   const proxies = [
     queryUrl,
-    `https://api.allorigins.win/raw?url=\${encodeURIComponent(queryUrl)}`,
-    `https://corsproxy.io/?\${encodeURIComponent(queryUrl)}`
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(queryUrl)}`,
+    `https://corsproxy.io/?${encodeURIComponent(queryUrl)}`
   ];
   
   for (const url of proxies) {
@@ -1088,7 +1088,7 @@ async function renderOutlookSection(s) {
         🔮 AI 未來看點評估
       </div>
       <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.8rem; line-height: 1.5; color: var(--text-primary); display: flex; flex-direction: column; gap: 6px;">
-        \${highlights.map(h => \`<li>\${h}</li>\`).join('')}
+        ${highlights.map(h => `<li>${h}</li>`).join('')}
       </ul>
     </div>
   `;
@@ -1102,16 +1102,16 @@ async function renderOutlookSection(s) {
             📰 即時市場新聞與公告
           </div>
           <div style="display: flex; flex-direction: column; gap: 8px;">
-            \${news.map((n, idx) => \`
-              <a href="\${n.link}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px;">
+            ${news.map((n, idx) => `
+              <a href="${n.link}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px;">
                 <div style="font-size: 0.8rem; color: var(--text-primary); font-weight: 600; line-height: 1.4;">
-                  \${n.title}
+                  ${n.title}
                 </div>
                 <div style="font-size: 0.65rem; color: var(--text-secondary);">
-                  📢 \${n.publisher} • 📅 \${n.time}
+                  📢 ${n.publisher} • 📅 ${n.time}
                 </div>
               </a>
-            \`).join('<div style="height: 1px; background: var(--border-color); margin: 2px 0;"></div>')}
+            `).join('<div style="height: 1px; background: var(--border-color); margin: 2px 0;"></div>')}
           </div>
         </div>
       `;
