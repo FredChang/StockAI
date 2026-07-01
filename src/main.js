@@ -10,23 +10,23 @@ const TWSE_LIST_URL = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=';
 const STRATEGIES = {
   momentum: {
     name: '熱門股',
-    weights: [0, 10, 0, 35, 15, 15, 25],
-    targets: [1, 1, 1, 1, 1, 1, 1]
+    weights: [0, 10, 0, 35, 15, 15, 25, 0, 0, 0, 0],
+    targets: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   },
   high: {
     name: '高風險',
-    weights: [30, 20, 10, 15, 10, 15, 0],
-    targets: [1, 1, 1, 1, 1, 1, 1]
+    weights: [30, 20, 10, 15, 10, 15, 0, 0, 0, 0, 0],
+    targets: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   },
   medium: {
     name: '中風險',
-    weights: [30, 20, 10, 25, 15, 0, 0],
-    targets: [0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5]
+    weights: [15, 10, 0, 20, 0, 0, 0, 20, 10, 10, 15],
+    targets: [0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5, 0.2, 0.2, 0.8, 1.0]
   },
   low: {
     name: '低風險',
-    weights: [30, 20, 15, 20, 15, 0, 0],
-    targets: [0, 0, 0, 1, 0, 0, 0]
+    weights: [20, 10, 0, 10, 0, 0, 0, 20, 10, 30, 0],
+    targets: [0, 0, 0, 1, 0, 0, 0, 0.1, 0.1, 1.0, 0.5]
   }
 };
 
@@ -36,8 +36,8 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   selectedStrategy: 'momentum',
-  weights: [0, 10, 0, 35, 15, 15, 25],
-  version: 'v2.7.1-Nitro',
+  weights: [0, 10, 0, 35, 15, 15, 25, 0, 0, 0, 0],
+  version: 'v2.8.0-Nitro',
   lastUpdate: '2026.07.01',
   currentChart: null,
   selectedStock: null,
@@ -428,12 +428,36 @@ function calculateFeatures(s, c) {
   };
 }
 
+function getFactorValue(r, f) {
+  if (f < 7) return r.features[f] || 0;
+  if (f === 7) { // PE Ratio
+    const pe = Number(r.pe);
+    return (isNaN(pe) || pe <= 0) ? 999 : pe;
+  }
+  if (f === 8) { // PB Ratio
+    const pb = Number(r.pb);
+    return (isNaN(pb) || pb <= 0) ? 99 : pb;
+  }
+  if (f === 9) { // Dividend Yield
+    const dy = Number(r.dy);
+    return (isNaN(dy) || dy < 0) ? 0 : dy;
+  }
+  if (f === 10) { // Revenue YoY Growth
+    const revYoY = Number(r.revYoY);
+    const revCumYoY = Number(r.revCumYoY);
+    if (!isNaN(revYoY)) return revYoY;
+    if (!isNaN(revCumYoY)) return revCumYoY;
+    return -999;
+  }
+  return 0;
+}
+
 function scoreAndRank(recs, limit = 20) {
   const n = recs.length; if (n === 0) return [];
-  const prs = recs.map(() => new Array(7).fill(0));
+  const prs = recs.map(() => new Array(11).fill(0));
   
-  for (let f = 0; f < 7; f++) {
-    const sorted = recs.map((r, i) => ({ v: r.features[f] || 0, i })).sort((a,b) => a.v - b.v);
+  for (let f = 0; f < 11; f++) {
+    const sorted = recs.map((r, i) => ({ v: getFactorValue(r, f), i })).sort((a,b) => a.v - b.v);
     sorted.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
   }
   
@@ -442,7 +466,7 @@ function scoreAndRank(recs, limit = 20) {
   
   recs.forEach((r, i) => {
     let sc = 0;
-    for (let f = 0; f < 7; f++) {
+    for (let f = 0; f < 11; f++) {
       const w = strategy.weights[f];
       const t = strategy.targets[f];
       
