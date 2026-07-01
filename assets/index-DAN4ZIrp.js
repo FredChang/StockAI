@@ -127,13 +127,13 @@
           <span style="font-size: 0.55rem; color: var(--text-secondary); margin-left: auto;">模型: ${o}</span>
         </div>
     </div>`})()}
-  `}function D(e){let t=[],n=Number(e.revYoY),r=Number(e.revCumYoY),i=isNaN(n)?isNaN(r)?null:r:n;i===null?t.push(`ℹ️ <b>營收看點</b>：近期營收數據缺漏，需持續追蹤交易所每月公佈之最新營業收入。`):i>=20?t.push("📈 <b>營收爆發</b>：近期累計營收年增率達 ${growth.toFixed(1)}%，出貨強勁，成長動能極高，看好未來盈餘上升。"):i>=5?t.push("📈 <b>營收穩健</b>：營收維持正成長（年增 ${growth.toFixed(1)}%），產業需求穩定，未來獲利具備基本支撐。"):i<=-15?t.push("📉 <b>營收衰退</b>：營收面臨顯著衰退（年減 ${Math.abs(growth).toFixed(1)}%），庫存消化較慢或行業面臨淡季，短期須審慎。"):t.push("↔️ <b>營收持平</b>：營收年增率在微幅波動區間（${growth >= 0 ? '+' : ''}${growth.toFixed(1)}%），表現平穩，靜待新訂單動能。");let a=Number(e.pe),o=T(e)?.fairPE;if(!isNaN(a)&&a>0&&o){let e=a/o;e<.8?t.push("🟢 <b>估值吸引力</b>：目前本益比為 ${pe.toFixed(1)} 倍，低於模型估算之合理本益比 ${fairPE.toFixed(1)} 倍，股價具備估值優勢與安全邊際。"):e>1.3?a>100?t.push("🔴 <b>溢價轉機</b>：目前本益比高達 ${pe.toFixed(0)} 倍，偏離合理區間，股價大漲主要反映市場對未來業績「轉機與庫存觸底」之強烈預期。"):t.push("🟠 <b>估值偏高</b>：本益比 ${pe.toFixed(1)} 倍高於合理本益比 ${fairPE.toFixed(1)} 倍，多頭情緒亢奮，追高需注意修正風險。"):t.push("🟡 <b>合理區間</b>：本益比 ${pe.toFixed(1)} 倍與合理本益比 ${fairPE.toFixed(1)} 倍相當，股價合理反映其資產價值與獲利水準。")}else t.push(`ℹ️ <b>估值看點</b>：目前無有效盈餘數據（本益比為負值或無數據），反映公司可能正處於虧損谷底或轉型期，操作宜留意轉機時程。`);let s=Number(e.dy);return!isNaN(s)&&s>=4.5?t.push("🛡️ <b>高息防守</b>：目前現金殖利率高達 ${dy.toFixed(2)}%，股利配發優渥，在大盤震盪時具備極佳的下檔防守能力。"):!isNaN(s)&&s>0&&s<3&&t.push("⚡ <b>輕裝前行</b>：殖利率較低（${dy.toFixed(2)}%），反映公司保留較多現金進行資本支出或擴產，成長性重於股息分配。"),t}async function O(e){for(let e of["https://query1.finance.yahoo.com/v1/finance/search?q=${symbol}","https://api.allorigins.win/raw?url=${encodeURIComponent(queryUrl)}","https://corsproxy.io/?${encodeURIComponent(queryUrl)}"])try{let t=await fetch(e);if(t.ok){let e=await t.json();if(e.news&&e.news.length>0)return e.news.slice(0,3).map(e=>({title:e.title,publisher:e.publisher,link:e.link,time:new Date(e.providerPublishTime*1e3).toLocaleDateString()}))}}catch{}return[]}async function k(e){let t=document.getElementById(`outlook-container`);if(!t)return;t.innerHTML=`<div style="color: var(--text-secondary); font-size: 0.8rem;">載入未來看點與即時消息中...</div>`,D(e);let n=`
+  `}function D(e){let t=[],n=Number(e.revYoY),r=Number(e.revCumYoY),i=isNaN(n)?isNaN(r)?null:r:n;i===null?t.push(`ℹ️ <b>營收看點</b>：近期營收數據缺漏，需持續追蹤交易所每月公佈之最新營業收入。`):i>=20?t.push(`📈 <b>營收爆發</b>：近期累計營收年增率達 ${i.toFixed(1)}%，出貨強勁，成長動能極高，看好未來盈餘上升。`):i>=5?t.push(`📈 <b>營收穩健</b>：營收維持正成長（年增 ${i.toFixed(1)}%），產業需求穩定，未來獲利具備基本支撐。`):i<=-15?t.push(`📉 <b>營收衰退</b>：營收面臨顯著衰退（年減 ${Math.abs(i).toFixed(1)}%），庫存消化較慢或行業面臨淡季，短期須審慎。`):t.push(`↔️ <b>營收持平</b>：營收年增率在微幅波動區間（${i>=0?`+`:``}${i.toFixed(1)}%），表現平穩，靜待新訂單動能。`);let a=Number(e.pe),o=T(e)?.fairPE;if(!isNaN(a)&&a>0&&o){let e=a/o;e<.8?t.push(`🟢 <b>估值吸引力</b>：目前本益比為 ${a.toFixed(1)} 倍，低於模型估算之合理本益比 ${o.toFixed(1)} 倍，股價具備估值優勢與安全邊際。`):e>1.3?a>100?t.push(`🔴 <b>溢價轉機</b>：目前本益比高達 ${a.toFixed(0)} 倍，偏離合理區間，股價大漲主要反映市場對未來業績「轉機與庫存觸底」之強烈預期。`):t.push(`🟠 <b>估值偏高</b>：本益比 ${a.toFixed(1)} 倍高於合理本益比 ${o.toFixed(1)} 倍，多頭情緒亢奮，追高需注意修正風險。`):t.push(`🟡 <b>合理區間</b>：本益比 ${a.toFixed(1)} 倍與合理本益比 ${o.toFixed(1)} 倍相當，股價合理反映其資產價值與獲利水準。`)}else t.push(`ℹ️ <b>估值看點</b>：目前無有效盈餘數據（本益比為負值或無數據），反映公司可能正處於虧損谷底或轉型期，操作宜留意轉機時程。`);let s=Number(e.dy);return!isNaN(s)&&s>=4.5?t.push(`🛡️ <b>高息防守</b>：目前現金殖利率高達 ${s.toFixed(2)}%，股利配發優渥，在大盤震盪時具備極佳的下檔防守能力。`):!isNaN(s)&&s>0&&s<3&&t.push(`⚡ <b>輕裝前行</b>：殖利率較低（${s.toFixed(2)}%），反映公司保留較多現金進行資本支出或擴產，成長性重於股息分配。`),t}async function O(e){let t=`https://query1.finance.yahoo.com/v1/finance/search?q=${e}`,n=[t,`https://api.allorigins.win/raw?url=${encodeURIComponent(t)}`,`https://corsproxy.io/?${encodeURIComponent(t)}`];for(let e of n)try{let t=await fetch(e);if(t.ok){let e=await t.json();if(e.news&&e.news.length>0)return e.news.slice(0,3).map(e=>({title:e.title,publisher:e.publisher,link:e.link,time:new Date(e.providerPublishTime*1e3).toLocaleDateString()}))}}catch{}return[]}async function k(e){let t=document.getElementById(`outlook-container`);if(!t)return;t.innerHTML=`<div style="color: var(--text-secondary); font-size: 0.8rem;">載入未來看點與即時消息中...</div>`;let n=`
     <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px;">
       <div style="font-size: 0.75rem; color: var(--accent-color); font-weight: bold; display: flex; align-items: center; gap: 4px;">
         🔮 AI 未來看點評估
       </div>
       <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.8rem; line-height: 1.5; color: var(--text-primary); display: flex; flex-direction: column; gap: 6px;">
-        \${highlights.map(h => \`<li>\${h}</li>\`).join('')}
+        ${D(e).map(e=>`<li>${e}</li>`).join(``)}
       </ul>
     </div>
   `;try{let t=await O(e.id);t&&t.length>0?n+=`
@@ -142,16 +142,16 @@
             📰 即時市場新聞與公告
           </div>
           <div style="display: flex; flex-direction: column; gap: 8px;">
-            \${news.map((n, idx) => \`
-              <a href="\${n.link}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px;">
+            ${t.map((e,t)=>`
+              <a href="${e.link}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px;">
                 <div style="font-size: 0.8rem; color: var(--text-primary); font-weight: 600; line-height: 1.4;">
-                  \${n.title}
+                  ${e.title}
                 </div>
                 <div style="font-size: 0.65rem; color: var(--text-secondary);">
-                  📢 \${n.publisher} • 📅 \${n.time}
+                  📢 ${e.publisher} • 📅 ${e.time}
                 </div>
               </a>
-            \`).join('<div style="height: 1px; background: var(--border-color); margin: 2px 0;"></div>')}
+            `).join(`<div style="height: 1px; background: var(--border-color); margin: 2px 0;"></div>`)}
           </div>
         </div>
       `:n+=`
