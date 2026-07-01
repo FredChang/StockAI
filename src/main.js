@@ -10,19 +10,23 @@ const TWSE_LIST_URL = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=';
 const STRATEGIES = {
   momentum: {
     name: '熱門股',
-    weights: [0, 10, 0, 35, 15, 15, 25]
+    weights: [0, 10, 0, 35, 15, 15, 25],
+    targets: [1, 1, 1, 1, 1, 1, 1]
   },
   high: {
     name: '高風險',
-    weights: [30, 20, 10, 15, 10, 15, 0]
+    weights: [30, 20, 10, 15, 10, 15, 0],
+    targets: [1, 1, 1, 1, 1, 1, 1]
   },
   medium: {
     name: '中風險',
-    weights: [-10, 10, 20, 30, 20, 0, 10]
+    weights: [30, 20, 10, 25, 15, 0, 0],
+    targets: [0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5]
   },
   low: {
     name: '低風險',
-    weights: [-30, -20, -15, 20, -15, 0, 0]
+    weights: [30, 20, 15, 20, 15, 0, 0],
+    targets: [0, 0, 0, 1, 0, 0, 0]
   }
 };
 
@@ -33,8 +37,8 @@ let state = {
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   selectedStrategy: 'momentum',
   weights: [0, 10, 0, 35, 15, 15, 25],
-  version: 'v2.7.0-Nitro',
-  lastUpdate: '2026.06.29',
+  version: 'v2.7.1-Nitro',
+  lastUpdate: '2026.07.01',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo',
@@ -433,20 +437,22 @@ function scoreAndRank(recs, limit = 20) {
     sorted.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
   }
   
-  const sumAbs = state.weights.reduce((a,b) => a + Math.abs(b), 0);
+  const strategy = STRATEGIES[state.selectedStrategy];
+  const sumWeights = strategy.weights.reduce((a,b) => a + b, 0);
   
   recs.forEach((r, i) => {
     let sc = 0;
     for (let f = 0; f < 7; f++) {
-      const w = state.weights[f];
-      const absW = Math.abs(w);
-      if (w >= 0) {
-        sc += prs[i][f] * w;
-      } else {
-        sc += (1 - prs[i][f]) * absW;
-      }
+      const w = strategy.weights[f];
+      const t = strategy.targets[f];
+      
+      const dist = Math.abs(prs[i][f] - t);
+      const maxDist = Math.max(t, 1 - t);
+      const contribution = maxDist === 0 ? 1 : (1 - dist / maxDist);
+      
+      sc += contribution * w;
     }
-    r.aiScore = sumAbs === 0 ? 0 : (sc / sumAbs) * 100;
+    r.aiScore = sumWeights === 0 ? 0 : (sc / sumWeights) * 100;
   });
   
   // Return only top 20 carefully
