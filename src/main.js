@@ -13,8 +13,8 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
-  version: 'v2.9.0-Nitro',
-  lastUpdate: '2026.07.01',
+  version: 'v3.0.0-Nitro',
+  lastUpdate: '2026.07.13',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo',
@@ -463,7 +463,7 @@ window.showStockDetails = async (id) => {
   // Find full fundamental info if available in pre-scanned results
   const fullInfo = state.preScannedResults.find(p => p.id === id) || s;
   renderFinancialGrid(fullInfo);
-  renderOutlookSection(fullInfo);
+  renderVolumeTrendChart(s.id);
 
   renderChart(s.id, '1mo');
 };
@@ -994,137 +994,117 @@ function renderFinancialGrid(s) {
   `;
 }
 
-function generateAIOutlook(s) {
-  const highlights = [];
-  
-  // 1. Revenue YoY
-  const revYoY = Number(s.revYoY);
-  const revCumYoY = Number(s.revCumYoY);
-  const growth = !isNaN(revYoY) ? revYoY : (!isNaN(revCumYoY) ? revCumYoY : null);
-  if (growth !== null) {
-    if (growth >= 20) {
-      highlights.push(`📈 <b>營收爆發</b>：近期累計營收年增率達 ${growth.toFixed(1)}%，出貨強勁，成長動能極高，看好未來盈餘上升。`);
-    } else if (growth >= 5) {
-      highlights.push(`📈 <b>營收穩健</b>：營收維持正成長（年增 ${growth.toFixed(1)}%），產業需求穩定，未來獲利具備基本支撐。`);
-    } else if (growth <= -15) {
-      highlights.push(`📉 <b>營收衰退</b>：營收面臨顯著衰退（年減 ${Math.abs(growth).toFixed(1)}%），庫存消化較慢或行業面臨淡季，短期須審慎。`);
-    } else {
-      highlights.push(`↔️ <b>營收持平</b>：營收年增率在微幅波動區間（${growth >= 0 ? '+' : ''}${growth.toFixed(1)}%），表現平穩，靜待新訂單動能。`);
-    }
-  } else {
-    highlights.push(`ℹ️ <b>營收看點</b>：近期營收數據缺漏，需持續追蹤交易所每月公佈之最新營業收入。`);
-  }
-  
-  // 2. PE & Valuation
-  const pe = Number(s.pe);
-  const fairPE = calculateFairPE(s)?.fairPE;
-  if (!isNaN(pe) && pe > 0 && fairPE) {
-    const ratio = pe / fairPE;
-    if (ratio < 0.8) {
-      highlights.push(`🟢 <b>估值吸引力</b>：目前本益比為 ${pe.toFixed(1)} 倍，低於模型估算之合理本益比 ${fairPE.toFixed(1)} 倍，股價具備估值優勢與安全邊際。`);
-    } else if (ratio > 1.3) {
-      if (pe > 100) {
-        highlights.push(`🔴 <b>溢價轉機</b>：目前本益比高達 ${pe.toFixed(0)} 倍，偏離合理區間，股價大漲主要反映市場對未來業績「轉機與庫存觸底」之強烈預期。`);
-      } else {
-        highlights.push(`🟠 <b>估值偏高</b>：本益比 ${pe.toFixed(1)} 倍高於合理本益比 ${fairPE.toFixed(1)} 倍，多頭情緒亢奮，追高需注意修正風險。`);
-      }
-    } else {
-      highlights.push(`🟡 <b>合理區間</b>：本益比 ${pe.toFixed(1)} 倍與合理本益比 ${fairPE.toFixed(1)} 倍相當，股價合理反映其資產價值與獲利水準。`);
-    }
-  } else {
-    highlights.push(`ℹ️ <b>估值看點</b>：目前無有效盈餘數據（本益比為負值或無數據），反映公司可能正處於虧損谷底或轉型期，操作宜留意轉機時程。`);
-  }
-  
-  // 3. Dividend Yield
-  const dy = Number(s.dy);
-  if (!isNaN(dy) && dy >= 4.5) {
-    highlights.push(`🛡️ <b>高息防守</b>：目前現金殖利率高達 ${dy.toFixed(2)}%，股利配發優渥，在大盤震盪時具備極佳的下檔防守能力。`);
-  } else if (!isNaN(dy) && dy > 0 && dy < 3.0) {
-    highlights.push(`⚡ <b>輕裝前行</b>：殖利率較低（${dy.toFixed(2)}%），反映公司保留較多現金進行資本支出或擴產，成長性重於股息分配。`);
-  }
-  
-  return highlights;
-}
-
-async function fetchLiveNews(symbol) {
-  const queryUrl = `https://query1.finance.yahoo.com/v1/finance/search?q=${symbol}`;
-  const proxies = [
-    queryUrl,
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(queryUrl)}`,
-    `https://corsproxy.io/?${encodeURIComponent(queryUrl)}`
-  ];
-  
-  for (const url of proxies) {
-    try {
-      const res = await fetch(url);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.news && data.news.length > 0) {
-          return data.news.slice(0, 3).map(n => ({
-            title: n.title,
-            publisher: n.publisher,
-            link: n.link,
-            time: new Date(n.providerPublishTime * 1000).toLocaleDateString()
-          }));
-        }
-      }
-    } catch (e) {
-      // Silently try next proxy
-    }
-  }
-  return [];
-}
-
-async function renderOutlookSection(s) {
-  const container = document.getElementById('outlook-container');
-  if (!container) return;
-  
-  container.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.8rem;">載入未來看點與即時消息中...</div>';
-  
-  const highlights = generateAIOutlook(s);
-  let html = `
-    <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px;">
-      <div style="font-size: 0.75rem; color: var(--accent-color); font-weight: bold; display: flex; align-items: center; gap: 4px;">
-        🔮 AI 未來看點評估
-      </div>
-      <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.8rem; line-height: 1.5; color: var(--text-primary); display: flex; flex-direction: column; gap: 6px;">
-        ${highlights.map(h => `<li>${h}</li>`).join('')}
-      </ul>
-    </div>
-  `;
+async function renderVolumeTrendChart(symbol) {
+  const el = document.getElementById('volume-chart-container');
+  if (!el) return;
+  el.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.8rem;">載入成交量數據中...</div>';
   
   try {
-    const news = await fetchLiveNews(s.id);
-    if (news && news.length > 0) {
-      html += `
-        <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
-          <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: bold; display: flex; align-items: center; gap: 4px;">
-            📰 即時市場新聞與公告
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            ${news.map((n, idx) => `
-              <a href="${n.link}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px;">
-                <div style="font-size: 0.8rem; color: var(--text-primary); font-weight: 600; line-height: 1.4;">
-                  ${n.title}
-                </div>
-                <div style="font-size: 0.65rem; color: var(--text-secondary);">
-                  📢 ${n.publisher} • 📅 ${n.time}
-                </div>
-              </a>
-            `).join('<div style="height: 1px; background: var(--border-color); margin: 2px 0;"></div>')}
-          </div>
-        </div>
-      `;
-    } else {
-      html += `
-        <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; text-align: center; color: var(--text-secondary); font-size: 0.75rem; margin-top: 8px;">
-          📅 暫無即時市場新聞，建議點擊上方「+ 加入監控」追蹤最新股價與盈虧變動。
-        </div>
-      `;
+    const data = await safeFetch(`${YAHOO_URL}${symbol}?range=1mo&interval=1d`);
+    const result = data.chart.result[0];
+    const timestamps = result.timestamp;
+    const quotes = result.indicators.quote[0];
+    const closes = quotes.close;
+    const volumes = quotes.volume;
+    
+    if (!timestamps || timestamps.length === 0) {
+      el.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.8rem;">暫無成交量數據</div>';
+      return;
     }
+    
+    const chartData = [];
+    for (let i = 0; i < timestamps.length; i++) {
+      if (volumes[i] == null || closes[i] == null) continue;
+      const prevClose = i > 0 ? (closes[i - 1] != null ? closes[i - 1] : closes[i]) : closes[i];
+      const isUp = closes[i] >= prevClose;
+      chartData.push({
+        timestamp: timestamps[i] * 1000,
+        volumeLots: Math.round(volumes[i] / 1000),
+        isUp: isUp
+      });
+    }
+    
+    // Take the last 10 trading days (2 weeks)
+    const last2Weeks = chartData.slice(-10);
+    
+    if (last2Weeks.length === 0) {
+      el.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.8rem;">暫無成交量數據</div>';
+      return;
+    }
+    
+    const categories = last2Weeks.map(d => {
+      const date = new Date(d.timestamp);
+      return `${date.getMonth() + 1}/${date.getDate()}`;
+    });
+    
+    const seriesData = last2Weeks.map(d => ({
+      x: `${new Date(d.timestamp).getMonth() + 1}/${new Date(d.timestamp).getDate()}`,
+      y: d.volumeLots,
+      isUp: d.isUp
+    }));
+    
+    const opts = {
+      series: [{
+        name: '成交張數',
+        data: seriesData
+      }],
+      chart: {
+        type: 'bar',
+        height: 180,
+        toolbar: { show: false },
+        animations: { enabled: true }
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: '55%',
+          distributed: true,
+          borderRadius: 3
+        }
+      },
+      colors: [
+        function({ dataPointIndex, w }) {
+          const d = w.config.series[0].data[dataPointIndex];
+          if (!d) return '#3b82f6';
+          return d.isUp ? '#ef4444' : '#22c55e'; // Red up, Green down (Taiwan Standard)
+        }
+      ],
+      dataLabels: { enabled: false },
+      legend: { show: false },
+      xaxis: {
+        type: 'category',
+        categories: categories,
+        labels: {
+          style: { colors: '#94a3b8', fontSize: '9px' }
+        },
+        axisBorder: { show: false },
+        axisTicks: { show: false }
+      },
+      yaxis: {
+        labels: {
+          style: { colors: '#94a3b8', fontSize: '9px' },
+          formatter: (v) => `${Math.round(v)}`
+        }
+      },
+      grid: {
+        borderColor: 'rgba(255,255,255,0.05)',
+        strokeDashArray: 4,
+        yaxis: {
+          lines: { show: true }
+        }
+      },
+      tooltip: {
+        theme: 'dark',
+        y: {
+          formatter: (v) => `${v} 張`
+        }
+      }
+    };
+    
+    el.innerHTML = '';
+    const chart = new window.ApexCharts(el, opts);
+    chart.render();
   } catch (e) {
-    console.error('Render news error:', e);
+    console.error('Render volume chart error:', e);
+    el.innerHTML = '<div style="color: var(--danger); font-size: 0.8rem;">成交量圖表載入失敗</div>';
   }
-  
-  container.innerHTML = html;
 }
