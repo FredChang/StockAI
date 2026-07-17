@@ -119,6 +119,25 @@
                         </div>
                         <input type="range" id="w10" min="0" max="100" step="1">
                     </div>
+                    
+                    <!-- Liquidity/Size Sliders -->
+                    <div style="margin: 1rem 0 0.5rem 0; border-top: 1px dashed rgba(255,255,255,0.07); padding-top: 0.8rem; font-size: 0.75rem; color: var(--accent-color); font-weight: bold; text-align: left;">
+                        💧 流動性/規模過濾權重 (過濾投機小股)
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>當日成交張數</span>
+                            <span id="v-w11">0</span>
+                        </div>
+                        <input type="range" id="w11" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>當日成交金額</span>
+                            <span id="v-w12">0</span>
+                        </div>
+                        <input type="range" id="w12" min="0" max="100" step="1">
+                    </div>
                 </div>
                 <button id="start-scan" class="btn-primary" style="margin-top: 1rem;">開始全市場掃描</button>
             </div>
@@ -161,7 +180,7 @@
             </div>
         </section>
         
-        <div class="version-tag">AI Stock Scanner v3.0.0-Nitro (2026.07.13)</div>
+        <div class="version-tag">AI Stock Scanner v3.1.0-Nitro (2026.07.17)</div>
     </div>
 
     <!-- Chart Modal -->
@@ -200,6 +219,6 @@
         </div>
     </div>
 
-    <script type="module" src="src/main.js?v=3.0.0"></script>
+    <script type="module" src="src/main.js?v=3.1.0"></script>
 </body>
 </html>

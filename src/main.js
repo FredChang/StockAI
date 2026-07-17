@@ -12,9 +12,9 @@ let state = {
   isScanning: false,
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
-  weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0],
-  version: 'v3.0.0-Nitro',
-  lastUpdate: '2026.07.13',
+  weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0],
+  version: 'v3.1.0-Nitro',
+  lastUpdate: '2026.07.17',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo',
@@ -256,13 +256,28 @@ async function runScan() {
           const data = await safeFetch(`${YAHOO_URL}${s.id}?range=150d&interval=1d`, false, 2);
           const res = data.chart.result[0];
           const quotes = res.indicators.quote[0].close;
-          const validQuotes = quotes.filter(v => v != null);
+          const volumes = res.indicators.quote[0].volume;
+          
+          const validQuotes = [];
+          const validVolumes = [];
+          for (let idx = 0; idx < quotes.length; idx++) {
+            if (quotes[idx] != null && volumes && volumes[idx] != null) {
+              validQuotes.push(quotes[idx]);
+              validVolumes.push(volumes[idx]);
+            }
+          }
           
           if (validQuotes.length >= 60) {
             const feat = calculateFeatures(s, validQuotes);
             if (feat) {
+               const lastVol = validVolumes[validVolumes.length - 1] || 0;
+               const lastClose = validQuotes[validQuotes.length - 1] || 0;
+               const volLots = Math.round(lastVol / 1000);
+               const turnMillion = parseFloat(((lastVol * lastClose) / 1000000).toFixed(2));
                results.push({ 
                    ...feat, 
+                   volLots,
+                   turnMillion,
                    history: validQuotes,
                    timestamps: res.timestamp.filter((_, idx) => quotes[idx] != null)
                });
@@ -423,21 +438,29 @@ function getScoreFactorValue(r, f) {
     const revCumYoY = Number(r.revCumYoY);
     return !isNaN(revYoY) ? revYoY : (!isNaN(revCumYoY) ? revCumYoY : -999);
   }
+  if (f === 10) { // 成交張數
+    const vol = Number(r.volLots);
+    return (isNaN(vol) || vol < 0) ? 0 : vol;
+  }
+  if (f === 11) { // 成交金額
+    const turn = Number(r.turnMillion);
+    return (isNaN(turn) || turn < 0) ? 0 : turn;
+  }
   return 0;
 }
 
 function scoreAndRank(recs, limit = 20) {
   const n = recs.length; if (n === 0) return [];
-  const prs = recs.map(() => new Array(10).fill(0));
+  const prs = recs.map(() => new Array(12).fill(0));
   
-  for (let f = 0; f < 10; f++) {
+  for (let f = 0; f < 12; f++) {
     const sorted = recs.map((r, i) => ({ v: getScoreFactorValue(r, f), i })).sort((a,b) => a.v - b.v);
     sorted.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
   }
   
   recs.forEach((r, i) => {
     let sc = 0;
-    for (let f = 0; f < 10; f++) {
+    for (let f = 0; f < 12; f++) {
       sc += prs[i][f] * state.weights[f];
     }
     r.aiScore = (sc / state.weights.reduce((a,b)=>a+b,0)) * 100;
@@ -452,8 +475,14 @@ function renderResults() {
   el.innerHTML = state.results.map(r => `
     <div class="stock-card" onclick="showStockDetails('${r.id}')">
       <div class="stock-info">
-        <span class="stock-id">${r.code}</span> 
-        <span class="stock-name">${r.name}</span>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span class="stock-id">${r.code}</span> 
+          <span class="stock-name">${r.name}</span>
+        </div>
+        <div style="font-size: 0.65rem; color: var(--text-secondary); margin-top: 3px; display: flex; gap: 8px;">
+          <span>📊 ${r.volLots ? r.volLots.toLocaleString() : 0} 張</span>
+          <span>💰 ${r.turnMillion ? (r.turnMillion >= 100 ? (r.turnMillion/100).toFixed(2) + ' 億' : r.turnMillion.toFixed(1) + ' 百萬') : '0.0 百萬'}</span>
+        </div>
       </div>
       <div style="text-align:center">
         <div class="price-text">${r.close.toFixed(2)}</div>
@@ -638,10 +667,10 @@ function toggleWeights() {
 }
 
 const MARKET_PRESETS = {
-  bull: [60, 70, 50, 90, 60, 80, 90, 0, 0, 0],
-  flat: [10, 5, 20, 40, 10, 5, 20, 80, 90, 65],
-  bear: [5, 5, 20, 50, 5, 5, 10, 90, 80, 40],
-  default: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0]
+  bull: [60, 70, 50, 90, 60, 80, 90, 0, 0, 0, 0, 0],
+  flat: [10, 5, 20, 40, 10, 5, 20, 80, 90, 65, 40, 60],
+  bear: [5, 5, 20, 50, 5, 5, 10, 90, 80, 40, 30, 50],
+  default: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0]
 };
 
 window.applyMarketPreset = (key) => {

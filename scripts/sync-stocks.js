@@ -273,6 +273,59 @@ async function fetchRevenueData() {
   return revMap;
 }
 
+async function fetchVolumeData() {
+  const volMap = new Map(); // code -> { volLots, turnMillion }
+
+  // 1. TWSE daily quotes (STOCK_DAY_ALL)
+  try {
+    console.log("[Volume] Fetching TWSE daily quotes...");
+    const url = "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL";
+    const res = await fetchWithRetry(url, {}, { label: "TWSE Volume API", retries: 3, baseDelayMs: 1500 });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach(item => {
+        if (!item.Code) return;
+        const volShares = parseInt(item.TradeVolume);
+        const turnVal = parseFloat(item.TradeValue);
+        if (!isNaN(volShares) && !isNaN(turnVal)) {
+          const volLots = Math.round(volShares / 1000);
+          const turnMillion = parseFloat((turnVal / 1000000).toFixed(2));
+          volMap.set(item.Code, { volLots, turnMillion });
+        }
+      });
+      console.log(`[Volume] TWSE success: ${data.length} items.`);
+    }
+  } catch (e) {
+    console.error("[Volume] TWSE fetch error:", e.message);
+  }
+
+  // 2. TPEX daily quotes (tpex_mainboard_daily_close_quotes)
+  try {
+    console.log("[Volume] Fetching TPEX daily quotes...");
+    const url = "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes";
+    const res = await fetchWithRetry(url, {}, { label: "TPEX Volume API", retries: 3, baseDelayMs: 1500 });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach(item => {
+        const code = item.SecuritiesCompanyCode;
+        if (!code) return;
+        const volShares = parseInt(item.TradingShares);
+        const turnVal = parseFloat(item.TransactionAmount);
+        if (!isNaN(volShares) && !isNaN(turnVal)) {
+          const volLots = Math.round(volShares / 1000);
+          const turnMillion = parseFloat((turnVal / 1000000).toFixed(2));
+          volMap.set(code, { volLots, turnMillion });
+        }
+      });
+      console.log(`[Volume] TPEX success: ${data.length} items.`);
+    }
+  } catch (e) {
+    console.error("[Volume] TPEX fetch error:", e.message);
+  }
+
+  return volMap;
+}
+
 async function sync() {
   console.log('--- Stock Sync Process Start ---');
   const tickers = new Map();
@@ -309,9 +362,10 @@ async function sync() {
   fs.writeFileSync(filePath, JSON.stringify(list, null, 2));
   console.log(`[Universe] Saved ${list.length} stocks to: ${filePath}`);
 
-  // Fetch fundamental PE and Revenue data
+  // Fetch fundamental PE, Revenue, and Volume data
   const peMap = await fetchPEData();
   const revMap = await fetchRevenueData();
+  const volMap = await fetchVolumeData();
 
   // 2. Fetch Yahoo Finance Spark data & calculate features
   console.log(`[Yahoo Spark] Fetching prices for ${list.length} stocks...`);
@@ -399,6 +453,14 @@ async function sync() {
       r.revYoY = revData.revYoY;
       r.revMoM = revData.revMoM;
       r.revCumYoY = revData.revCumYoY;
+    }
+    const volData = volMap.get(r.code);
+    if (volData) {
+      r.volLots = volData.volLots;
+      r.turnMillion = volData.turnMillion;
+    } else {
+      r.volLots = r.volLots || 0;
+      r.turnMillion = r.turnMillion || 0;
     }
   }
 
