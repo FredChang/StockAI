@@ -12,7 +12,7 @@ let state = {
   isScanning: false,
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
-  weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25],
+  weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0],
   version: 'v3.0.0-Nitro',
   lastUpdate: '2026.07.13',
   currentChart: null,
@@ -407,18 +407,37 @@ function calculateFeatures(s, c) {
   };
 }
 
+function getScoreFactorValue(r, f) {
+  if (f < 7) return r.features[f] || 0;
+  if (f === 7) { // 現金殖利率
+    const dy = Number(r.dy);
+    return (isNaN(dy) || dy < 0) ? 0 : dy;
+  }
+  if (f === 8) { // 合理估值折價
+    const pe = Number(r.pe);
+    const fairPEInfo = calculateFairPE(r);
+    return (fairPEInfo && pe && pe > 0) ? (fairPEInfo.fairPE - pe) : -999;
+  }
+  if (f === 9) { // 營收成長動能
+    const revYoY = Number(r.revYoY);
+    const revCumYoY = Number(r.revCumYoY);
+    return !isNaN(revYoY) ? revYoY : (!isNaN(revCumYoY) ? revCumYoY : -999);
+  }
+  return 0;
+}
+
 function scoreAndRank(recs, limit = 20) {
   const n = recs.length; if (n === 0) return [];
-  const prs = recs.map(() => new Array(7).fill(0));
+  const prs = recs.map(() => new Array(10).fill(0));
   
-  for (let f = 0; f < 7; f++) {
-    const sorted = recs.map((r, i) => ({ v: r.features[f] || 0, i })).sort((a,b) => a.v - b.v);
+  for (let f = 0; f < 10; f++) {
+    const sorted = recs.map((r, i) => ({ v: getScoreFactorValue(r, f), i })).sort((a,b) => a.v - b.v);
     sorted.forEach((it, ranking) => prs[it.i][f] = (ranking+1)/n);
   }
   
   recs.forEach((r, i) => {
     let sc = 0;
-    for (let f = 0; f < 7; f++) {
+    for (let f = 0; f < 10; f++) {
       sc += prs[i][f] * state.weights[f];
     }
     r.aiScore = (sc / state.weights.reduce((a,b)=>a+b,0)) * 100;
@@ -619,10 +638,10 @@ function toggleWeights() {
 }
 
 const MARKET_PRESETS = {
-  bull: [60, 70, 50, 90, 60, 80, 90],
-  flat: [10, 5, 40, 80, 15, 10, 40],
-  bear: [5, 5, 30, 70, 10, 5, 20],
-  default: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25]
+  bull: [60, 70, 50, 90, 60, 80, 90, 0, 0, 0],
+  flat: [10, 5, 20, 40, 10, 5, 20, 80, 90, 65],
+  bear: [5, 5, 20, 50, 5, 5, 10, 90, 80, 40],
+  default: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0]
 };
 
 window.applyMarketPreset = (key) => {
