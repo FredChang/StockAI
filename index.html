@@ -35,6 +35,15 @@
                 </div>
                 
                 <div id="weight-controls" style="display: none; margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <div style="margin-bottom: 1.2rem; background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 10px;">
+                        <span style="font-size: 0.75rem; color: var(--text-secondary); display: block; margin-bottom: 0.6rem; font-weight: 600;">💡 快速切換推薦市場權重配置：</span>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button type="button" class="preset-btn" onclick="applyMarketPreset('bull')" id="preset-bull" style="flex: 1; padding: 6px 4px; font-size: 0.7rem; background: rgba(59, 130, 246, 0.15); border: 1px solid #3b82f6; border-radius: 8px; color: #60a5fa; cursor: pointer; transition: all 0.2s; outline: none;">🔥 多頭強勢盤</button>
+                            <button type="button" class="preset-btn" onclick="applyMarketPreset('flat')" id="preset-flat" style="flex: 1; padding: 6px 4px; font-size: 0.7rem; background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 8px; color: #fbbf24; cursor: pointer; transition: all 0.2s; outline: none;">⚖️ 盤整修正盤</button>
+                            <button type="button" class="preset-btn" onclick="applyMarketPreset('bear')" id="preset-bear" style="flex: 1; padding: 6px 4px; font-size: 0.7rem; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 8px; color: #34d399; cursor: pointer; transition: all 0.2s; outline: none;">🛡️ 空頭防禦盤</button>
+                            <button type="button" class="preset-btn" onclick="applyMarketPreset('default')" id="preset-default" style="flex: 1; padding: 6px 4px; font-size: 0.7rem; background: rgba(148, 163, 184, 0.1); border: 1px solid #94a3b8; border-radius: 8px; color: #cbd5e1; cursor: pointer; transition: all 0.2s; outline: none;">🔄 恢復預設</button>
+                        </div>
+                    </div>
                     <div class="control-item">
                         <div class="control-header">
                             <span>歷史波動率</span>

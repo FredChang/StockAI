@@ -394,3 +394,18 @@ input[type="range"] {
   color: var(--text-secondary);
   cursor: pointer;
 }
+
+.preset-btn:hover {
+  filter: brightness(1.2);
+  transform: translateY(-1px);
+}
+
+.preset-btn:active {
+  transform: translateY(0);
+}
+
+.preset-btn.active {
+  box-shadow: 0 0 6px currentColor;
+  font-weight: bold;
+  filter: brightness(1.3);
+}

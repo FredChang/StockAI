@@ -595,9 +595,13 @@ function initWeights() {
         s.oninput = (e) => {
             state.weights[i] = parseFloat(e.target.value); 
             l.innerText = state.weights[i].toFixed(0);
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
         }; 
     }
   });
+
+  const defBtn = document.getElementById('preset-default');
+  if (defBtn) defBtn.classList.add('active');
 
   const m = document.getElementById('monitor-all-btn');
   if(m) m.addEventListener('click', monitorAllResults);
@@ -613,6 +617,42 @@ function toggleWeights() {
   const c = document.getElementById('weight-controls');
   if (c) c.style.display = c.style.display === 'none' ? 'block' : 'none';
 }
+
+const MARKET_PRESETS = {
+  bull: [60, 70, 50, 90, 60, 80, 90],
+  flat: [10, 5, 40, 80, 15, 10, 40],
+  bear: [5, 5, 30, 70, 10, 5, 20],
+  default: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25]
+};
+
+window.applyMarketPreset = (key) => {
+  const weights = MARKET_PRESETS[key];
+  if (!weights) return;
+  
+  state.weights = [...weights];
+  
+  state.weights.forEach((w, i) => {
+    const s = document.getElementById(`w${i+1}`);
+    const l = document.getElementById(`v-w${i+1}`);
+    if (s && l) {
+      s.value = w;
+      l.innerText = w.toFixed(0);
+    }
+  });
+  
+  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById(`preset-${key}`);
+  if (activeBtn) activeBtn.classList.add('active');
+  
+  const sourceData = (state.preScannedResults && state.preScannedResults.length > 0)
+    ? state.preScannedResults
+    : (state.results && state.results.length > 0 ? state.results : null);
+    
+  if (sourceData) {
+    state.results = scoreAndRank(sourceData);
+    renderResults();
+  }
+};
 
 function avg(a) { return a.reduce((x,y)=>x+y,0)/a.length; }
 function stdDev(a) { const m = avg(a); return Math.sqrt(a.reduce((x,y)=>x+Math.pow(y-m,2),0)/a.length); }
