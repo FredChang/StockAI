@@ -8,7 +8,7 @@
     <link rel="manifest" href="/StockAI/assets/manifest-BxB5Zljs.webmanifest?v=2.5.1">
     <link rel="icon" href="/StockAI/assets/icon-CNzFRXmK.svg" type="image/svg+xml">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script type="module" crossorigin src="/StockAI/assets/index-CL_0gOA5.js"></script>
+  <script type="module" crossorigin src="/StockAI/assets/index-BTHeR6D-.js"></script>
   <link rel="stylesheet" crossorigin href="/StockAI/assets/index-CiCFe0yX.css">
 </head>
 <body>
@@ -93,6 +93,32 @@
                             <span id="v-w7">0</span>
                         </div>
                         <input type="range" id="w7" min="0" max="100" step="1">
+                    </div>
+                    
+                    <!-- Fundamental Sliders -->
+                    <div style="margin: 1rem 0 0.5rem 0; border-top: 1px dashed rgba(255,255,255,0.07); padding-top: 0.8rem; font-size: 0.75rem; color: var(--accent-color); font-weight: bold; text-align: left;">
+                        📊 基本面防禦權重 (修正/平盤期適用)
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>現金殖利率</span>
+                            <span id="v-w8">0</span>
+                        </div>
+                        <input type="range" id="w8" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>合理估值折價</span>
+                            <span id="v-w9">0</span>
+                        </div>
+                        <input type="range" id="w9" min="0" max="100" step="1">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>營收成長動能</span>
+                            <span id="v-w10">0</span>
+                        </div>
+                        <input type="range" id="w10" min="0" max="100" step="1">
                     </div>
                 </div>
                 <button id="start-scan" class="btn-primary" style="margin-top: 1rem;">開始全市場掃描</button>
