@@ -129,7 +129,7 @@ function calculateFeatures(s, c) {
   };
 }
 
-function parseYahooBatch(chunk, data, peMap, revMap) {
+function parseYahooBatch(chunk, data, peMap, revMap, exMap) {
   const results = [];
   let failCount = 0;
   const items = data?.spark?.result;
@@ -150,10 +150,12 @@ function parseYahooBatch(chunk, data, peMap, revMap) {
         if (feat) {
           const peData = peMap.get(s.code) || { pe: null, pb: null, dy: null };
           const revData = revMap.get(s.code) || { rev: null, revYm: null, revYoY: null, revMoM: null, revCumYoY: null };
+          const exData = exMap ? (exMap.get(s.code) || { exDate: null, exType: null }) : { exDate: null, exType: null };
           results.push({
             ...feat,
             ...peData,
-            ...revData
+            ...revData,
+            ...exData
           });
           continue;
         }
@@ -164,7 +166,7 @@ function parseYahooBatch(chunk, data, peMap, revMap) {
   return { results, failCount };
 }
 
-async function fetchYahooBatch(chunk, headers, hostIndex, peMap, revMap) {
+async function fetchYahooBatch(chunk, headers, hostIndex, peMap, revMap, exMap) {
   const host = YAHOO_HOSTS[hostIndex % YAHOO_HOSTS.length];
   const symbols = chunk.map(s => s.id).join(',');
   const url = `https://${host}/v7/finance/spark?symbols=${symbols}&range=150d&interval=1d`;
@@ -175,7 +177,76 @@ async function fetchYahooBatch(chunk, headers, hostIndex, peMap, revMap) {
     throw new Error(`HTTP ${res.status}`);
   }
   const data = await res.json();
-  return parseYahooBatch(chunk, data, peMap, revMap);
+  return parseYahooBatch(chunk, data, peMap, revMap, exMap);
+}
+
+async function fetchExDividendData() {
+  const exMap = new Map(); // code -> { exDate, exType }
+  // 1. TWSE
+  try {
+    console.log("[ExDividend] Fetching TWSE Ex-Dividend schedule...");
+    const url = "https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL";
+    const res = await fetchWithRetry(url, {}, { label: "TWSE Ex-Dividend API", retries: 3, baseDelayMs: 1000 });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach(item => {
+        const code = item.Code;
+        if (!code) return;
+        const rawDate = item.Date || "";
+        let exDate = "";
+        if (rawDate.length === 7) {
+          const y = parseInt(rawDate.substring(0, 3)) + 1911;
+          const m = rawDate.substring(3, 5);
+          const d = rawDate.substring(5, 7);
+          exDate = `${y}-${m}-${d}`;
+        } else if (rawDate.length === 6) {
+          const y = parseInt(rawDate.substring(0, 2)) + 1911;
+          const m = rawDate.substring(2, 4);
+          const d = rawDate.substring(4, 6);
+          exDate = `${y}-${m}-${d}`;
+        }
+        const exType = item.Exdividend || "";
+        exMap.set(code, { exDate, exType });
+      });
+      console.log(`[ExDividend] TWSE success: ${data.length} items.`);
+    }
+  } catch (e) {
+    console.error("[ExDividend] TWSE fetch error:", e.message);
+  }
+
+  // 2. TPEX
+  try {
+    console.log("[ExDividend] Fetching TPEX Ex-Dividend schedule...");
+    const url = "https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost";
+    const res = await fetchWithRetry(url, {}, { label: "TPEX Ex-Dividend API", retries: 3, baseDelayMs: 1000 });
+    if (res.ok) {
+      const data = await res.json();
+      data.forEach(item => {
+        const code = item.SecuritiesCompanyCode;
+        if (!code) return;
+        const rawDate = item.ExRrightsExDividendDate || "";
+        let exDate = "";
+        if (rawDate.length === 7) {
+          const y = parseInt(rawDate.substring(0, 3)) + 1911;
+          const m = rawDate.substring(3, 5);
+          const d = rawDate.substring(5, 7);
+          exDate = `${y}-${m}-${d}`;
+        } else if (rawDate.length === 6) {
+          const y = parseInt(rawDate.substring(0, 2)) + 1911;
+          const m = rawDate.substring(2, 4);
+          const d = rawDate.substring(4, 6);
+          exDate = `${y}-${m}-${d}`;
+        }
+        const exType = item.ExRrightsExDividend || "";
+        exMap.set(code, { exDate, exType });
+      });
+      console.log(`[ExDividend] TPEX success: ${data.length} items.`);
+    }
+  } catch (e) {
+    console.error("[ExDividend] TPEX fetch error:", e.message);
+  }
+
+  return exMap;
 }
 
 async function fetchPEData() {
@@ -366,6 +437,7 @@ async function sync() {
   const peMap = await fetchPEData();
   const revMap = await fetchRevenueData();
   const volMap = await fetchVolumeData();
+  const exMap = await fetchExDividendData();
 
   // 2. Fetch Yahoo Finance Spark data & calculate features
   console.log(`[Yahoo Spark] Fetching prices for ${list.length} stocks...`);
@@ -380,7 +452,7 @@ async function sync() {
     const chunk = list.slice(i, i + batchSize);
 
     try {
-      const { results, failCount: batchFails } = await fetchYahooBatch(chunk, headers, batchIndex, peMap, revMap);
+      const { results, failCount: batchFails } = await fetchYahooBatch(chunk, headers, batchIndex, peMap, revMap, exMap);
       scanResults.push(...results);
       successCount += results.length;
       failCount += batchFails;
@@ -409,7 +481,7 @@ async function sync() {
     for (let j = 0; j < failedChunks.length; j++) {
       const { chunk, startIndex } = failedChunks[j];
       try {
-        const { results, failCount: batchFails } = await fetchYahooBatch(chunk, headers, batchIndex + j + 1, peMap, revMap);
+        const { results, failCount: batchFails } = await fetchYahooBatch(chunk, headers, batchIndex + j + 1, peMap, revMap, exMap);
         scanResults.push(...results);
         successCount += results.length;
         failCount -= chunk.length;
@@ -461,6 +533,14 @@ async function sync() {
     } else {
       r.volLots = r.volLots || 0;
       r.turnMillion = r.turnMillion || 0;
+    }
+    const exData = exMap.get(r.code);
+    if (exData) {
+      r.exDate = exData.exDate;
+      r.exType = exData.exType;
+    } else {
+      r.exDate = r.exDate || null;
+      r.exType = r.exType || null;
     }
   }
 

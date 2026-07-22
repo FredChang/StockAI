@@ -13,8 +13,8 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0],
-  version: 'v3.1.0-Nitro',
-  lastUpdate: '2026.07.17',
+  version: 'v3.2.0-Nitro',
+  lastUpdate: '2026.07.22',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo',
@@ -1077,6 +1077,11 @@ function renderFinancialGrid(s) {
         <div class="financial-card-title">單月營收 (${s.revYm || '--'})</div>
         <div class="financial-card-value">${formatRevenue(s.rev)}</div>
         <div class="financial-card-sub">年增: ${formatChange(s.revYoY)} | 月增: ${formatChange(s.revMoM)}</div>
+    </div>
+    <div class="financial-card">
+        <div class="financial-card-title">除權息預告</div>
+        <div class="financial-card-value" style="color: #39d2c0;">${s.exDate || '--'}</div>
+        <div class="financial-card-sub">類型: ${s.exType || '--'}</div>
     </div>
     ${renderFairPECard()}
   `;
