@@ -13026,12 +13026,12 @@
     "close": 16.4,
     "ma5": 16.389999999999997,
     "features": [
-      24.90863067263246,
-      17.511382800607034,
-      -5.312598332000606,
-      -5.370334552529887,
-      -3.955679059702677,
-      -11.688004826541631,
+      11.52252114995541,
+      5.780584932824196,
+      -0.13102728026544996,
+      -0.19192299533846713,
+      -1.5712588075718181,
+      -4.336221782478034,
       -2.0895522388059806
     ],
     "pe": 12.6,
@@ -34072,8 +34072,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 681,
-    "turnMillion": 7.79
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "00877.TWO",
@@ -34100,8 +34100,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 3173,
-    "turnMillion": 125.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1240.TWO",
@@ -34128,8 +34128,8 @@
     "revCumYoY": 7.586483288835424,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 1.42
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "009806.TWO",
@@ -34156,8 +34156,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 0.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "00858.TWO",
@@ -34184,8 +34184,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 331,
-    "turnMillion": 11.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "009815.TWO",
@@ -34212,8 +34212,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 2192,
-    "turnMillion": 25.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "00887.TWO",
@@ -34240,8 +34240,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 4123,
-    "turnMillion": 71.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "00955.TWO",
@@ -34268,8 +34268,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 2437,
-    "turnMillion": 37.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "9110.TW",
@@ -34324,8 +34324,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 41,
-    "turnMillion": 0.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "00886.TWO",
@@ -34352,8 +34352,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 33,
-    "turnMillion": 1.52
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1259.TWO",
@@ -34381,7 +34381,7 @@
     "exDate": null,
     "exType": null,
     "volLots": 0,
-    "turnMillion": 0.01
+    "turnMillion": 0
   },
   {
     "id": "1264.TWO",
@@ -34408,8 +34408,8 @@
     "revCumYoY": 6.862621716062202,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 6.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "00888.TWO",
@@ -34436,8 +34436,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 5592,
-    "turnMillion": 183.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "006201.TWO",
@@ -34464,8 +34464,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 214,
-    "turnMillion": 9.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "9103.TW",
@@ -34548,8 +34548,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 945,
-    "turnMillion": 30.54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "9136.TW",
@@ -34604,8 +34604,8 @@
     "revCumYoY": 26.552236821429002,
     "exDate": null,
     "exType": null,
-    "volLots": 197,
-    "turnMillion": 12.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1599.TWO",
@@ -34632,8 +34632,8 @@
     "revCumYoY": 17.90486618742499,
     "exDate": null,
     "exType": null,
-    "volLots": 33,
-    "turnMillion": 0.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1295.TWO",
@@ -34660,8 +34660,8 @@
     "revCumYoY": -2.8727373403119274,
     "exDate": null,
     "exType": null,
-    "volLots": 105,
-    "turnMillion": 4.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1570.TWO",
@@ -34688,8 +34688,8 @@
     "revCumYoY": -3.0493828629920134,
     "exDate": null,
     "exType": null,
-    "volLots": 63,
-    "turnMillion": 2.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1781.TWO",
@@ -34716,8 +34716,8 @@
     "revCumYoY": -8.946970533522471,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.08
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1784.TWO",
@@ -34744,8 +34744,8 @@
     "revCumYoY": 9.414618356272431,
     "exDate": null,
     "exType": null,
-    "volLots": 70,
-    "turnMillion": 4.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1742.TWO",
@@ -34772,8 +34772,8 @@
     "revCumYoY": -42.684014680395556,
     "exDate": null,
     "exType": null,
-    "volLots": 83,
-    "turnMillion": 1.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1593.TWO",
@@ -34800,8 +34800,8 @@
     "revCumYoY": 11.219758414421085,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 0.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1569.TWO",
@@ -34828,8 +34828,8 @@
     "revCumYoY": -5.090616749193082,
     "exDate": null,
     "exType": null,
-    "volLots": 554,
-    "turnMillion": 24.31
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1584.TWO",
@@ -34856,8 +34856,8 @@
     "revCumYoY": -17.18817126382642,
     "exDate": null,
     "exType": null,
-    "volLots": 220,
-    "turnMillion": 3.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1788.TWO",
@@ -34884,8 +34884,8 @@
     "revCumYoY": 5.744167337087691,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 1.66
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1777.TWO",
@@ -34912,8 +34912,8 @@
     "revCumYoY": -5.295184941535981,
     "exDate": null,
     "exType": null,
-    "volLots": 18,
-    "turnMillion": 1.34
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1565.TWO",
@@ -34940,8 +34940,8 @@
     "revCumYoY": -16.860293686377293,
     "exDate": "2026-10-12",
     "exType": "除息",
-    "volLots": 43,
-    "turnMillion": 4.06
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1294.TWO",
@@ -34968,8 +34968,8 @@
     "revCumYoY": 23.200643628337474,
     "exDate": null,
     "exType": null,
-    "volLots": 36,
-    "turnMillion": 2.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1785.TWO",
@@ -34996,8 +34996,8 @@
     "revCumYoY": 68.68290900725333,
     "exDate": null,
     "exType": null,
-    "volLots": 6666,
-    "turnMillion": 674.2
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1586.TWO",
@@ -35024,8 +35024,8 @@
     "revCumYoY": 7.650183841627202,
     "exDate": null,
     "exType": null,
-    "volLots": 1236,
-    "turnMillion": 23.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1268.TWO",
@@ -35052,8 +35052,8 @@
     "revCumYoY": 17.084384043680004,
     "exDate": null,
     "exType": null,
-    "volLots": 42,
-    "turnMillion": 7.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1591.TWO",
@@ -35080,8 +35080,8 @@
     "revCumYoY": 295.6681164268986,
     "exDate": null,
     "exType": null,
-    "volLots": 165,
-    "turnMillion": 5.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1336.TWO",
@@ -35108,8 +35108,8 @@
     "revCumYoY": 7.488358417155009,
     "exDate": null,
     "exType": null,
-    "volLots": 763,
-    "turnMillion": 13.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1580.TWO",
@@ -35136,8 +35136,8 @@
     "revCumYoY": -2.1764795855826082,
     "exDate": null,
     "exType": null,
-    "volLots": 62,
-    "turnMillion": 6.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2643.TWO",
@@ -35164,8 +35164,8 @@
     "revCumYoY": -12.332287547896923,
     "exDate": null,
     "exType": null,
-    "volLots": 4,
-    "turnMillion": 0.28
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1796.TWO",
@@ -35192,8 +35192,8 @@
     "revCumYoY": 1.6400981798878396,
     "exDate": null,
     "exType": null,
-    "volLots": 33,
-    "turnMillion": 0.99
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2063.TWO",
@@ -35220,8 +35220,8 @@
     "revCumYoY": -7.502493742436492,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 0.62
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1799.TWO",
@@ -35248,8 +35248,8 @@
     "revCumYoY": 77.30335427949436,
     "exDate": null,
     "exType": null,
-    "volLots": 95,
-    "turnMillion": 2.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2073.TWO",
@@ -35276,8 +35276,8 @@
     "revCumYoY": 58.04993562212438,
     "exDate": null,
     "exType": null,
-    "volLots": 7,
-    "turnMillion": 0.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2596.TWO",
@@ -35304,8 +35304,8 @@
     "revCumYoY": 4.960745961346448,
     "exDate": null,
     "exType": null,
-    "volLots": 34,
-    "turnMillion": 1.12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2641.TWO",
@@ -35332,8 +35332,8 @@
     "revCumYoY": 10.898833328625216,
     "exDate": null,
     "exType": null,
-    "volLots": 4879,
-    "turnMillion": 87.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1813.TWO",
@@ -35360,8 +35360,8 @@
     "revCumYoY": -9.128453811515813,
     "exDate": null,
     "exType": null,
-    "volLots": 20,
-    "turnMillion": 0.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2640.TWO",
@@ -35388,8 +35388,8 @@
     "revCumYoY": 9.125492244792367,
     "exDate": null,
     "exType": null,
-    "volLots": 28,
-    "turnMillion": 4.24
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2235.TWO",
@@ -35416,8 +35416,8 @@
     "revCumYoY": -2.8144375688321803,
     "exDate": null,
     "exType": null,
-    "volLots": 4,
-    "turnMillion": 0.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2061.TWO",
@@ -35444,8 +35444,8 @@
     "revCumYoY": 15.868930658480394,
     "exDate": null,
     "exType": null,
-    "volLots": 2251,
-    "turnMillion": 110.92
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1815.TWO",
@@ -35472,8 +35472,8 @@
     "revCumYoY": 46.895566129278095,
     "exDate": null,
     "exType": null,
-    "volLots": 70435,
-    "turnMillion": 7048.96
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2035.TWO",
@@ -35528,8 +35528,8 @@
     "revCumYoY": 26.4679040340416,
     "exDate": "2026-08-24",
     "exType": "除息",
-    "volLots": 805,
-    "turnMillion": 52.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2067.TWO",
@@ -35556,8 +35556,8 @@
     "revCumYoY": -10.145539617270545,
     "exDate": null,
     "exType": null,
-    "volLots": 119,
-    "turnMillion": 0.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2221.TWO",
@@ -35584,8 +35584,8 @@
     "revCumYoY": 21.732227588680473,
     "exDate": null,
     "exType": null,
-    "volLots": 332,
-    "turnMillion": 17.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2065.TWO",
@@ -35612,8 +35612,8 @@
     "revCumYoY": 8.306384168439122,
     "exDate": null,
     "exType": null,
-    "volLots": 27,
-    "turnMillion": 0.96
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2066.TWO",
@@ -35640,8 +35640,8 @@
     "revCumYoY": 8.272808330127491,
     "exDate": "2026-08-21",
     "exType": "除息",
-    "volLots": 131,
-    "turnMillion": 7.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2064.TWO",
@@ -35696,8 +35696,8 @@
     "revCumYoY": 46.77438410988005,
     "exDate": null,
     "exType": null,
-    "volLots": 92,
-    "turnMillion": 2.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2751.TWO",
@@ -35724,8 +35724,8 @@
     "revCumYoY": 28.082712825967832,
     "exDate": "2026-08-31",
     "exType": "除息",
-    "volLots": 5,
-    "turnMillion": 0.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2752.TWO",
@@ -35752,8 +35752,8 @@
     "revCumYoY": 10.63279556592088,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2740.TWO",
@@ -35780,8 +35780,8 @@
     "revCumYoY": -61.034303233643776,
     "exDate": null,
     "exType": null,
-    "volLots": 6,
-    "turnMillion": 0.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2724.TWO",
@@ -35808,8 +35808,8 @@
     "revCumYoY": 44.627571359408314,
     "exDate": null,
     "exType": null,
-    "volLots": 51,
-    "turnMillion": 0.54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2736.TWO",
@@ -35836,8 +35836,8 @@
     "revCumYoY": 13.605925155578666,
     "exDate": null,
     "exType": null,
-    "volLots": 17,
-    "turnMillion": 0.2
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2743.TWO",
@@ -35864,8 +35864,8 @@
     "revCumYoY": 0.8182218367365398,
     "exDate": null,
     "exType": null,
-    "volLots": 48,
-    "turnMillion": 2.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2719.TWO",
@@ -35892,8 +35892,8 @@
     "revCumYoY": -23.20639464463553,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2734.TWO",
@@ -35920,8 +35920,8 @@
     "revCumYoY": 29.58450042282434,
     "exDate": null,
     "exType": null,
-    "volLots": 45,
-    "turnMillion": 0.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2732.TWO",
@@ -35948,8 +35948,8 @@
     "revCumYoY": 32.07631568297084,
     "exDate": "2026-09-03",
     "exType": "除息",
-    "volLots": 18,
-    "turnMillion": 1.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2924.TWO",
@@ -35976,8 +35976,8 @@
     "revCumYoY": 8.03218328105823,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2755.TWO",
@@ -36004,8 +36004,8 @@
     "revCumYoY": 19.25351694046418,
     "exDate": null,
     "exType": null,
-    "volLots": 21,
-    "turnMillion": 2.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2745.TWO",
@@ -36032,8 +36032,8 @@
     "revCumYoY": 16.218307898902065,
     "exDate": null,
     "exType": null,
-    "volLots": 51,
-    "turnMillion": 4.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2718.TWO",
@@ -36060,8 +36060,8 @@
     "revCumYoY": -89.10525167931605,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 97,
-    "turnMillion": 4.85
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2916.TWO",
@@ -36088,8 +36088,8 @@
     "revCumYoY": 1.0980283018782682,
     "exDate": null,
     "exType": null,
-    "volLots": 26,
-    "turnMillion": 1.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2729.TWO",
@@ -36116,8 +36116,8 @@
     "revCumYoY": 6.544770212694297,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 11,
-    "turnMillion": 1.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2756.TWO",
@@ -36144,8 +36144,8 @@
     "revCumYoY": 17.510733259708942,
     "exDate": null,
     "exType": null,
-    "volLots": 182,
-    "turnMillion": 11.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2726.TWO",
@@ -36172,8 +36172,8 @@
     "revCumYoY": -8.714377087627033,
     "exDate": null,
     "exType": null,
-    "volLots": 75,
-    "turnMillion": 0.64
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2937.TWO",
@@ -36200,8 +36200,8 @@
     "revCumYoY": 13.609805497154557,
     "exDate": "2026-08-31",
     "exType": "除權",
-    "volLots": 12,
-    "turnMillion": 0.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2926.TWO",
@@ -36228,8 +36228,8 @@
     "revCumYoY": 4.540301234632516,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.34
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2754.TWO",
@@ -36256,8 +36256,8 @@
     "revCumYoY": 6.239058374578058,
     "exDate": "2026-08-13",
     "exType": "除息",
-    "volLots": 11,
-    "turnMillion": 0.76
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2941.TWO",
@@ -36312,8 +36312,8 @@
     "revCumYoY": 14.677636408123318,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3064.TWO",
@@ -36368,8 +36368,8 @@
     "revCumYoY": 1.9216232158342192,
     "exDate": "2026-08-10",
     "exType": "除權息",
-    "volLots": 33,
-    "turnMillion": 1.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2947.TWO",
@@ -36396,8 +36396,8 @@
     "revCumYoY": 7.711458763438394,
     "exDate": null,
     "exType": null,
-    "volLots": 4,
-    "turnMillion": 0.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3078.TWO",
@@ -36424,8 +36424,8 @@
     "revCumYoY": -46.64761697600575,
     "exDate": "2026-09-01",
     "exType": "除息",
-    "volLots": 376,
-    "turnMillion": 20
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3073.TWO",
@@ -36452,8 +36452,8 @@
     "revCumYoY": 314.653396396135,
     "exDate": null,
     "exType": null,
-    "volLots": 68,
-    "turnMillion": 1.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3085.TWO",
@@ -36508,8 +36508,8 @@
     "revCumYoY": 1.9934560172488793,
     "exDate": null,
     "exType": null,
-    "volLots": 394,
-    "turnMillion": 9.16
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3071.TWO",
@@ -36536,8 +36536,8 @@
     "revCumYoY": 35.421848030642344,
     "exDate": null,
     "exType": null,
-    "volLots": 139,
-    "turnMillion": 3.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "2949.TWO",
@@ -36564,8 +36564,8 @@
     "revCumYoY": 24.211593825811526,
     "exDate": null,
     "exType": null,
-    "volLots": 4,
-    "turnMillion": 0.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3093.TWO",
@@ -36592,8 +36592,8 @@
     "revCumYoY": -26.399831686472524,
     "exDate": null,
     "exType": null,
-    "volLots": 159,
-    "turnMillion": 7.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3095.TWO",
@@ -36620,8 +36620,8 @@
     "revCumYoY": 17.93781352064017,
     "exDate": null,
     "exType": null,
-    "volLots": 4,
-    "turnMillion": 0.15
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3081.TWO",
@@ -36648,8 +36648,8 @@
     "revCumYoY": 120.95247227766829,
     "exDate": null,
     "exType": null,
-    "volLots": 5627,
-    "turnMillion": 16544.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3083.TWO",
@@ -36676,8 +36676,8 @@
     "revCumYoY": 3.739130014919824,
     "exDate": null,
     "exType": null,
-    "volLots": 90,
-    "turnMillion": 2.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3114.TWO",
@@ -36704,8 +36704,8 @@
     "revCumYoY": 4.4688795956797644,
     "exDate": null,
     "exType": null,
-    "volLots": 304,
-    "turnMillion": 10.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3086.TWO",
@@ -36732,8 +36732,8 @@
     "revCumYoY": -17.590958742962776,
     "exDate": null,
     "exType": null,
-    "volLots": 68,
-    "turnMillion": 1.8
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3115.TWO",
@@ -36788,8 +36788,8 @@
     "revCumYoY": 45.47725625456599,
     "exDate": null,
     "exType": null,
-    "volLots": 750,
-    "turnMillion": 94.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3105.TWO",
@@ -36816,8 +36816,8 @@
     "revCumYoY": 33.42387468491996,
     "exDate": null,
     "exType": null,
-    "volLots": 28852,
-    "turnMillion": 11302.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3206.TWO",
@@ -36844,8 +36844,8 @@
     "revCumYoY": -2.674011867925579,
     "exDate": null,
     "exType": null,
-    "volLots": 17,
-    "turnMillion": 0.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3122.TWO",
@@ -36872,8 +36872,8 @@
     "revCumYoY": -3.8225383946380305,
     "exDate": null,
     "exType": null,
-    "volLots": 74,
-    "turnMillion": 1.88
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3118.TWO",
@@ -36900,8 +36900,8 @@
     "revCumYoY": -5.800253805251966,
     "exDate": null,
     "exType": null,
-    "volLots": 17,
-    "turnMillion": 0.54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3162.TWO",
@@ -36928,8 +36928,8 @@
     "revCumYoY": 24.597030018535595,
     "exDate": null,
     "exType": null,
-    "volLots": 441,
-    "turnMillion": 27.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3128.TWO",
@@ -36956,8 +36956,8 @@
     "revCumYoY": -15.380714438582288,
     "exDate": "2026-08-26",
     "exType": "除權息",
-    "volLots": 69,
-    "turnMillion": 1.52
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3152.TWO",
@@ -36984,8 +36984,8 @@
     "revCumYoY": 5.3769443321123775,
     "exDate": null,
     "exType": null,
-    "volLots": 70,
-    "turnMillion": 15.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3188.TWO",
@@ -37012,8 +37012,8 @@
     "revCumYoY": 253.6239479606622,
     "exDate": null,
     "exType": null,
-    "volLots": 318,
-    "turnMillion": 7.58
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3169.TWO",
@@ -37040,8 +37040,8 @@
     "revCumYoY": 4.744938779592245,
     "exDate": null,
     "exType": null,
-    "volLots": 166,
-    "turnMillion": 16.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3171.TWO",
@@ -37068,8 +37068,8 @@
     "revCumYoY": 76.53120414179412,
     "exDate": null,
     "exType": null,
-    "volLots": 14,
-    "turnMillion": 0.91
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3176.TWO",
@@ -37096,8 +37096,8 @@
     "revCumYoY": -34.057433441173664,
     "exDate": null,
     "exType": null,
-    "volLots": 539,
-    "turnMillion": 18.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3141.TWO",
@@ -37124,8 +37124,8 @@
     "revCumYoY": 16.008459948026328,
     "exDate": null,
     "exType": null,
-    "volLots": 527,
-    "turnMillion": 37.42
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3147.TWO",
@@ -37152,8 +37152,8 @@
     "revCumYoY": 101.16184418007562,
     "exDate": "2026-08-21",
     "exType": "除息",
-    "volLots": 416,
-    "turnMillion": 94.69
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3205.TWO",
@@ -37180,8 +37180,8 @@
     "revCumYoY": 46.522835438586675,
     "exDate": null,
     "exType": null,
-    "volLots": 48,
-    "turnMillion": 2.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3207.TWO",
@@ -37208,8 +37208,8 @@
     "revCumYoY": -6.430923437546514,
     "exDate": null,
     "exType": null,
-    "volLots": 87,
-    "turnMillion": 3.69
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3191.TWO",
@@ -37236,8 +37236,8 @@
     "revCumYoY": 5.740937583819278,
     "exDate": null,
     "exType": null,
-    "volLots": 26,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3131.TWO",
@@ -37264,8 +37264,8 @@
     "revCumYoY": 20.06965890533005,
     "exDate": null,
     "exType": null,
-    "volLots": 290,
-    "turnMillion": 717.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3158.TWO",
@@ -37292,8 +37292,8 @@
     "revCumYoY": 18.950579161669765,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3211.TWO",
@@ -37320,8 +37320,8 @@
     "revCumYoY": 21.66222759286037,
     "exDate": null,
     "exType": null,
-    "volLots": 2739,
-    "turnMillion": 1057.61
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3178.TWO",
@@ -37348,8 +37348,8 @@
     "revCumYoY": 6.110496899450669,
     "exDate": null,
     "exType": null,
-    "volLots": 14,
-    "turnMillion": 0.83
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3163.TWO",
@@ -37376,8 +37376,8 @@
     "revCumYoY": 18.955677483835437,
     "exDate": null,
     "exType": null,
-    "volLots": 1607,
-    "turnMillion": 1161.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3228.TWO",
@@ -37404,8 +37404,8 @@
     "revCumYoY": 12.870337380436869,
     "exDate": null,
     "exType": null,
-    "volLots": 190,
-    "turnMillion": 26.82
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3217.TWO",
@@ -37432,8 +37432,8 @@
     "revCumYoY": -4.150413481042285,
     "exDate": null,
     "exType": null,
-    "volLots": 347,
-    "turnMillion": 47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3236.TWO",
@@ -37460,8 +37460,8 @@
     "revCumYoY": 21.413487016199795,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 1510,
-    "turnMillion": 67.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3232.TWO",
@@ -37488,8 +37488,8 @@
     "revCumYoY": 6.936589751380087,
     "exDate": "2026-08-13",
     "exType": "除息",
-    "volLots": 13,
-    "turnMillion": 0.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3265.TWO",
@@ -37516,8 +37516,8 @@
     "revCumYoY": 18.372044755561426,
     "exDate": null,
     "exType": null,
-    "volLots": 3412,
-    "turnMillion": 595.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3224.TWO",
@@ -37544,8 +37544,8 @@
     "revCumYoY": 14.997608885314971,
     "exDate": null,
     "exType": null,
-    "volLots": 15,
-    "turnMillion": 0.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3227.TWO",
@@ -37572,8 +37572,8 @@
     "revCumYoY": 5.404461483235662,
     "exDate": null,
     "exType": null,
-    "volLots": 817,
-    "turnMillion": 161.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3234.TWO",
@@ -37600,8 +37600,8 @@
     "revCumYoY": 16.40202694424433,
     "exDate": "2026-08-26",
     "exType": "除權",
-    "volLots": 5658,
-    "turnMillion": 833.62
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3226.TWO",
@@ -37628,8 +37628,8 @@
     "revCumYoY": -24.81611408656199,
     "exDate": null,
     "exType": null,
-    "volLots": 21,
-    "turnMillion": 1.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3221.TWO",
@@ -37656,8 +37656,8 @@
     "revCumYoY": 13.163776475287658,
     "exDate": null,
     "exType": null,
-    "volLots": 1585,
-    "turnMillion": 74.71
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3272.TWO",
@@ -37684,8 +37684,8 @@
     "revCumYoY": -4.193162325892557,
     "exDate": null,
     "exType": null,
-    "volLots": 65,
-    "turnMillion": 0.92
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3259.TWO",
@@ -37712,8 +37712,8 @@
     "revCumYoY": 1.5947693495464197,
     "exDate": null,
     "exType": null,
-    "volLots": 342,
-    "turnMillion": 4.31
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3252.TWO",
@@ -37740,8 +37740,8 @@
     "revCumYoY": -2.8468939205440824,
     "exDate": null,
     "exType": null,
-    "volLots": 76,
-    "turnMillion": 1.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3213.TWO",
@@ -37768,8 +37768,8 @@
     "revCumYoY": 20.35700956406458,
     "exDate": null,
     "exType": null,
-    "volLots": 284,
-    "turnMillion": 37.71
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3219.TWO",
@@ -37796,8 +37796,8 @@
     "revCumYoY": 34.71437649532478,
     "exDate": null,
     "exType": null,
-    "volLots": 153,
-    "turnMillion": 10.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3268.TWO",
@@ -37824,8 +37824,8 @@
     "revCumYoY": 5.522851993779753,
     "exDate": null,
     "exType": null,
-    "volLots": 168,
-    "turnMillion": 3.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3264.TWO",
@@ -37852,8 +37852,8 @@
     "revCumYoY": 31.90083312437352,
     "exDate": null,
     "exType": null,
-    "volLots": 4173,
-    "turnMillion": 889.92
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3260.TWO",
@@ -37880,8 +37880,8 @@
     "revCumYoY": 206.7316700495354,
     "exDate": null,
     "exType": null,
-    "volLots": 9599,
-    "turnMillion": 3764.95
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3230.TWO",
@@ -37908,8 +37908,8 @@
     "revCumYoY": 1.0493244329731133,
     "exDate": null,
     "exType": null,
-    "volLots": 1073,
-    "turnMillion": 46.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3218.TWO",
@@ -37936,8 +37936,8 @@
     "revCumYoY": 5.465591034125203,
     "exDate": null,
     "exType": null,
-    "volLots": 190,
-    "turnMillion": 25.5
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3290.TWO",
@@ -37964,8 +37964,8 @@
     "revCumYoY": 85.0253355188165,
     "exDate": null,
     "exType": null,
-    "volLots": 455,
-    "turnMillion": 23.63
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3332.TWO",
@@ -37992,8 +37992,8 @@
     "revCumYoY": 14.456538777072295,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3306.TWO",
@@ -38020,8 +38020,8 @@
     "revCumYoY": 8.465854546658282,
     "exDate": null,
     "exType": null,
-    "volLots": 103,
-    "turnMillion": 4.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3324.TWO",
@@ -38048,8 +38048,8 @@
     "revCumYoY": 83.28059163271227,
     "exDate": null,
     "exType": null,
-    "volLots": 1655,
-    "turnMillion": 1647.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3323.TWO",
@@ -38076,8 +38076,8 @@
     "revCumYoY": -11.615549808324715,
     "exDate": null,
     "exType": null,
-    "volLots": 334,
-    "turnMillion": 10.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3317.TWO",
@@ -38104,8 +38104,8 @@
     "revCumYoY": 7.959692065587676,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 908,
-    "turnMillion": 62.61
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3310.TWO",
@@ -38132,8 +38132,8 @@
     "revCumYoY": 2.0578355529425623,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 1.64
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3303.TWO",
@@ -38160,8 +38160,8 @@
     "revCumYoY": 18.960462424601914,
     "exDate": null,
     "exType": null,
-    "volLots": 171,
-    "turnMillion": 8.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3285.TWO",
@@ -38188,8 +38188,8 @@
     "revCumYoY": 84.40931220579608,
     "exDate": null,
     "exType": null,
-    "volLots": 28,
-    "turnMillion": 1.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3313.TWO",
@@ -38216,8 +38216,8 @@
     "revCumYoY": 304.74049856967713,
     "exDate": null,
     "exType": null,
-    "volLots": 94,
-    "turnMillion": 0.97
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3289.TWO",
@@ -38244,8 +38244,8 @@
     "revCumYoY": -3.037712746774625,
     "exDate": null,
     "exType": null,
-    "volLots": 673,
-    "turnMillion": 91.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3294.TWO",
@@ -38272,8 +38272,8 @@
     "revCumYoY": -5.610897498693835,
     "exDate": null,
     "exType": null,
-    "volLots": 281,
-    "turnMillion": 8.65
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3325.TWO",
@@ -38300,8 +38300,8 @@
     "revCumYoY": -45.86551713086119,
     "exDate": null,
     "exType": null,
-    "volLots": 147,
-    "turnMillion": 1.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3322.TWO",
@@ -38328,8 +38328,8 @@
     "revCumYoY": 8.626018512501467,
     "exDate": null,
     "exType": null,
-    "volLots": 283,
-    "turnMillion": 3.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3293.TWO",
@@ -38356,8 +38356,8 @@
     "revCumYoY": 17.132813146408,
     "exDate": null,
     "exType": null,
-    "volLots": 1511,
-    "turnMillion": 1108.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3288.TWO",
@@ -38384,8 +38384,8 @@
     "revCumYoY": 15.515944059572922,
     "exDate": null,
     "exType": null,
-    "volLots": 115,
-    "turnMillion": 2.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3284.TWO",
@@ -38412,8 +38412,8 @@
     "revCumYoY": -2.513013209711183,
     "exDate": null,
     "exType": null,
-    "volLots": 252,
-    "turnMillion": 5.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3276.TWO",
@@ -38440,8 +38440,8 @@
     "revCumYoY": 36.22245533454007,
     "exDate": null,
     "exType": null,
-    "volLots": 141,
-    "turnMillion": 2.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3297.TWO",
@@ -38468,8 +38468,8 @@
     "revCumYoY": 22.641788319581266,
     "exDate": null,
     "exType": null,
-    "volLots": 30,
-    "turnMillion": 0.83
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3287.TWO",
@@ -38496,8 +38496,8 @@
     "revCumYoY": 5.372445207996927,
     "exDate": "2026-08-26",
     "exType": "除息",
-    "volLots": 1027,
-    "turnMillion": 38.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3441.TWO",
@@ -38524,8 +38524,8 @@
     "revCumYoY": 33.425877171987935,
     "exDate": null,
     "exType": null,
-    "volLots": 12820,
-    "turnMillion": 1118.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3379.TWO",
@@ -38552,8 +38552,8 @@
     "revCumYoY": -32.97375958606671,
     "exDate": null,
     "exType": null,
-    "volLots": 137,
-    "turnMillion": 3.99
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3390.TWO",
@@ -38580,8 +38580,8 @@
     "revCumYoY": 30.633764266880764,
     "exDate": "2026-08-11",
     "exType": "除息",
-    "volLots": 144,
-    "turnMillion": 3.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3388.TWO",
@@ -38608,8 +38608,8 @@
     "revCumYoY": 19.208656249505086,
     "exDate": null,
     "exType": null,
-    "volLots": 11803,
-    "turnMillion": 1173.43
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3434.TWO",
@@ -38636,8 +38636,8 @@
     "revCumYoY": -37.138999962002934,
     "exDate": "2026-08-24",
     "exType": "除息",
-    "volLots": 51,
-    "turnMillion": 1.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3430.TWO",
@@ -38664,8 +38664,8 @@
     "revCumYoY": 26.298367727787703,
     "exDate": null,
     "exType": null,
-    "volLots": 862,
-    "turnMillion": 101.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3438.TWO",
@@ -38692,8 +38692,8 @@
     "revCumYoY": -18.948636560831204,
     "exDate": null,
     "exType": null,
-    "volLots": 47,
-    "turnMillion": 2.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3444.TWO",
@@ -38720,8 +38720,8 @@
     "revCumYoY": 9.065006885094805,
     "exDate": null,
     "exType": null,
-    "volLots": 210,
-    "turnMillion": 16.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3363.TWO",
@@ -38748,8 +38748,8 @@
     "revCumYoY": -14.302419953049595,
     "exDate": null,
     "exType": null,
-    "volLots": 3957,
-    "turnMillion": 2406.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3354.TWO",
@@ -38776,8 +38776,8 @@
     "revCumYoY": 30.62933756606609,
     "exDate": null,
     "exType": null,
-    "volLots": 61,
-    "turnMillion": 1.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3339.TWO",
@@ -38804,8 +38804,8 @@
     "revCumYoY": 0.3303160700127817,
     "exDate": null,
     "exType": null,
-    "volLots": 1383,
-    "turnMillion": 54.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3349.TWO",
@@ -38832,8 +38832,8 @@
     "revCumYoY": -33.29275375634534,
     "exDate": null,
     "exType": null,
-    "volLots": 146,
-    "turnMillion": 3.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3373.TWO",
@@ -38860,8 +38860,8 @@
     "revCumYoY": 12.772428913519123,
     "exDate": "2026-08-28",
     "exType": "除息",
-    "volLots": 48,
-    "turnMillion": 0.79
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3362.TWO",
@@ -38888,8 +38888,8 @@
     "revCumYoY": -1.2867574454435668,
     "exDate": null,
     "exType": null,
-    "volLots": 4710,
-    "turnMillion": 851.66
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3402.TWO",
@@ -38916,8 +38916,8 @@
     "revCumYoY": 19.608168765319647,
     "exDate": null,
     "exType": null,
-    "volLots": 181,
-    "turnMillion": 22.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3357.TWO",
@@ -38944,8 +38944,8 @@
     "revCumYoY": 29.2237005554902,
     "exDate": null,
     "exType": null,
-    "volLots": 1492,
-    "turnMillion": 322.83
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3360.TWO",
@@ -38972,8 +38972,8 @@
     "revCumYoY": 64.89115072102275,
     "exDate": null,
     "exType": null,
-    "volLots": 534,
-    "turnMillion": 8.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3372.TWO",
@@ -39000,8 +39000,8 @@
     "revCumYoY": 26.25350835563514,
     "exDate": null,
     "exType": null,
-    "volLots": 344,
-    "turnMillion": 5.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3455.TWO",
@@ -39028,8 +39028,8 @@
     "revCumYoY": -27.920576755617045,
     "exDate": "2026-09-01",
     "exType": "除息",
-    "volLots": 8558,
-    "turnMillion": 2223.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3374.TWO",
@@ -39056,8 +39056,8 @@
     "revCumYoY": 32.61506808727751,
     "exDate": null,
     "exType": null,
-    "volLots": 26947,
-    "turnMillion": 8329.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3467.TWO",
@@ -39084,8 +39084,8 @@
     "revCumYoY": 23.19971108703503,
     "exDate": null,
     "exType": null,
-    "volLots": 41,
-    "turnMillion": 1.86
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3499.TWO",
@@ -39112,8 +39112,8 @@
     "revCumYoY": -15.827250962032434,
     "exDate": null,
     "exType": null,
-    "volLots": 28,
-    "turnMillion": 0.36
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3490.TWO",
@@ -39140,8 +39140,8 @@
     "revCumYoY": 8.723520450691272,
     "exDate": null,
     "exType": null,
-    "volLots": 10288,
-    "turnMillion": 448.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3520.TWO",
@@ -39168,8 +39168,8 @@
     "revCumYoY": 13.100049488617618,
     "exDate": null,
     "exType": null,
-    "volLots": 117,
-    "turnMillion": 2.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3492.TWO",
@@ -39196,8 +39196,8 @@
     "revCumYoY": 0.709718568757329,
     "exDate": "2026-08-28",
     "exType": "除息",
-    "volLots": 579,
-    "turnMillion": 11.66
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3516.TWO",
@@ -39224,8 +39224,8 @@
     "revCumYoY": 23.546354430523852,
     "exDate": null,
     "exType": null,
-    "volLots": 42,
-    "turnMillion": 1.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3485.TWO",
@@ -39252,8 +39252,8 @@
     "revCumYoY": 8.619056060541228,
     "exDate": null,
     "exType": null,
-    "volLots": 101,
-    "turnMillion": 21.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3498.TWO",
@@ -39280,8 +39280,8 @@
     "revCumYoY": 132.44309301641832,
     "exDate": null,
     "exType": null,
-    "volLots": 6626,
-    "turnMillion": 1089.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3511.TWO",
@@ -39308,8 +39308,8 @@
     "revCumYoY": 12.06830637187201,
     "exDate": null,
     "exType": null,
-    "volLots": 107,
-    "turnMillion": 2.12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3508.TWO",
@@ -39336,8 +39336,8 @@
     "revCumYoY": 1.1745600050598721,
     "exDate": null,
     "exType": null,
-    "volLots": 489,
-    "turnMillion": 10.06
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3491.TWO",
@@ -39364,8 +39364,8 @@
     "revCumYoY": 70.78905876182232,
     "exDate": null,
     "exType": null,
-    "volLots": 1369,
-    "turnMillion": 1770.71
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3483.TWO",
@@ -39392,8 +39392,8 @@
     "revCumYoY": -3.397302380934471,
     "exDate": null,
     "exType": null,
-    "volLots": 270,
-    "turnMillion": 19.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3522.TWO",
@@ -39420,8 +39420,8 @@
     "revCumYoY": 8.282436628135796,
     "exDate": null,
     "exType": null,
-    "volLots": 76,
-    "turnMillion": 0.88
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3512.TWO",
@@ -39448,8 +39448,8 @@
     "revCumYoY": -64.2336637611057,
     "exDate": null,
     "exType": null,
-    "volLots": 28,
-    "turnMillion": 0.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3466.TWO",
@@ -39476,8 +39476,8 @@
     "revCumYoY": 214.85839606925202,
     "exDate": null,
     "exType": null,
-    "volLots": 106,
-    "turnMillion": 2.62
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3479.TWO",
@@ -39504,8 +39504,8 @@
     "revCumYoY": 14.59786084335627,
     "exDate": null,
     "exType": null,
-    "volLots": 421,
-    "turnMillion": 54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3484.TWO",
@@ -39532,8 +39532,8 @@
     "revCumYoY": -2.2915850981411974,
     "exDate": null,
     "exType": null,
-    "volLots": 186,
-    "turnMillion": 9.5
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3489.TWO",
@@ -39560,8 +39560,8 @@
     "revCumYoY": 83.30643928975276,
     "exDate": null,
     "exType": null,
-    "volLots": 555,
-    "turnMillion": 13.43
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3465.TWO",
@@ -39588,8 +39588,8 @@
     "revCumYoY": 10.564063446571362,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.24
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3521.TWO",
@@ -39616,8 +39616,8 @@
     "revCumYoY": -94.22158931365077,
     "exDate": null,
     "exType": null,
-    "volLots": 22,
-    "turnMillion": 0.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3570.TWO",
@@ -39644,8 +39644,8 @@
     "revCumYoY": 8.42473649914103,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 2.16
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3527.TWO",
@@ -39672,8 +39672,8 @@
     "revCumYoY": -4.312966641943409,
     "exDate": null,
     "exType": null,
-    "volLots": 53,
-    "turnMillion": 2.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3567.TWO",
@@ -39700,8 +39700,8 @@
     "revCumYoY": 3.647467978624141,
     "exDate": null,
     "exType": null,
-    "volLots": 139,
-    "turnMillion": 3.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3580.TWO",
@@ -39728,8 +39728,8 @@
     "revCumYoY": -10.883200611374658,
     "exDate": null,
     "exType": null,
-    "volLots": 210,
-    "turnMillion": 17.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3552.TWO",
@@ -39756,8 +39756,8 @@
     "revCumYoY": -3.357948284057542,
     "exDate": null,
     "exType": null,
-    "volLots": 68,
-    "turnMillion": 3.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3526.TWO",
@@ -39784,8 +39784,8 @@
     "revCumYoY": 27.123072046684293,
     "exDate": null,
     "exType": null,
-    "volLots": 334,
-    "turnMillion": 94.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3555.TWO",
@@ -39812,8 +39812,8 @@
     "revCumYoY": 445.848475801221,
     "exDate": null,
     "exType": null,
-    "volLots": 122,
-    "turnMillion": 20.64
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3540.TWO",
@@ -39840,8 +39840,8 @@
     "revCumYoY": -11.423155666104153,
     "exDate": null,
     "exType": null,
-    "volLots": 60,
-    "turnMillion": 1.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3546.TWO",
@@ -39868,8 +39868,8 @@
     "revCumYoY": 43.503456515045194,
     "exDate": null,
     "exType": null,
-    "volLots": 147,
-    "turnMillion": 10.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3577.TWO",
@@ -39896,8 +39896,8 @@
     "revCumYoY": 39.95157212039828,
     "exDate": null,
     "exType": null,
-    "volLots": 488,
-    "turnMillion": 59.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3531.TWO",
@@ -39924,8 +39924,8 @@
     "revCumYoY": -27.81549422306996,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3529.TWO",
@@ -39952,8 +39952,8 @@
     "revCumYoY": 19.718386918531927,
     "exDate": null,
     "exType": null,
-    "volLots": 1970,
-    "turnMillion": 4746.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3551.TWO",
@@ -39980,8 +39980,8 @@
     "revCumYoY": 20.27538715835829,
     "exDate": null,
     "exType": null,
-    "volLots": 254,
-    "turnMillion": 44.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3548.TWO",
@@ -40008,8 +40008,8 @@
     "revCumYoY": -20.66228200515361,
     "exDate": null,
     "exType": null,
-    "volLots": 112,
-    "turnMillion": 8.42
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3537.TWO",
@@ -40036,8 +40036,8 @@
     "revCumYoY": 6.958799822434121,
     "exDate": null,
     "exType": null,
-    "volLots": 461,
-    "turnMillion": 24.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3564.TWO",
@@ -40064,8 +40064,8 @@
     "revCumYoY": 23.25096205974102,
     "exDate": null,
     "exType": null,
-    "volLots": 58,
-    "turnMillion": 2.64
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3556.TWO",
@@ -40092,8 +40092,8 @@
     "revCumYoY": 30.02110069166287,
     "exDate": null,
     "exType": null,
-    "volLots": 235,
-    "turnMillion": 14.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3523.TWO",
@@ -40120,8 +40120,8 @@
     "revCumYoY": -6.061820263308529,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.08
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3541.TWO",
@@ -40148,8 +40148,8 @@
     "revCumYoY": -4.643862274046286,
     "exDate": null,
     "exType": null,
-    "volLots": 35,
-    "turnMillion": 0.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3558.TWO",
@@ -40176,8 +40176,8 @@
     "revCumYoY": -14.050158813670347,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 115,
-    "turnMillion": 14.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3666.TWO",
@@ -40204,8 +40204,8 @@
     "revCumYoY": -5.855673715849204,
     "exDate": null,
     "exType": null,
-    "volLots": 41,
-    "turnMillion": 1.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3672.TWO",
@@ -40232,8 +40232,8 @@
     "revCumYoY": -4.828716115579386,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3664.TWO",
@@ -40288,8 +40288,8 @@
     "revCumYoY": -27.88191205862758,
     "exDate": null,
     "exType": null,
-    "volLots": 539,
-    "turnMillion": 19.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3663.TWO",
@@ -40316,8 +40316,8 @@
     "revCumYoY": 42.69974821276856,
     "exDate": null,
     "exType": null,
-    "volLots": 296,
-    "turnMillion": 18.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3632.TWO",
@@ -40344,8 +40344,8 @@
     "revCumYoY": 19.654027065717933,
     "exDate": null,
     "exType": null,
-    "volLots": 19,
-    "turnMillion": 0.14
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3630.TWO",
@@ -40372,8 +40372,8 @@
     "revCumYoY": 8.49863382859118,
     "exDate": null,
     "exType": null,
-    "volLots": 569,
-    "turnMillion": 14.62
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3631.TWO",
@@ -40400,8 +40400,8 @@
     "revCumYoY": 43.019715497878714,
     "exDate": null,
     "exType": null,
-    "volLots": 773,
-    "turnMillion": 31.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3629.TWO",
@@ -40428,8 +40428,8 @@
     "revCumYoY": 4456.313993174062,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3628.TWO",
@@ -40456,8 +40456,8 @@
     "revCumYoY": 17.358529744249324,
     "exDate": null,
     "exType": null,
-    "volLots": 45,
-    "turnMillion": 3.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3624.TWO",
@@ -40484,8 +40484,8 @@
     "revCumYoY": 25.758498314731263,
     "exDate": null,
     "exType": null,
-    "volLots": 3390,
-    "turnMillion": 293.76
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3587.TWO",
@@ -40512,8 +40512,8 @@
     "revCumYoY": 17.635630599474858,
     "exDate": null,
     "exType": null,
-    "volLots": 529,
-    "turnMillion": 131.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3611.TWO",
@@ -40540,8 +40540,8 @@
     "revCumYoY": 2.5855501643015666,
     "exDate": null,
     "exType": null,
-    "volLots": 28,
-    "turnMillion": 5.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3609.TWO",
@@ -40568,8 +40568,8 @@
     "revCumYoY": -33.28248805721051,
     "exDate": null,
     "exType": null,
-    "volLots": 165,
-    "turnMillion": 4.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3594.TWO",
@@ -40596,8 +40596,8 @@
     "revCumYoY": 42.84900257523927,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 1023,
-    "turnMillion": 52.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3646.TWO",
@@ -40624,8 +40624,8 @@
     "revCumYoY": 15.737523531061,
     "exDate": "2026-08-24",
     "exType": "除息",
-    "volLots": 9,
-    "turnMillion": 0.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3623.TWO",
@@ -40652,8 +40652,8 @@
     "revCumYoY": -15.500653942497395,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.24
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3597.TWO",
@@ -40680,8 +40680,8 @@
     "revCumYoY": 17.538235690639183,
     "exDate": null,
     "exType": null,
-    "volLots": 33,
-    "turnMillion": 0.89
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3625.TWO",
@@ -40708,8 +40708,8 @@
     "revCumYoY": 4.334547163162222,
     "exDate": null,
     "exType": null,
-    "volLots": 699,
-    "turnMillion": 9.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3581.TWO",
@@ -40736,8 +40736,8 @@
     "revCumYoY": 34.99435285869232,
     "exDate": null,
     "exType": null,
-    "volLots": 533,
-    "turnMillion": 58.06
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3713.TWO",
@@ -40764,8 +40764,8 @@
     "revCumYoY": 82.85172097096945,
     "exDate": null,
     "exType": null,
-    "volLots": 6,
-    "turnMillion": 0.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3691.TWO",
@@ -40792,8 +40792,8 @@
     "revCumYoY": 127.67361077252771,
     "exDate": null,
     "exType": null,
-    "volLots": 608,
-    "turnMillion": 62.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3707.TWO",
@@ -40820,8 +40820,8 @@
     "revCumYoY": 25.932527721914624,
     "exDate": null,
     "exType": null,
-    "volLots": 4492,
-    "turnMillion": 290.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4107.TWO",
@@ -40848,8 +40848,8 @@
     "revCumYoY": 8.20270345169357,
     "exDate": null,
     "exType": null,
-    "volLots": 46,
-    "turnMillion": 5.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3684.TWO",
@@ -40876,8 +40876,8 @@
     "revCumYoY": 5.989871827284777,
     "exDate": null,
     "exType": null,
-    "volLots": 7,
-    "turnMillion": 0.37
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4102.TWO",
@@ -40904,8 +40904,8 @@
     "revCumYoY": 8.835377132287457,
     "exDate": null,
     "exType": null,
-    "volLots": 18,
-    "turnMillion": 0.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4113.TWO",
@@ -40932,8 +40932,8 @@
     "revCumYoY": 41.56907134903325,
     "exDate": null,
     "exType": null,
-    "volLots": 68,
-    "turnMillion": 1.01
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4111.TWO",
@@ -40960,8 +40960,8 @@
     "revCumYoY": 5.328975063764456,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 62,
-    "turnMillion": 1.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3710.TWO",
@@ -40988,8 +40988,8 @@
     "revCumYoY": 13.017535004759893,
     "exDate": null,
     "exType": null,
-    "volLots": 191,
-    "turnMillion": 1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4105.TWO",
@@ -41016,8 +41016,8 @@
     "revCumYoY": 7.404116058558598,
     "exDate": null,
     "exType": null,
-    "volLots": 292,
-    "turnMillion": 22.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3693.TWO",
@@ -41044,8 +41044,8 @@
     "revCumYoY": 11.055660113139236,
     "exDate": "2026-08-28",
     "exType": "除息",
-    "volLots": 781,
-    "turnMillion": 411.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3709.TWO",
@@ -41072,8 +41072,8 @@
     "revCumYoY": 41.145846312940165,
     "exDate": "2026-08-10",
     "exType": "除息",
-    "volLots": 776,
-    "turnMillion": 53.69
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4114.TWO",
@@ -41100,8 +41100,8 @@
     "revCumYoY": 22.046288990081653,
     "exDate": null,
     "exType": null,
-    "volLots": 813,
-    "turnMillion": 24.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3687.TWO",
@@ -41128,8 +41128,8 @@
     "revCumYoY": 13.868936905075213,
     "exDate": null,
     "exType": null,
-    "volLots": 37,
-    "turnMillion": 2.37
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4116.TWO",
@@ -41156,8 +41156,8 @@
     "revCumYoY": 5.300659065724086,
     "exDate": null,
     "exType": null,
-    "volLots": 17,
-    "turnMillion": 0.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3675.TWO",
@@ -41184,8 +41184,8 @@
     "revCumYoY": 19.015080413014804,
     "exDate": null,
     "exType": null,
-    "volLots": 2323,
-    "turnMillion": 663.15
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4109.TWO",
@@ -41212,8 +41212,8 @@
     "revCumYoY": 14.50646289977445,
     "exDate": null,
     "exType": null,
-    "volLots": 325,
-    "turnMillion": 3.66
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3689.TWO",
@@ -41240,8 +41240,8 @@
     "revCumYoY": 40.78636874283747,
     "exDate": null,
     "exType": null,
-    "volLots": 742,
-    "turnMillion": 80.01
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3680.TWO",
@@ -41268,8 +41268,8 @@
     "revCumYoY": 28.665066968265855,
     "exDate": null,
     "exType": null,
-    "volLots": 1802,
-    "turnMillion": 870.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "3685.TWO",
@@ -41296,8 +41296,8 @@
     "revCumYoY": 32.18368908643905,
     "exDate": null,
     "exType": null,
-    "volLots": 959,
-    "turnMillion": 34.83
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4147.TWO",
@@ -41324,8 +41324,8 @@
     "revCumYoY": 9.668951395011518,
     "exDate": null,
     "exType": null,
-    "volLots": 1698,
-    "turnMillion": 106.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4166.TWO",
@@ -41352,8 +41352,8 @@
     "revCumYoY": 18.331904258642577,
     "exDate": null,
     "exType": null,
-    "volLots": 35,
-    "turnMillion": 0.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4129.TWO",
@@ -41380,8 +41380,8 @@
     "revCumYoY": 14.138856877797211,
     "exDate": null,
     "exType": null,
-    "volLots": 27,
-    "turnMillion": 2.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4161.TWO",
@@ -41408,8 +41408,8 @@
     "revCumYoY": 22.826316902898245,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4162.TWO",
@@ -41436,8 +41436,8 @@
     "revCumYoY": 28.19499859787566,
     "exDate": "2026-08-17",
     "exType": "除息",
-    "volLots": 209,
-    "turnMillion": 12.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4160.TWO",
@@ -41464,8 +41464,8 @@
     "revCumYoY": 4.816850940953316,
     "exDate": null,
     "exType": null,
-    "volLots": 9,
-    "turnMillion": 0.37
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4157.TWO",
@@ -41492,8 +41492,8 @@
     "revCumYoY": -12.725060827250608,
     "exDate": null,
     "exType": null,
-    "volLots": 471,
-    "turnMillion": 4.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4154.TWO",
@@ -41520,8 +41520,8 @@
     "revCumYoY": 57.48921484037964,
     "exDate": null,
     "exType": null,
-    "volLots": 23,
-    "turnMillion": 0.28
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4153.TWO",
@@ -41548,8 +41548,8 @@
     "revCumYoY": 8.918649126795087,
     "exDate": null,
     "exType": null,
-    "volLots": 17,
-    "turnMillion": 0.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4123.TWO",
@@ -41576,8 +41576,8 @@
     "revCumYoY": 18.086882519917808,
     "exDate": "2026-08-17",
     "exType": "除權息",
-    "volLots": 1323,
-    "turnMillion": 42.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4139.TWO",
@@ -41604,8 +41604,8 @@
     "revCumYoY": -0.1426737281335259,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 0.92
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4163.TWO",
@@ -41632,8 +41632,8 @@
     "revCumYoY": 12.70464950095314,
     "exDate": null,
     "exType": null,
-    "volLots": 154,
-    "turnMillion": 22.71
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4131.TWO",
@@ -41660,8 +41660,8 @@
     "revCumYoY": 17.0278993916674,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.39
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4121.TWO",
@@ -41688,8 +41688,8 @@
     "revCumYoY": -0.8420674722044585,
     "exDate": null,
     "exType": null,
-    "volLots": 41,
-    "turnMillion": 0.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4130.TWO",
@@ -41744,8 +41744,8 @@
     "revCumYoY": 6.275015969885627,
     "exDate": null,
     "exType": null,
-    "volLots": 677,
-    "turnMillion": 10.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4138.TWO",
@@ -41772,8 +41772,8 @@
     "revCumYoY": 2.892254966527491,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4127.TWO",
@@ -41800,8 +41800,8 @@
     "revCumYoY": 51.5327536072859,
     "exDate": null,
     "exType": null,
-    "volLots": 554,
-    "turnMillion": 51.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4120.TWO",
@@ -41828,8 +41828,8 @@
     "revCumYoY": 3.9956514568987336,
     "exDate": null,
     "exType": null,
-    "volLots": 42,
-    "turnMillion": 1.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4126.TWO",
@@ -41856,8 +41856,8 @@
     "revCumYoY": 1.1098396938076398,
     "exDate": null,
     "exType": null,
-    "volLots": 45,
-    "turnMillion": 3.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4401.TWO",
@@ -41884,8 +41884,8 @@
     "revCumYoY": -2.42467718794835,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.16
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4402.TWO",
@@ -41912,8 +41912,8 @@
     "revCumYoY": -13.813329895578187,
     "exDate": null,
     "exType": null,
-    "volLots": 9,
-    "turnMillion": 0.14
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4171.TWO",
@@ -41940,8 +41940,8 @@
     "revCumYoY": 8.915314157158926,
     "exDate": null,
     "exType": null,
-    "volLots": 43,
-    "turnMillion": 0.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4183.TWO",
@@ -41968,8 +41968,8 @@
     "revCumYoY": -33.08193349331505,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4168.TWO",
@@ -41996,8 +41996,8 @@
     "revCumYoY": -49.3436371612729,
     "exDate": null,
     "exType": null,
-    "volLots": 77,
-    "turnMillion": 1.71
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4305.TWO",
@@ -42024,8 +42024,8 @@
     "revCumYoY": -7.323132003044125,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4406.TWO",
@@ -42052,8 +42052,8 @@
     "revCumYoY": -61.94526312926835,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4207.TWO",
@@ -42080,8 +42080,8 @@
     "revCumYoY": 9.108730255551324,
     "exDate": null,
     "exType": null,
-    "volLots": 106,
-    "turnMillion": 2.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4303.TWO",
@@ -42108,8 +42108,8 @@
     "revCumYoY": 4.639837661955885,
     "exDate": "2026-08-27",
     "exType": "除權息",
-    "volLots": 462,
-    "turnMillion": 22.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4304.TWO",
@@ -42136,8 +42136,8 @@
     "revCumYoY": 8.079953701642701,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 0.24
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4192.TWO",
@@ -42164,8 +42164,8 @@
     "revCumYoY": -7.0649748134923165,
     "exDate": null,
     "exType": null,
-    "volLots": 17,
-    "turnMillion": 0.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4174.TWO",
@@ -42192,8 +42192,8 @@
     "revCumYoY": -20.420803933463173,
     "exDate": null,
     "exType": null,
-    "volLots": 210,
-    "turnMillion": 5.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4167.TWO",
@@ -42220,8 +42220,8 @@
     "revCumYoY": -12.8761370600379,
     "exDate": null,
     "exType": null,
-    "volLots": 547,
-    "turnMillion": 10.54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4173.TWO",
@@ -42248,8 +42248,8 @@
     "revCumYoY": 2.6541853942076985,
     "exDate": null,
     "exType": null,
-    "volLots": 151,
-    "turnMillion": 2.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4188.TWO",
@@ -42276,8 +42276,8 @@
     "revCumYoY": -3.6906854130052724,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4205.TWO",
@@ -42304,8 +42304,8 @@
     "revCumYoY": 2.6067682130226038,
     "exDate": null,
     "exType": null,
-    "volLots": 49,
-    "turnMillion": 3.42
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4413.TWO",
@@ -42332,8 +42332,8 @@
     "revCumYoY": -34.69562037714191,
     "exDate": null,
     "exType": null,
-    "volLots": 95,
-    "turnMillion": 1.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4175.TWO",
@@ -42360,8 +42360,8 @@
     "revCumYoY": 1.1425835465255845,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4198.TWO",
@@ -42388,8 +42388,8 @@
     "revCumYoY": -19.439303584892727,
     "exDate": null,
     "exType": null,
-    "volLots": 6,
-    "turnMillion": 0.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4416.TWO",
@@ -42416,8 +42416,8 @@
     "revCumYoY": 485.18497432584826,
     "exDate": null,
     "exType": null,
-    "volLots": 2177,
-    "turnMillion": 26.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4503.TWO",
@@ -42444,8 +42444,8 @@
     "revCumYoY": -3.4095625189100325,
     "exDate": null,
     "exType": null,
-    "volLots": 390,
-    "turnMillion": 9.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4420.TWO",
@@ -42472,8 +42472,8 @@
     "revCumYoY": -8.807279712197424,
     "exDate": null,
     "exType": null,
-    "volLots": 28,
-    "turnMillion": 1.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4442.TWO",
@@ -42500,8 +42500,8 @@
     "revCumYoY": 22.09008040493628,
     "exDate": null,
     "exType": null,
-    "volLots": 78,
-    "turnMillion": 4.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4433.TWO",
@@ -42528,8 +42528,8 @@
     "revCumYoY": -13.787472184775286,
     "exDate": null,
     "exType": null,
-    "volLots": 114,
-    "turnMillion": 2.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4530.TWO",
@@ -42556,8 +42556,8 @@
     "revCumYoY": 8.602756463258567,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4523.TWO",
@@ -42584,8 +42584,8 @@
     "revCumYoY": 75.86128259842648,
     "exDate": null,
     "exType": null,
-    "volLots": 31,
-    "turnMillion": 0.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4535.TWO",
@@ -42612,8 +42612,8 @@
     "revCumYoY": -1.969373686322657,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 0.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4502.TWO",
@@ -42640,8 +42640,8 @@
     "revCumYoY": 29.792672162857517,
     "exDate": null,
     "exType": null,
-    "volLots": 140,
-    "turnMillion": 2.2
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4513.TWO",
@@ -42668,8 +42668,8 @@
     "revCumYoY": 151.59591591087224,
     "exDate": null,
     "exType": null,
-    "volLots": 406,
-    "turnMillion": 6.91
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4533.TWO",
@@ -42696,8 +42696,8 @@
     "revCumYoY": -3.70861352305987,
     "exDate": null,
     "exType": null,
-    "volLots": 798,
-    "turnMillion": 21.43
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4528.TWO",
@@ -42724,8 +42724,8 @@
     "revCumYoY": -6.720518933303764,
     "exDate": null,
     "exType": null,
-    "volLots": 38,
-    "turnMillion": 0.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4432.TWO",
@@ -42752,8 +42752,8 @@
     "revCumYoY": -18.244300762194893,
     "exDate": "2026-08-17",
     "exType": "除息",
-    "volLots": 76,
-    "turnMillion": 1.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4506.TWO",
@@ -42780,8 +42780,8 @@
     "revCumYoY": 5.911004575066583,
     "exDate": null,
     "exType": null,
-    "volLots": 60,
-    "turnMillion": 7.31
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4510.TWO",
@@ -42808,8 +42808,8 @@
     "revCumYoY": 28.048020560122517,
     "exDate": null,
     "exType": null,
-    "volLots": 1224,
-    "turnMillion": 55.39
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4534.TWO",
@@ -42836,8 +42836,8 @@
     "revCumYoY": 32.721895173904386,
     "exDate": null,
     "exType": null,
-    "volLots": 573,
-    "turnMillion": 17.52
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4527.TWO",
@@ -42864,8 +42864,8 @@
     "revCumYoY": 8.92520461543162,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4529.TWO",
@@ -42892,8 +42892,8 @@
     "revCumYoY": 309.0474673462886,
     "exDate": null,
     "exType": null,
-    "volLots": 299,
-    "turnMillion": 1.01
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4430.TWO",
@@ -42920,8 +42920,8 @@
     "revCumYoY": 7.219816535349818,
     "exDate": "2026-08-21",
     "exType": "除息",
-    "volLots": 27,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4417.TWO",
@@ -42948,8 +42948,8 @@
     "revCumYoY": -2.274653461007069,
     "exDate": null,
     "exType": null,
-    "volLots": 32,
-    "turnMillion": 1.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4419.TWO",
@@ -42976,8 +42976,8 @@
     "revCumYoY": 2.234144738505093,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.24
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4584.TWO",
@@ -43032,8 +43032,8 @@
     "revCumYoY": 56.23802563047273,
     "exDate": null,
     "exType": null,
-    "volLots": 754,
-    "turnMillion": 60.69
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4568.TWO",
@@ -43060,8 +43060,8 @@
     "revCumYoY": 4.563853223418293,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4580.TWO",
@@ -43088,8 +43088,8 @@
     "revCumYoY": 2.5482904172354814,
     "exDate": "2026-08-11",
     "exType": "除息",
-    "volLots": 43,
-    "turnMillion": 3.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4702.TWO",
@@ -43116,8 +43116,8 @@
     "revCumYoY": -15.283564419552398,
     "exDate": null,
     "exType": null,
-    "volLots": 47,
-    "turnMillion": 0.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4609.TWO",
@@ -43172,8 +43172,8 @@
     "revCumYoY": 41.64932219346722,
     "exDate": null,
     "exType": null,
-    "volLots": 476,
-    "turnMillion": 123.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4554.TWO",
@@ -43200,8 +43200,8 @@
     "revCumYoY": 12.567099911135514,
     "exDate": "2026-08-25",
     "exType": "除權息",
-    "volLots": 36,
-    "turnMillion": 1.14
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4706.TWO",
@@ -43228,8 +43228,8 @@
     "revCumYoY": 13.009443278708996,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 18,
-    "turnMillion": 0.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4711.TWO",
@@ -43256,8 +43256,8 @@
     "revCumYoY": 18.722596456929953,
     "exDate": null,
     "exType": null,
-    "volLots": 35,
-    "turnMillion": 0.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4541.TWO",
@@ -43284,8 +43284,8 @@
     "revCumYoY": 34.206063818557105,
     "exDate": null,
     "exType": null,
-    "volLots": 6331,
-    "turnMillion": 459.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4558.TWO",
@@ -43312,8 +43312,8 @@
     "revCumYoY": 16.301015350818442,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4563.TWO",
@@ -43340,8 +43340,8 @@
     "revCumYoY": -13.731598850365147,
     "exDate": null,
     "exType": null,
-    "volLots": 78,
-    "turnMillion": 3.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4550.TWO",
@@ -43368,8 +43368,8 @@
     "revCumYoY": -4.774208649933379,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 0.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4707.TWO",
@@ -43396,8 +43396,8 @@
     "revCumYoY": -9.296292088020301,
     "exDate": "2026-08-27",
     "exType": "除權息",
-    "volLots": 3358,
-    "turnMillion": 109.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4543.TWO",
@@ -43424,8 +43424,8 @@
     "revCumYoY": 21.13354565814549,
     "exDate": "2026-08-25",
     "exType": "除權息",
-    "volLots": 81,
-    "turnMillion": 2.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4556.TWO",
@@ -43452,8 +43452,8 @@
     "revCumYoY": 16.566284707877628,
     "exDate": null,
     "exType": null,
-    "volLots": 539,
-    "turnMillion": 42.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4549.TWO",
@@ -43480,8 +43480,8 @@
     "revCumYoY": -8.633388161624731,
     "exDate": "2026-09-08",
     "exType": "除權",
-    "volLots": 87,
-    "turnMillion": 8.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4561.TWO",
@@ -43508,8 +43508,8 @@
     "revCumYoY": 19.453400438319143,
     "exDate": null,
     "exType": null,
-    "volLots": 1487,
-    "turnMillion": 73.71
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4538.TWO",
@@ -43536,8 +43536,8 @@
     "revCumYoY": 7.81397445106407,
     "exDate": null,
     "exType": null,
-    "volLots": 15,
-    "turnMillion": 0.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4749.TWO",
@@ -43564,8 +43564,8 @@
     "revCumYoY": 18.065012631121075,
     "exDate": null,
     "exType": null,
-    "volLots": 413,
-    "turnMillion": 320.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4745.TWO",
@@ -43592,8 +43592,8 @@
     "revCumYoY": -2.728129768395681,
     "exDate": null,
     "exType": null,
-    "volLots": 9,
-    "turnMillion": 0.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4772.TWO",
@@ -43620,8 +43620,8 @@
     "revCumYoY": 263.7796228480027,
     "exDate": null,
     "exType": null,
-    "volLots": 426,
-    "turnMillion": 107.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4767.TWO",
@@ -43648,8 +43648,8 @@
     "revCumYoY": -10.70944765264857,
     "exDate": null,
     "exType": null,
-    "volLots": 47,
-    "turnMillion": 1.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4721.TWO",
@@ -43676,8 +43676,8 @@
     "revCumYoY": 9.149031792338143,
     "exDate": null,
     "exType": null,
-    "volLots": 1070,
-    "turnMillion": 80.37
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4735.TWO",
@@ -43704,8 +43704,8 @@
     "revCumYoY": 13.330926893097653,
     "exDate": "2026-08-31",
     "exType": "除息",
-    "volLots": 165,
-    "turnMillion": 6.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4804.TWO",
@@ -43760,8 +43760,8 @@
     "revCumYoY": 5.633807097034951,
     "exDate": null,
     "exType": null,
-    "volLots": 33,
-    "turnMillion": 1.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4768.TWO",
@@ -43788,8 +43788,8 @@
     "revCumYoY": 131.97155056911384,
     "exDate": "2026-08-25",
     "exType": "除權息",
-    "volLots": 204,
-    "turnMillion": 62.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4806.TWO",
@@ -43816,8 +43816,8 @@
     "revCumYoY": 173.30493348247222,
     "exDate": null,
     "exType": null,
-    "volLots": 30,
-    "turnMillion": 0.28
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4754.TWO",
@@ -43844,8 +43844,8 @@
     "revCumYoY": 6.405158102003783,
     "exDate": null,
     "exType": null,
-    "volLots": 39,
-    "turnMillion": 1.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4760.TWO",
@@ -43872,8 +43872,8 @@
     "revCumYoY": 61.37540118544151,
     "exDate": "2026-09-01",
     "exType": "除權",
-    "volLots": 277,
-    "turnMillion": 69.34
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4728.TWO",
@@ -43900,8 +43900,8 @@
     "revCumYoY": 20.849508882785774,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.4
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4729.TWO",
@@ -43928,8 +43928,8 @@
     "revCumYoY": -1.1809848646344063,
     "exDate": null,
     "exType": null,
-    "volLots": 61,
-    "turnMillion": 1.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4716.TWO",
@@ -43956,8 +43956,8 @@
     "revCumYoY": -1.429949660422776,
     "exDate": null,
     "exType": null,
-    "volLots": 447,
-    "turnMillion": 7.8
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4743.TWO",
@@ -43984,8 +43984,8 @@
     "revCumYoY": 23.067812522568065,
     "exDate": null,
     "exType": null,
-    "volLots": 765,
-    "turnMillion": 36.06
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4741.TWO",
@@ -44012,8 +44012,8 @@
     "revCumYoY": 19.834636340392738,
     "exDate": null,
     "exType": null,
-    "volLots": 54,
-    "turnMillion": 2.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4744.TWO",
@@ -44040,8 +44040,8 @@
     "revCumYoY": -33.71444510362228,
     "exDate": "2026-08-11",
     "exType": "除息",
-    "volLots": 71,
-    "turnMillion": 2.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4726.TWO",
@@ -44068,8 +44068,8 @@
     "revCumYoY": 25.77009494817714,
     "exDate": null,
     "exType": null,
-    "volLots": 153,
-    "turnMillion": 3.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4714.TWO",
@@ -44096,8 +44096,8 @@
     "revCumYoY": 66.12809624030187,
     "exDate": null,
     "exType": null,
-    "volLots": 6550,
-    "turnMillion": 76.01
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4946.TWO",
@@ -44124,8 +44124,8 @@
     "revCumYoY": -17.7366655470103,
     "exDate": null,
     "exType": null,
-    "volLots": 51,
-    "turnMillion": 4.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4923.TWO",
@@ -44152,8 +44152,8 @@
     "revCumYoY": 30.25919537168682,
     "exDate": null,
     "exType": null,
-    "volLots": 611,
-    "turnMillion": 32.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4974.TWO",
@@ -44180,8 +44180,8 @@
     "revCumYoY": -1.8343787152051818,
     "exDate": null,
     "exType": null,
-    "volLots": 110,
-    "turnMillion": 7.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4971.TWO",
@@ -44208,8 +44208,8 @@
     "revCumYoY": 18.777786343895357,
     "exDate": null,
     "exType": null,
-    "volLots": 6501,
-    "turnMillion": 3712.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4924.TWO",
@@ -44236,8 +44236,8 @@
     "revCumYoY": 8.634014937597595,
     "exDate": null,
     "exType": null,
-    "volLots": 57,
-    "turnMillion": 0.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4907.TWO",
@@ -44264,8 +44264,8 @@
     "revCumYoY": 53.18765350980116,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 59,
-    "turnMillion": 2.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4931.TWO",
@@ -44292,8 +44292,8 @@
     "revCumYoY": 82.01318588196726,
     "exDate": null,
     "exType": null,
-    "volLots": 1559,
-    "turnMillion": 410.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4950.TWO",
@@ -44320,8 +44320,8 @@
     "revCumYoY": 24.79410482737455,
     "exDate": null,
     "exType": null,
-    "volLots": 19,
-    "turnMillion": 0.31
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4939.TWO",
@@ -44348,8 +44348,8 @@
     "revCumYoY": 13.145214501100718,
     "exDate": null,
     "exType": null,
-    "volLots": 10041,
-    "turnMillion": 619.97
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4972.TWO",
@@ -44376,8 +44376,8 @@
     "revCumYoY": 8.007751338247918,
     "exDate": null,
     "exType": null,
-    "volLots": 30,
-    "turnMillion": 0.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4933.TWO",
@@ -44404,8 +44404,8 @@
     "revCumYoY": -10.514222579371511,
     "exDate": null,
     "exType": null,
-    "volLots": 56,
-    "turnMillion": 3
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4973.TWO",
@@ -44432,8 +44432,8 @@
     "revCumYoY": 126.68837392653762,
     "exDate": null,
     "exType": null,
-    "volLots": 1311,
-    "turnMillion": 199.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4909.TWO",
@@ -44460,8 +44460,8 @@
     "revCumYoY": -37.22795139433073,
     "exDate": null,
     "exType": null,
-    "volLots": 239,
-    "turnMillion": 9.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4911.TWO",
@@ -44488,8 +44488,8 @@
     "revCumYoY": -58.55112382552655,
     "exDate": null,
     "exType": null,
-    "volLots": 44,
-    "turnMillion": 1.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4966.TWO",
@@ -44516,8 +44516,8 @@
     "revCumYoY": -0.7772187659054726,
     "exDate": "2026-08-20",
     "exType": "除息",
-    "volLots": 990,
-    "turnMillion": 560.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4908.TWO",
@@ -44544,8 +44544,8 @@
     "revCumYoY": 28.187329123643597,
     "exDate": "2026-08-20",
     "exType": "除息",
-    "volLots": 1613,
-    "turnMillion": 252.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4951.TWO",
@@ -44572,8 +44572,8 @@
     "revCumYoY": 0.01824122581037446,
     "exDate": null,
     "exType": null,
-    "volLots": 173,
-    "turnMillion": 13.34
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4953.TWO",
@@ -44600,8 +44600,8 @@
     "revCumYoY": 31.280601009362524,
     "exDate": null,
     "exType": null,
-    "volLots": 186,
-    "turnMillion": 22.96
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4903.TWO",
@@ -44628,8 +44628,8 @@
     "revCumYoY": 22.80356558873059,
     "exDate": null,
     "exType": null,
-    "volLots": 678,
-    "turnMillion": 23.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4905.TWO",
@@ -44656,8 +44656,8 @@
     "revCumYoY": 33.65635084172466,
     "exDate": "2026-08-31",
     "exType": "除息",
-    "volLots": 599,
-    "turnMillion": 57.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5210.TWO",
@@ -44684,8 +44684,8 @@
     "revCumYoY": 5.1404157136820645,
     "exDate": null,
     "exType": null,
-    "volLots": 189,
-    "turnMillion": 5.52
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5212.TWO",
@@ -44712,8 +44712,8 @@
     "revCumYoY": -1.6843189051927117,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5213.TWO",
@@ -44740,8 +44740,8 @@
     "revCumYoY": -54.61956783880071,
     "exDate": null,
     "exType": null,
-    "volLots": 186,
-    "turnMillion": 3.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5206.TWO",
@@ -44768,8 +44768,8 @@
     "revCumYoY": -39.179539326052065,
     "exDate": "2026-08-20",
     "exType": "除權",
-    "volLots": 126,
-    "turnMillion": 2.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5205.TWO",
@@ -44796,8 +44796,8 @@
     "revCumYoY": 38.13038130381304,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5014.TWO",
@@ -44824,8 +44824,8 @@
     "revCumYoY": 16.113194958431333,
     "exDate": null,
     "exType": null,
-    "volLots": 158,
-    "turnMillion": 1.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5223.TWO",
@@ -44852,8 +44852,8 @@
     "revCumYoY": 0.7126832026106372,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5209.TWO",
@@ -44880,8 +44880,8 @@
     "revCumYoY": -26.43669873738832,
     "exDate": null,
     "exType": null,
-    "volLots": 59,
-    "turnMillion": 9.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5211.TWO",
@@ -44908,8 +44908,8 @@
     "revCumYoY": 37.4957518931307,
     "exDate": null,
     "exType": null,
-    "volLots": 46,
-    "turnMillion": 0.88
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5202.TWO",
@@ -44936,8 +44936,8 @@
     "revCumYoY": -13.620018614095947,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 134,
-    "turnMillion": 1.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4995.TWO",
@@ -44964,8 +44964,8 @@
     "revCumYoY": 16.139563103479375,
     "exDate": null,
     "exType": null,
-    "volLots": 33,
-    "turnMillion": 1.61
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5013.TWO",
@@ -44992,8 +44992,8 @@
     "revCumYoY": 12.012882954712861,
     "exDate": "2026-08-31",
     "exType": "除息",
-    "volLots": 10,
-    "turnMillion": 0.28
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5220.TWO",
@@ -45020,8 +45020,8 @@
     "revCumYoY": 36.170502250438346,
     "exDate": null,
     "exType": null,
-    "volLots": 34,
-    "turnMillion": 0.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5016.TWO",
@@ -45048,8 +45048,8 @@
     "revCumYoY": 6.559731589893256,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.3
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4991.TWO",
@@ -45076,8 +45076,8 @@
     "revCumYoY": 45.74648863298457,
     "exDate": null,
     "exType": null,
-    "volLots": 1451,
-    "turnMillion": 715.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5011.TWO",
@@ -45104,8 +45104,8 @@
     "revCumYoY": -24.220511995967303,
     "exDate": null,
     "exType": null,
-    "volLots": 193,
-    "turnMillion": 3.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5009.TWO",
@@ -45132,8 +45132,8 @@
     "revCumYoY": 2.1861714001405206,
     "exDate": null,
     "exType": null,
-    "volLots": 1203,
-    "turnMillion": 39.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "4979.TWO",
@@ -45160,8 +45160,8 @@
     "revCumYoY": 17.6433828416455,
     "exDate": null,
     "exType": null,
-    "volLots": 2081,
-    "turnMillion": 1097.24
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5201.TWO",
@@ -45188,8 +45188,8 @@
     "revCumYoY": -17.07180358074434,
     "exDate": null,
     "exType": null,
-    "volLots": 36,
-    "turnMillion": 0.92
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5015.TWO",
@@ -45216,8 +45216,8 @@
     "revCumYoY": -22.52815217676887,
     "exDate": null,
     "exType": null,
-    "volLots": 26,
-    "turnMillion": 0.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5299.TWO",
@@ -45244,8 +45244,8 @@
     "revCumYoY": -3.296290678594423,
     "exDate": null,
     "exType": null,
-    "volLots": 545,
-    "turnMillion": 55.58
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5301.TWO",
@@ -45272,8 +45272,8 @@
     "revCumYoY": -22.044213729526536,
     "exDate": null,
     "exType": null,
-    "volLots": 6,
-    "turnMillion": 0.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5289.TWO",
@@ -45300,8 +45300,8 @@
     "revCumYoY": 548.7852489122538,
     "exDate": "2026-08-27",
     "exType": "除權息",
-    "volLots": 1955,
-    "turnMillion": 2917.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5230.TWO",
@@ -45328,8 +45328,8 @@
     "revCumYoY": 6.629369834235297,
     "exDate": null,
     "exType": null,
-    "volLots": 85,
-    "turnMillion": 1.5
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5287.TWO",
@@ -45356,8 +45356,8 @@
     "revCumYoY": -1.8435523813654195,
     "exDate": "2026-08-27",
     "exType": "除權息",
-    "volLots": 66,
-    "turnMillion": 10.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5263.TWO",
@@ -45384,8 +45384,8 @@
     "revCumYoY": 56.84437293127921,
     "exDate": null,
     "exType": null,
-    "volLots": 49,
-    "turnMillion": 4.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5302.TWO",
@@ -45412,8 +45412,8 @@
     "revCumYoY": 79.53085160632331,
     "exDate": null,
     "exType": null,
-    "volLots": 307,
-    "turnMillion": 3.24
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5312.TWO",
@@ -45440,8 +45440,8 @@
     "revCumYoY": 12.94538046267305,
     "exDate": null,
     "exType": null,
-    "volLots": 129,
-    "turnMillion": 11.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5309.TWO",
@@ -45468,8 +45468,8 @@
     "revCumYoY": 6.984569931976621,
     "exDate": null,
     "exType": null,
-    "volLots": 1311,
-    "turnMillion": 69.34
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5310.TWO",
@@ -45496,8 +45496,8 @@
     "revCumYoY": -23.4338747099768,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5228.TWO",
@@ -45524,8 +45524,8 @@
     "revCumYoY": 53.54175557452256,
     "exDate": null,
     "exType": null,
-    "volLots": 181,
-    "turnMillion": 7.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5245.TWO",
@@ -45552,8 +45552,8 @@
     "revCumYoY": -5.567304183743617,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 0.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5278.TWO",
@@ -45580,8 +45580,8 @@
     "revCumYoY": 18.001600027527356,
     "exDate": null,
     "exType": null,
-    "volLots": 61,
-    "turnMillion": 1.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5291.TWO",
@@ -45608,8 +45608,8 @@
     "revCumYoY": 43.53916167664671,
     "exDate": null,
     "exType": null,
-    "volLots": 2237,
-    "turnMillion": 131.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5236.TWO",
@@ -45664,8 +45664,8 @@
     "revCumYoY": 7.190515402968687,
     "exDate": null,
     "exType": null,
-    "volLots": 88,
-    "turnMillion": 2.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5227.TWO",
@@ -45692,8 +45692,8 @@
     "revCumYoY": -80.6372136935632,
     "exDate": null,
     "exType": null,
-    "volLots": 972,
-    "turnMillion": 32.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5274.TWO",
@@ -45720,8 +45720,8 @@
     "revCumYoY": 68.05540554444981,
     "exDate": null,
     "exType": null,
-    "volLots": 178,
-    "turnMillion": 3045.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5272.TWO",
@@ -45748,8 +45748,8 @@
     "revCumYoY": -9.555205531007374,
     "exDate": null,
     "exType": null,
-    "volLots": 80,
-    "turnMillion": 1.4
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5276.TWO",
@@ -45776,8 +45776,8 @@
     "revCumYoY": 14.451914402086723,
     "exDate": null,
     "exType": null,
-    "volLots": 51,
-    "turnMillion": 0.97
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5386.TWO",
@@ -45804,8 +45804,8 @@
     "revCumYoY": 521.9729949035211,
     "exDate": null,
     "exType": null,
-    "volLots": 1165,
-    "turnMillion": 271.79
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5344.TWO",
@@ -45832,8 +45832,8 @@
     "revCumYoY": 13.454291841025961,
     "exDate": null,
     "exType": null,
-    "volLots": 52,
-    "turnMillion": 0.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5381.TWO",
@@ -45860,8 +45860,8 @@
     "revCumYoY": -8.962235121232181,
     "exDate": null,
     "exType": null,
-    "volLots": 135,
-    "turnMillion": 3.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5347.TWO",
@@ -45888,8 +45888,8 @@
     "revCumYoY": 15.482479140506403,
     "exDate": null,
     "exType": null,
-    "volLots": 18071,
-    "turnMillion": 2844.97
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5355.TWO",
@@ -45916,8 +45916,8 @@
     "revCumYoY": 28.666895815619515,
     "exDate": null,
     "exType": null,
-    "volLots": 165,
-    "turnMillion": 0.88
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5353.TWO",
@@ -45944,8 +45944,8 @@
     "revCumYoY": 6.227173066173127,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 0.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5364.TWO",
@@ -45972,8 +45972,8 @@
     "revCumYoY": -54.11818339701285,
     "exDate": null,
     "exType": null,
-    "volLots": 26,
-    "turnMillion": 0.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5351.TWO",
@@ -46000,8 +46000,8 @@
     "revCumYoY": 481.0886945275895,
     "exDate": null,
     "exType": null,
-    "volLots": 31472,
-    "turnMillion": 4082.14
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5321.TWO",
@@ -46028,8 +46028,8 @@
     "revCumYoY": -23.716253816510466,
     "exDate": null,
     "exType": null,
-    "volLots": 1524,
-    "turnMillion": 108.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5398.TWO",
@@ -46056,8 +46056,8 @@
     "revCumYoY": -34.787408046023316,
     "exDate": null,
     "exType": null,
-    "volLots": 159,
-    "turnMillion": 2.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5340.TWO",
@@ -46084,8 +46084,8 @@
     "revCumYoY": 24.812520808385905,
     "exDate": null,
     "exType": null,
-    "volLots": 4909,
-    "turnMillion": 391.54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5356.TWO",
@@ -46112,8 +46112,8 @@
     "revCumYoY": 13.298937784522003,
     "exDate": null,
     "exType": null,
-    "volLots": 88,
-    "turnMillion": 2.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5371.TWO",
@@ -46140,8 +46140,8 @@
     "revCumYoY": 6.771751988310623,
     "exDate": null,
     "exType": null,
-    "volLots": 8953,
-    "turnMillion": 792.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5348.TWO",
@@ -46168,8 +46168,8 @@
     "revCumYoY": 25.528486819531263,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5345.TWO",
@@ -46196,8 +46196,8 @@
     "revCumYoY": 539.025681758009,
     "exDate": null,
     "exType": null,
-    "volLots": 37,
-    "turnMillion": 0.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5314.TWO",
@@ -46224,8 +46224,8 @@
     "revCumYoY": 159.93783085768646,
     "exDate": "2026-08-14",
     "exType": "除權",
-    "volLots": 5134,
-    "turnMillion": 82.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5392.TWO",
@@ -46252,8 +46252,8 @@
     "revCumYoY": 5.639418099708172,
     "exDate": "2026-08-31",
     "exType": "除權息",
-    "volLots": 1674,
-    "turnMillion": 77.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5328.TWO",
@@ -46280,8 +46280,8 @@
     "revCumYoY": 25.02126327951985,
     "exDate": null,
     "exType": null,
-    "volLots": 7452,
-    "turnMillion": 476.34
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5315.TWO",
@@ -46308,8 +46308,8 @@
     "revCumYoY": -6.2857539121374355,
     "exDate": null,
     "exType": null,
-    "volLots": 199,
-    "turnMillion": 3.76
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5324.TWO",
@@ -46336,8 +46336,8 @@
     "revCumYoY": 4.807166681191225,
     "exDate": null,
     "exType": null,
-    "volLots": 388,
-    "turnMillion": 4.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5475.TWO",
@@ -46364,8 +46364,8 @@
     "revCumYoY": 149.8817311644841,
     "exDate": null,
     "exType": null,
-    "volLots": 4269,
-    "turnMillion": 766.34
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5481.TWO",
@@ -46392,8 +46392,8 @@
     "revCumYoY": -8.672694521951048,
     "exDate": null,
     "exType": null,
-    "volLots": 237,
-    "turnMillion": 4.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5457.TWO",
@@ -46420,8 +46420,8 @@
     "revCumYoY": -2.34286752426253,
     "exDate": null,
     "exType": null,
-    "volLots": 352,
-    "turnMillion": 9.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5439.TWO",
@@ -46448,8 +46448,8 @@
     "revCumYoY": 40.77892308318439,
     "exDate": null,
     "exType": null,
-    "volLots": 2168,
-    "turnMillion": 536.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5468.TWO",
@@ -46476,8 +46476,8 @@
     "revCumYoY": 46.40021425420631,
     "exDate": null,
     "exType": null,
-    "volLots": 496,
-    "turnMillion": 14.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5474.TWO",
@@ -46504,8 +46504,8 @@
     "revCumYoY": 3.42454604205033,
     "exDate": null,
     "exType": null,
-    "volLots": 343,
-    "turnMillion": 55.54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5465.TWO",
@@ -46532,8 +46532,8 @@
     "revCumYoY": -34.56712913964631,
     "exDate": null,
     "exType": null,
-    "volLots": 77,
-    "turnMillion": 1.85
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5460.TWO",
@@ -46560,8 +46560,8 @@
     "revCumYoY": 12.210065014631896,
     "exDate": null,
     "exType": null,
-    "volLots": 26,
-    "turnMillion": 0.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5464.TWO",
@@ -46588,8 +46588,8 @@
     "revCumYoY": 31.29607996914139,
     "exDate": null,
     "exType": null,
-    "volLots": 468,
-    "turnMillion": 34.69
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5478.TWO",
@@ -46616,8 +46616,8 @@
     "revCumYoY": 12.667252799290123,
     "exDate": null,
     "exType": null,
-    "volLots": 93,
-    "turnMillion": 9.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5438.TWO",
@@ -46644,8 +46644,8 @@
     "revCumYoY": -43.776437603380195,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 0.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5455.TWO",
@@ -46672,8 +46672,8 @@
     "revCumYoY": -99.59460633426986,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.15
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5425.TWO",
@@ -46700,8 +46700,8 @@
     "revCumYoY": 5.523522446958523,
     "exDate": null,
     "exType": null,
-    "volLots": 35760,
-    "turnMillion": 3346.58
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5450.TWO",
@@ -46728,8 +46728,8 @@
     "revCumYoY": 11.649094912709078,
     "exDate": null,
     "exType": null,
-    "volLots": 262,
-    "turnMillion": 4.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5410.TWO",
@@ -46756,8 +46756,8 @@
     "revCumYoY": 50.748860728542695,
     "exDate": null,
     "exType": null,
-    "volLots": 228,
-    "turnMillion": 8.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5403.TWO",
@@ -46784,8 +46784,8 @@
     "revCumYoY": 0.11282609761573578,
     "exDate": null,
     "exType": null,
-    "volLots": 28,
-    "turnMillion": 2.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5432.TWO",
@@ -46812,8 +46812,8 @@
     "revCumYoY": 4.358741131526287,
     "exDate": null,
     "exType": null,
-    "volLots": 411,
-    "turnMillion": 63.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5426.TWO",
@@ -46840,8 +46840,8 @@
     "revCumYoY": 17.434427530398434,
     "exDate": "2026-09-15",
     "exType": "除息",
-    "volLots": 666,
-    "turnMillion": 18.4
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5443.TWO",
@@ -46868,8 +46868,8 @@
     "revCumYoY": 22.375067810629616,
     "exDate": null,
     "exType": null,
-    "volLots": 1362,
-    "turnMillion": 145.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5452.TWO",
@@ -46896,8 +46896,8 @@
     "revCumYoY": -4.130588891416203,
     "exDate": null,
     "exType": null,
-    "volLots": 269,
-    "turnMillion": 7.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5511.TWO",
@@ -46924,8 +46924,8 @@
     "revCumYoY": 13.026401950983,
     "exDate": null,
     "exType": null,
-    "volLots": 116,
-    "turnMillion": 8.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5536.TWO",
@@ -46952,8 +46952,8 @@
     "revCumYoY": 24.325439334057528,
     "exDate": null,
     "exType": null,
-    "volLots": 2544,
-    "turnMillion": 2290.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5548.TWO",
@@ -46980,8 +46980,8 @@
     "revCumYoY": 13.221553829888075,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5543.TWO",
@@ -47008,8 +47008,8 @@
     "revCumYoY": 4.214989216899801,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.28
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5520.TWO",
@@ -47064,8 +47064,8 @@
     "revCumYoY": 68.03189575975748,
     "exDate": null,
     "exType": null,
-    "volLots": 1312,
-    "turnMillion": 66.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5488.TWO",
@@ -47092,8 +47092,8 @@
     "revCumYoY": 39.69930023522125,
     "exDate": null,
     "exType": null,
-    "volLots": 286,
-    "turnMillion": 3.58
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5490.TWO",
@@ -47120,8 +47120,8 @@
     "revCumYoY": 22.61277446521574,
     "exDate": null,
     "exType": null,
-    "volLots": 686,
-    "turnMillion": 20.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5487.TWO",
@@ -47148,8 +47148,8 @@
     "revCumYoY": -3.0327673754363693,
     "exDate": null,
     "exType": null,
-    "volLots": 50,
-    "turnMillion": 1.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5516.TWO",
@@ -47176,8 +47176,8 @@
     "revCumYoY": 40.98646344379,
     "exDate": null,
     "exType": null,
-    "volLots": 27,
-    "turnMillion": 0.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5512.TWO",
@@ -47204,8 +47204,8 @@
     "revCumYoY": 5.200562683831365,
     "exDate": null,
     "exType": null,
-    "volLots": 444,
-    "turnMillion": 3.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5547.TWO",
@@ -47232,8 +47232,8 @@
     "revCumYoY": 12.095194295026106,
     "exDate": null,
     "exType": null,
-    "volLots": 6,
-    "turnMillion": 0.12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5493.TWO",
@@ -47260,8 +47260,8 @@
     "revCumYoY": 18.13981383510413,
     "exDate": null,
     "exType": null,
-    "volLots": 27,
-    "turnMillion": 2.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5529.TWO",
@@ -47288,8 +47288,8 @@
     "revCumYoY": 980.2018062014112,
     "exDate": null,
     "exType": null,
-    "volLots": 56,
-    "turnMillion": 1.18
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5530.TWO",
@@ -47316,8 +47316,8 @@
     "revCumYoY": -10.26521882839324,
     "exDate": null,
     "exType": null,
-    "volLots": 218,
-    "turnMillion": 10.74
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5523.TWO",
@@ -47344,8 +47344,8 @@
     "revCumYoY": -22.25825471698113,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 0.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5514.TWO",
@@ -47372,8 +47372,8 @@
     "revCumYoY": 19921.82680901542,
     "exDate": null,
     "exType": null,
-    "volLots": 9,
-    "turnMillion": 0.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5483.TWO",
@@ -47400,8 +47400,8 @@
     "revCumYoY": 5.357930565970539,
     "exDate": null,
     "exType": null,
-    "volLots": 29223,
-    "turnMillion": 5539
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5508.TWO",
@@ -47428,8 +47428,8 @@
     "revCumYoY": 42.48933684214265,
     "exDate": null,
     "exType": null,
-    "volLots": 141,
-    "turnMillion": 7.4
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5489.TWO",
@@ -47456,8 +47456,8 @@
     "revCumYoY": 13.547539616346956,
     "exDate": "2026-08-19",
     "exType": "除息",
-    "volLots": 112,
-    "turnMillion": 4.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5701.TWO",
@@ -47484,8 +47484,8 @@
     "revCumYoY": -7.6370810840435155,
     "exDate": null,
     "exType": null,
-    "volLots": 88,
-    "turnMillion": 0.36
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5878.TWO",
@@ -47522,12 +47522,12 @@
     "close": 83.5,
     "ma5": 84.08000000000001,
     "features": [
-      26.864586328772905,
-      6.722099605278833,
-      -4.052801983751397,
-      -3.386342404716358,
-      -2.1837621530818363,
-      -5.364508164641013,
+      24.215527693978984,
+      6.601916151414393,
+      -4.016166666251564,
+      -3.349452614352455,
+      -2.069442734080418,
+      -5.198790901679495,
       -2.5489006115494095
     ],
     "pe": 9.78,
@@ -47540,8 +47540,8 @@
     "revCumYoY": 45.12404718050783,
     "exDate": "2026-08-12",
     "exType": "除權",
-    "volLots": 317,
-    "turnMillion": 26.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5704.TWO",
@@ -47568,8 +47568,8 @@
     "revCumYoY": -35.33373694566369,
     "exDate": null,
     "exType": null,
-    "volLots": 52,
-    "turnMillion": 1.15
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5603.TWO",
@@ -47596,8 +47596,8 @@
     "revCumYoY": 1.6976538318454666,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 38,
-    "turnMillion": 0.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5601.TWO",
@@ -47652,8 +47652,8 @@
     "revCumYoY": 271.184259343086,
     "exDate": null,
     "exType": null,
-    "volLots": 330,
-    "turnMillion": 2.61
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5604.TWO",
@@ -47680,8 +47680,8 @@
     "revCumYoY": 3.4179878114901645,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.36
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5609.TWO",
@@ -47708,8 +47708,8 @@
     "revCumYoY": 18.291122296361767,
     "exDate": null,
     "exType": null,
-    "volLots": 92,
-    "turnMillion": 7.16
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5703.TWO",
@@ -47736,8 +47736,8 @@
     "revCumYoY": 14.637992831541219,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.15
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5864.TWO",
@@ -47764,8 +47764,8 @@
     "revCumYoY": 4924.979018664523,
     "exDate": null,
     "exType": null,
-    "volLots": 2853,
-    "turnMillion": 96.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6028.TWO",
@@ -47792,8 +47792,8 @@
     "revCumYoY": 30.612526769241505,
     "exDate": null,
     "exType": null,
-    "volLots": 92,
-    "turnMillion": 9.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5902.TWO",
@@ -47820,8 +47820,8 @@
     "revCumYoY": -6.817189813898698,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.08
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5904.TWO",
@@ -47848,8 +47848,8 @@
     "revCumYoY": 14.466139725652752,
     "exDate": null,
     "exType": null,
-    "volLots": 21874,
-    "turnMillion": 1658.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6016.TWO",
@@ -47876,8 +47876,8 @@
     "revCumYoY": 240.8869882231261,
     "exDate": null,
     "exType": null,
-    "volLots": 2613,
-    "turnMillion": 50.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6021.TWO",
@@ -47904,8 +47904,8 @@
     "revCumYoY": 353.84373465539824,
     "exDate": null,
     "exType": null,
-    "volLots": 44,
-    "turnMillion": 1.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5903.TWO",
@@ -47932,8 +47932,8 @@
     "revCumYoY": 7.594361886276637,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 2.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6020.TWO",
@@ -47960,8 +47960,8 @@
     "revCumYoY": 1134.4308298072403,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6026.TWO",
@@ -47988,8 +47988,8 @@
     "revCumYoY": 159.982385701334,
     "exDate": null,
     "exType": null,
-    "volLots": 584,
-    "turnMillion": 8.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6015.TWO",
@@ -48016,8 +48016,8 @@
     "revCumYoY": 299.1755708039725,
     "exDate": null,
     "exType": null,
-    "volLots": 1070,
-    "turnMillion": 16.92
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6134.TWO",
@@ -48044,8 +48044,8 @@
     "revCumYoY": 44.594595946709894,
     "exDate": null,
     "exType": null,
-    "volLots": 126,
-    "turnMillion": 3.54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6125.TWO",
@@ -48072,8 +48072,8 @@
     "revCumYoY": 32.78163390204947,
     "exDate": null,
     "exType": null,
-    "volLots": 642,
-    "turnMillion": 31.81
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6127.TWO",
@@ -48100,8 +48100,8 @@
     "revCumYoY": 2.107490038371339,
     "exDate": null,
     "exType": null,
-    "volLots": 2056,
-    "turnMillion": 101.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6104.TWO",
@@ -48128,8 +48128,8 @@
     "revCumYoY": 0.4382436354569562,
     "exDate": null,
     "exType": null,
-    "volLots": 371,
-    "turnMillion": 33.96
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6121.TWO",
@@ -48156,8 +48156,8 @@
     "revCumYoY": 4.877426789320559,
     "exDate": null,
     "exType": null,
-    "volLots": 877,
-    "turnMillion": 350.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6124.TWO",
@@ -48184,8 +48184,8 @@
     "revCumYoY": -2.263853317559164,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6114.TWO",
@@ -48212,8 +48212,8 @@
     "revCumYoY": -12.303468929373595,
     "exDate": null,
     "exType": null,
-    "volLots": 7,
-    "turnMillion": 0.18
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6113.TWO",
@@ -48240,8 +48240,8 @@
     "revCumYoY": 64.92524115755627,
     "exDate": null,
     "exType": null,
-    "volLots": 115,
-    "turnMillion": 2.71
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6123.TWO",
@@ -48268,8 +48268,8 @@
     "revCumYoY": -7.752125942437095,
     "exDate": null,
     "exType": null,
-    "volLots": 18,
-    "turnMillion": 0.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6130.TWO",
@@ -48296,8 +48296,8 @@
     "revCumYoY": 23.706073126305032,
     "exDate": null,
     "exType": null,
-    "volLots": 132,
-    "turnMillion": 3.71
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6103.TWO",
@@ -48352,8 +48352,8 @@
     "revCumYoY": -2.2758656163077324,
     "exDate": null,
     "exType": null,
-    "volLots": 215,
-    "turnMillion": 10.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6126.TWO",
@@ -48380,8 +48380,8 @@
     "revCumYoY": 53.894442461025825,
     "exDate": "2026-09-03",
     "exType": "除息",
-    "volLots": 415,
-    "turnMillion": 12.37
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6140.TWO",
@@ -48408,8 +48408,8 @@
     "revCumYoY": -17.261715104229815,
     "exDate": null,
     "exType": null,
-    "volLots": 92,
-    "turnMillion": 1.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6111.TWO",
@@ -48436,8 +48436,8 @@
     "revCumYoY": 152.09411288130795,
     "exDate": null,
     "exType": null,
-    "volLots": 115,
-    "turnMillion": 4.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6101.TWO",
@@ -48464,8 +48464,8 @@
     "revCumYoY": 73.34987561416007,
     "exDate": null,
     "exType": null,
-    "volLots": 388,
-    "turnMillion": 14.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6118.TWO",
@@ -48492,8 +48492,8 @@
     "revCumYoY": 3.915787588219311,
     "exDate": null,
     "exType": null,
-    "volLots": 87,
-    "turnMillion": 1.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6109.TWO",
@@ -48520,8 +48520,8 @@
     "revCumYoY": 20.601426454019798,
     "exDate": null,
     "exType": null,
-    "volLots": 832,
-    "turnMillion": 8.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6138.TWO",
@@ -48548,8 +48548,8 @@
     "revCumYoY": 11.92273038985949,
     "exDate": null,
     "exType": null,
-    "volLots": 772,
-    "turnMillion": 223.86
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6129.TWO",
@@ -48576,8 +48576,8 @@
     "revCumYoY": 41.07155307796766,
     "exDate": null,
     "exType": null,
-    "volLots": 432,
-    "turnMillion": 5.96
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6146.TWO",
@@ -48604,8 +48604,8 @@
     "revCumYoY": 9.368868359496918,
     "exDate": "2026-09-03",
     "exType": "除息",
-    "volLots": 413,
-    "turnMillion": 80.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6151.TWO",
@@ -48632,8 +48632,8 @@
     "revCumYoY": 10.94381500863212,
     "exDate": null,
     "exType": null,
-    "volLots": 151,
-    "turnMillion": 5.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6156.TWO",
@@ -48660,8 +48660,8 @@
     "revCumYoY": 21.250351948978857,
     "exDate": null,
     "exType": null,
-    "volLots": 428,
-    "turnMillion": 9.08
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6171.TWO",
@@ -48688,8 +48688,8 @@
     "revCumYoY": -86.68804209630066,
     "exDate": null,
     "exType": null,
-    "volLots": 20,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6144.TWO",
@@ -48716,8 +48716,8 @@
     "revCumYoY": -9.54065410528253,
     "exDate": null,
     "exType": null,
-    "volLots": 16,
-    "turnMillion": 0.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6175.TWO",
@@ -48744,8 +48744,8 @@
     "revCumYoY": 19.39686570124975,
     "exDate": null,
     "exType": null,
-    "volLots": 599,
-    "turnMillion": 45.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6173.TWO",
@@ -48772,8 +48772,8 @@
     "revCumYoY": 21.96263719744514,
     "exDate": null,
     "exType": null,
-    "volLots": 12052,
-    "turnMillion": 2454.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6169.TWO",
@@ -48800,8 +48800,8 @@
     "revCumYoY": -98.76851767699718,
     "exDate": null,
     "exType": null,
-    "volLots": 15,
-    "turnMillion": 0.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6161.TWO",
@@ -48828,8 +48828,8 @@
     "revCumYoY": 28.14683372765948,
     "exDate": null,
     "exType": null,
-    "volLots": 88,
-    "turnMillion": 4.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6163.TWO",
@@ -48856,8 +48856,8 @@
     "revCumYoY": 39.2232643874818,
     "exDate": null,
     "exType": null,
-    "volLots": 3797,
-    "turnMillion": 170.62
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6150.TWO",
@@ -48884,8 +48884,8 @@
     "revCumYoY": -27.376635327737045,
     "exDate": null,
     "exType": null,
-    "volLots": 123,
-    "turnMillion": 7.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6148.TWO",
@@ -48912,8 +48912,8 @@
     "revCumYoY": -42.71606530681344,
     "exDate": null,
     "exType": null,
-    "volLots": 198,
-    "turnMillion": 5.5
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6174.TWO",
@@ -48940,8 +48940,8 @@
     "revCumYoY": 25.16607749713954,
     "exDate": null,
     "exType": null,
-    "volLots": 895,
-    "turnMillion": 38.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6143.TWO",
@@ -48968,8 +48968,8 @@
     "revCumYoY": 15.833649109947089,
     "exDate": null,
     "exType": null,
-    "volLots": 387,
-    "turnMillion": 34.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6158.TWO",
@@ -48996,8 +48996,8 @@
     "revCumYoY": -0.48784952975714,
     "exDate": null,
     "exType": null,
-    "volLots": 40,
-    "turnMillion": 0.66
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6170.TWO",
@@ -49024,8 +49024,8 @@
     "revCumYoY": -1.4237226662481222,
     "exDate": null,
     "exType": null,
-    "volLots": 87,
-    "turnMillion": 4.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6154.TWO",
@@ -49052,8 +49052,8 @@
     "revCumYoY": 5.3776018737012645,
     "exDate": null,
     "exType": null,
-    "volLots": 43,
-    "turnMillion": 0.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6160.TWO",
@@ -49080,8 +49080,8 @@
     "revCumYoY": -18.05851771052103,
     "exDate": null,
     "exType": null,
-    "volLots": 39,
-    "turnMillion": 0.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6167.TWO",
@@ -49108,8 +49108,8 @@
     "revCumYoY": 2.493794427489855,
     "exDate": null,
     "exType": null,
-    "volLots": 406,
-    "turnMillion": 4.3
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6147.TWO",
@@ -49136,8 +49136,8 @@
     "revCumYoY": 20.942382556244947,
     "exDate": null,
     "exType": null,
-    "volLots": 23444,
-    "turnMillion": 3888.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6188.TWO",
@@ -49164,8 +49164,8 @@
     "revCumYoY": -9.63124473352109,
     "exDate": "2026-08-14",
     "exType": "除息",
-    "volLots": 780,
-    "turnMillion": 54.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6203.TWO",
@@ -49192,8 +49192,8 @@
     "revCumYoY": -30.059169244286,
     "exDate": null,
     "exType": null,
-    "volLots": 84,
-    "turnMillion": 5.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6194.TWO",
@@ -49220,8 +49220,8 @@
     "revCumYoY": -35.788775743142715,
     "exDate": null,
     "exType": null,
-    "volLots": 2238,
-    "turnMillion": 59.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6182.TWO",
@@ -49248,8 +49248,8 @@
     "revCumYoY": 10.518015772529147,
     "exDate": null,
     "exType": null,
-    "volLots": 209397,
-    "turnMillion": 25920.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6190.TWO",
@@ -49276,8 +49276,8 @@
     "revCumYoY": 24.70469711690492,
     "exDate": null,
     "exType": null,
-    "volLots": 968,
-    "turnMillion": 63.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6212.TWO",
@@ -49332,8 +49332,8 @@
     "revCumYoY": 678.9866763094211,
     "exDate": null,
     "exType": null,
-    "volLots": 355,
-    "turnMillion": 33.69
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6180.TWO",
@@ -49360,8 +49360,8 @@
     "revCumYoY": -7.78523943196714,
     "exDate": null,
     "exType": null,
-    "volLots": 233,
-    "turnMillion": 9.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6187.TWO",
@@ -49388,8 +49388,8 @@
     "revCumYoY": 42.71621275569036,
     "exDate": null,
     "exType": null,
-    "volLots": 4088,
-    "turnMillion": 5304.76
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6210.TWO",
@@ -49416,8 +49416,8 @@
     "revCumYoY": 58.697879378872784,
     "exDate": null,
     "exType": null,
-    "volLots": 6,
-    "turnMillion": 0.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6195.TWO",
@@ -49444,8 +49444,8 @@
     "revCumYoY": 15.921029240796472,
     "exDate": null,
     "exType": null,
-    "volLots": 31,
-    "turnMillion": 0.85
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6207.TWO",
@@ -49472,8 +49472,8 @@
     "revCumYoY": 4.2497004741461515,
     "exDate": null,
     "exType": null,
-    "volLots": 2394,
-    "turnMillion": 248.8
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6186.TWO",
@@ -49500,8 +49500,8 @@
     "revCumYoY": -52.25338013799339,
     "exDate": "2026-08-26",
     "exType": "除權",
-    "volLots": 355,
-    "turnMillion": 11.82
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6208.TWO",
@@ -49528,8 +49528,8 @@
     "revCumYoY": 0.7220605822269464,
     "exDate": null,
     "exType": null,
-    "volLots": 246,
-    "turnMillion": 20.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6185.TWO",
@@ -49556,8 +49556,8 @@
     "revCumYoY": 33.74744680300954,
     "exDate": null,
     "exType": null,
-    "volLots": 258,
-    "turnMillion": 3.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6218.TWO",
@@ -49584,8 +49584,8 @@
     "revCumYoY": 13.09009009009009,
     "exDate": null,
     "exType": null,
-    "volLots": 1069,
-    "turnMillion": 40.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6198.TWO",
@@ -49612,8 +49612,8 @@
     "revCumYoY": 12,
     "exDate": null,
     "exType": null,
-    "volLots": 122,
-    "turnMillion": 2.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6179.TWO",
@@ -49640,8 +49640,8 @@
     "revCumYoY": 121.05077956434033,
     "exDate": "2026-08-14",
     "exType": "除息",
-    "volLots": 1625,
-    "turnMillion": 44.63
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6217.TWO",
@@ -49668,8 +49668,8 @@
     "revCumYoY": 36.03936536280349,
     "exDate": null,
     "exType": null,
-    "volLots": 5054,
-    "turnMillion": 848.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6204.TWO",
@@ -49696,8 +49696,8 @@
     "revCumYoY": 6.591307720848652,
     "exDate": null,
     "exType": null,
-    "volLots": 77,
-    "turnMillion": 6.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6228.TWO",
@@ -49724,8 +49724,8 @@
     "revCumYoY": -10.465116279069768,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.2
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6245.TWO",
@@ -49752,8 +49752,8 @@
     "revCumYoY": 17.991229365707685,
     "exDate": "2026-09-01",
     "exType": "除息",
-    "volLots": 1057,
-    "turnMillion": 86.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6244.TWO",
@@ -49780,8 +49780,8 @@
     "revCumYoY": 16.265991450935356,
     "exDate": null,
     "exType": null,
-    "volLots": 3386,
-    "turnMillion": 87.8
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6240.TWO",
@@ -49808,8 +49808,8 @@
     "revCumYoY": 7.832540437678402,
     "exDate": null,
     "exType": null,
-    "volLots": 52,
-    "turnMillion": 1.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6246.TWO",
@@ -49836,8 +49836,8 @@
     "revCumYoY": -19.101116230901834,
     "exDate": null,
     "exType": null,
-    "volLots": 280,
-    "turnMillion": 3.65
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6248.TWO",
@@ -49864,8 +49864,8 @@
     "revCumYoY": -19.065047794757426,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 34,
-    "turnMillion": 0.63
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6241.TWO",
@@ -49921,7 +49921,7 @@
     "exDate": null,
     "exType": null,
     "volLots": 0,
-    "turnMillion": 0.01
+    "turnMillion": 0
   },
   {
     "id": "6237.TWO",
@@ -49948,8 +49948,8 @@
     "revCumYoY": 46.500140472406606,
     "exDate": null,
     "exType": null,
-    "volLots": 129,
-    "turnMillion": 4.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6220.TWO",
@@ -49976,8 +49976,8 @@
     "revCumYoY": 20.474041164519626,
     "exDate": null,
     "exType": null,
-    "volLots": 191,
-    "turnMillion": 4.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6234.TWO",
@@ -50004,8 +50004,8 @@
     "revCumYoY": 27.849262615157144,
     "exDate": null,
     "exType": null,
-    "volLots": 225,
-    "turnMillion": 8.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6227.TWO",
@@ -50032,8 +50032,8 @@
     "revCumYoY": 37.402446997122354,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 370,
-    "turnMillion": 44.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6221.TWO",
@@ -50060,8 +50060,8 @@
     "revCumYoY": -33.61445451143492,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 128,
-    "turnMillion": 2.83
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6223.TWO",
@@ -50088,8 +50088,8 @@
     "revCumYoY": 52.26335952282982,
     "exDate": null,
     "exType": null,
-    "volLots": 2080,
-    "turnMillion": 11183.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6229.TWO",
@@ -50116,8 +50116,8 @@
     "revCumYoY": 47.611256065951444,
     "exDate": null,
     "exType": null,
-    "volLots": 45,
-    "turnMillion": 1.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6231.TWO",
@@ -50144,8 +50144,8 @@
     "revCumYoY": 9.233830845771145,
     "exDate": null,
     "exType": null,
-    "volLots": 247,
-    "turnMillion": 55.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6233.TWO",
@@ -50172,8 +50172,8 @@
     "revCumYoY": 3.2682945894655475,
     "exDate": null,
     "exType": null,
-    "volLots": 129,
-    "turnMillion": 2.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6222.TWO",
@@ -50200,8 +50200,8 @@
     "revCumYoY": -31.794871794871796,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6219.TWO",
@@ -50228,8 +50228,8 @@
     "revCumYoY": 28194.632968905295,
     "exDate": null,
     "exType": null,
-    "volLots": 32,
-    "turnMillion": 0.39
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6419.TWO",
@@ -50256,8 +50256,8 @@
     "revCumYoY": 195.34120296254596,
     "exDate": null,
     "exType": null,
-    "volLots": 743,
-    "turnMillion": 124.91
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6263.TWO",
@@ -50284,8 +50284,8 @@
     "revCumYoY": 7.732142198620791,
     "exDate": null,
     "exType": null,
-    "volLots": 68,
-    "turnMillion": 10.96
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6291.TWO",
@@ -50312,8 +50312,8 @@
     "revCumYoY": 41.76063731241894,
     "exDate": null,
     "exType": null,
-    "volLots": 456,
-    "turnMillion": 176.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6417.TWO",
@@ -50340,8 +50340,8 @@
     "revCumYoY": 20.987039705121145,
     "exDate": null,
     "exType": null,
-    "volLots": 50,
-    "turnMillion": 5.51
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6284.TWO",
@@ -50368,8 +50368,8 @@
     "revCumYoY": -6.6853557069744705,
     "exDate": null,
     "exType": null,
-    "volLots": 639,
-    "turnMillion": 49.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6294.TWO",
@@ -50396,8 +50396,8 @@
     "revCumYoY": -12.62878514077006,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 0.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6270.TWO",
@@ -50424,8 +50424,8 @@
     "revCumYoY": 14.380301653280272,
     "exDate": null,
     "exType": null,
-    "volLots": 130,
-    "turnMillion": 3.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6411.TWO",
@@ -50452,8 +50452,8 @@
     "revCumYoY": 13.80870926141203,
     "exDate": null,
     "exType": null,
-    "volLots": 1064,
-    "turnMillion": 86.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6292.TWO",
@@ -50480,8 +50480,8 @@
     "revCumYoY": 30.570679055316592,
     "exDate": null,
     "exType": null,
-    "volLots": 133,
-    "turnMillion": 8.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6290.TWO",
@@ -50508,8 +50508,8 @@
     "revCumYoY": 8.06817438069814,
     "exDate": null,
     "exType": null,
-    "volLots": 2128,
-    "turnMillion": 451.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6265.TWO",
@@ -50536,8 +50536,8 @@
     "revCumYoY": 734.0997307743714,
     "exDate": null,
     "exType": null,
-    "volLots": 10895,
-    "turnMillion": 668.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6418.TWO",
@@ -50564,8 +50564,8 @@
     "revCumYoY": 18.880653045219905,
     "exDate": null,
     "exType": null,
-    "volLots": 97,
-    "turnMillion": 3.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6266.TWO",
@@ -50592,8 +50592,8 @@
     "revCumYoY": -4.152488946597138,
     "exDate": null,
     "exType": null,
-    "volLots": 95,
-    "turnMillion": 2.36
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6259.TWO",
@@ -50620,8 +50620,8 @@
     "revCumYoY": 54.29732135972015,
     "exDate": null,
     "exType": null,
-    "volLots": 850,
-    "turnMillion": 26.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6275.TWO",
@@ -50648,8 +50648,8 @@
     "revCumYoY": 0.901144241015828,
     "exDate": null,
     "exType": null,
-    "volLots": 175,
-    "turnMillion": 7.62
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6276.TWO",
@@ -50676,8 +50676,8 @@
     "revCumYoY": -48.13204337535192,
     "exDate": null,
     "exType": null,
-    "volLots": 33,
-    "turnMillion": 0.63
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6279.TWO",
@@ -50704,8 +50704,8 @@
     "revCumYoY": 12.3627995249387,
     "exDate": null,
     "exType": null,
-    "volLots": 615,
-    "turnMillion": 77.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6274.TWO",
@@ -50732,8 +50732,8 @@
     "revCumYoY": 91.30497005868412,
     "exDate": null,
     "exType": null,
-    "volLots": 7101,
-    "turnMillion": 11124.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6264.TWO",
@@ -50760,8 +50760,8 @@
     "revCumYoY": 36.88880077321504,
     "exDate": null,
     "exType": null,
-    "volLots": 17,
-    "turnMillion": 0.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6261.TWO",
@@ -50788,8 +50788,8 @@
     "revCumYoY": 6.501847096349251,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 341,
-    "turnMillion": 26.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6496.TWO",
@@ -50816,8 +50816,8 @@
     "revCumYoY": 12.337731421121251,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6432.TWO",
@@ -50844,8 +50844,8 @@
     "revCumYoY": 11.027100205341297,
     "exDate": "2026-08-18",
     "exType": "除息",
-    "volLots": 826,
-    "turnMillion": 57.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6469.TWO",
@@ -50872,8 +50872,8 @@
     "revCumYoY": 1.858495680949812,
     "exDate": null,
     "exType": null,
-    "volLots": 367,
-    "turnMillion": 25.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6485.TWO",
@@ -50900,8 +50900,8 @@
     "revCumYoY": -10.18629887044306,
     "exDate": "2026-08-13",
     "exType": "除息",
-    "volLots": 370,
-    "turnMillion": 22.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6425.TWO",
@@ -50928,8 +50928,8 @@
     "revCumYoY": 51.65384360570456,
     "exDate": null,
     "exType": null,
-    "volLots": 203,
-    "turnMillion": 12.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6461.TWO",
@@ -50956,8 +50956,8 @@
     "revCumYoY": -61.86701618607748,
     "exDate": null,
     "exType": null,
-    "volLots": 35,
-    "turnMillion": 0.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6494.TWO",
@@ -50984,8 +50984,8 @@
     "revCumYoY": 48.20584681707315,
     "exDate": null,
     "exType": null,
-    "volLots": 365,
-    "turnMillion": 20.58
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6462.TWO",
@@ -51012,8 +51012,8 @@
     "revCumYoY": 70.36418860283483,
     "exDate": null,
     "exType": null,
-    "volLots": 349,
-    "turnMillion": 34.64
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6482.TWO",
@@ -51040,8 +51040,8 @@
     "revCumYoY": -30.657657261082008,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 31,
-    "turnMillion": 0.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6465.TWO",
@@ -51068,8 +51068,8 @@
     "revCumYoY": 85.68706702799693,
     "exDate": null,
     "exType": null,
-    "volLots": 127,
-    "turnMillion": 5.9
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6499.TWO",
@@ -51096,8 +51096,8 @@
     "revCumYoY": 10.919966301600674,
     "exDate": null,
     "exType": null,
-    "volLots": 142,
-    "turnMillion": 8.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6492.TWO",
@@ -51124,8 +51124,8 @@
     "revCumYoY": -3.9451114922813035,
     "exDate": null,
     "exType": null,
-    "volLots": 73,
-    "turnMillion": 2.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6488.TWO",
@@ -51152,8 +51152,8 @@
     "revCumYoY": -4.4397002274196975,
     "exDate": null,
     "exType": null,
-    "volLots": 13533,
-    "turnMillion": 14608.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6435.TWO",
@@ -51180,8 +51180,8 @@
     "revCumYoY": 12.783135889064873,
     "exDate": null,
     "exType": null,
-    "volLots": 881,
-    "turnMillion": 231.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6441.TWO",
@@ -51208,8 +51208,8 @@
     "revCumYoY": -61.68505088345634,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 0.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6470.TWO",
@@ -51236,8 +51236,8 @@
     "revCumYoY": -46.71948649653712,
     "exDate": null,
     "exType": null,
-    "volLots": 52,
-    "turnMillion": 2.15
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6474.TWO",
@@ -51264,8 +51264,8 @@
     "revCumYoY": 18.59955682571423,
     "exDate": "2026-08-28",
     "exType": "除息",
-    "volLots": 204,
-    "turnMillion": 8.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6423.TWO",
@@ -51292,8 +51292,8 @@
     "revCumYoY": 21.27653195826838,
     "exDate": null,
     "exType": null,
-    "volLots": 40,
-    "turnMillion": 3.15
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6498.TWO",
@@ -51320,8 +51320,8 @@
     "revCumYoY": 23.530665277588685,
     "exDate": null,
     "exType": null,
-    "volLots": 60,
-    "turnMillion": 4.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6486.TWO",
@@ -51348,8 +51348,8 @@
     "revCumYoY": 19.81607931591905,
     "exDate": null,
     "exType": null,
-    "volLots": 39,
-    "turnMillion": 2.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6538.TWO",
@@ -51376,8 +51376,8 @@
     "revCumYoY": -6.500872743588481,
     "exDate": null,
     "exType": null,
-    "volLots": 2523,
-    "turnMillion": 476.84
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6517.TWO",
@@ -51404,8 +51404,8 @@
     "revCumYoY": -6.398198843575705,
     "exDate": null,
     "exType": null,
-    "volLots": 2137,
-    "turnMillion": 145.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6556.TWO",
@@ -51432,8 +51432,8 @@
     "revCumYoY": 4.108578198879003,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 1.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6546.TWO",
@@ -51460,8 +51460,8 @@
     "revCumYoY": -6.30335344063581,
     "exDate": null,
     "exType": null,
-    "volLots": 148,
-    "turnMillion": 9.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6516.TWO",
@@ -51488,8 +51488,8 @@
     "revCumYoY": 25.80431053262172,
     "exDate": null,
     "exType": null,
-    "volLots": 49,
-    "turnMillion": 2.88
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6561.TWO",
@@ -51516,8 +51516,8 @@
     "revCumYoY": 0.0030607260629209807,
     "exDate": null,
     "exType": null,
-    "volLots": 40,
-    "turnMillion": 12.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6542.TWO",
@@ -51544,8 +51544,8 @@
     "revCumYoY": 19.63565821602399,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6527.TWO",
@@ -51572,8 +51572,8 @@
     "revCumYoY": -11.147392037974448,
     "exDate": null,
     "exType": null,
-    "volLots": 21,
-    "turnMillion": 1.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6560.TWO",
@@ -51600,8 +51600,8 @@
     "revCumYoY": 56.10358214764963,
     "exDate": null,
     "exType": null,
-    "volLots": 4,
-    "turnMillion": 0.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6509.TWO",
@@ -51628,8 +51628,8 @@
     "revCumYoY": 5.8056630678345895,
     "exDate": null,
     "exType": null,
-    "volLots": 761,
-    "turnMillion": 35.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6535.TWO",
@@ -51656,8 +51656,8 @@
     "revCumYoY": -47.1672392169693,
     "exDate": null,
     "exType": null,
-    "volLots": 296,
-    "turnMillion": 24.85
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6530.TWO",
@@ -51684,8 +51684,8 @@
     "revCumYoY": 17.206378083364545,
     "exDate": null,
     "exType": null,
-    "volLots": 1188,
-    "turnMillion": 99.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6548.TWO",
@@ -51712,8 +51712,8 @@
     "revCumYoY": 25.929855608364328,
     "exDate": null,
     "exType": null,
-    "volLots": 3234,
-    "turnMillion": 237.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6512.TWO",
@@ -51740,8 +51740,8 @@
     "revCumYoY": -52.22855843406161,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 0.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6532.TWO",
@@ -51768,8 +51768,8 @@
     "revCumYoY": 8.700755895794366,
     "exDate": null,
     "exType": null,
-    "volLots": 460,
-    "turnMillion": 39.18
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6523.TWO",
@@ -51796,8 +51796,8 @@
     "revCumYoY": -15.085362482799871,
     "exDate": null,
     "exType": null,
-    "volLots": 30,
-    "turnMillion": 2.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6547.TWO",
@@ -51824,8 +51824,8 @@
     "revCumYoY": -15.139268366727384,
     "exDate": null,
     "exType": null,
-    "volLots": 4109,
-    "turnMillion": 215.69
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6510.TWO",
@@ -51852,8 +51852,8 @@
     "revCumYoY": 29.997807927670973,
     "exDate": null,
     "exType": null,
-    "volLots": 446,
-    "turnMillion": 1238.65
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6506.TWO",
@@ -51880,8 +51880,8 @@
     "revCumYoY": 12.08252918650374,
     "exDate": null,
     "exType": null,
-    "volLots": 107,
-    "turnMillion": 1.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6508.TWO",
@@ -51908,8 +51908,8 @@
     "revCumYoY": -6.892540774406767,
     "exDate": null,
     "exType": null,
-    "volLots": 38,
-    "turnMillion": 0.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6597.TWO",
@@ -51936,8 +51936,8 @@
     "revCumYoY": -14.794468561696457,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6584.TWO",
@@ -51964,8 +51964,8 @@
     "revCumYoY": 51.970590365257294,
     "exDate": null,
     "exType": null,
-    "volLots": 824,
-    "turnMillion": 493.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6578.TWO",
@@ -51992,8 +51992,8 @@
     "revCumYoY": 23.169462869033683,
     "exDate": null,
     "exType": null,
-    "volLots": 28,
-    "turnMillion": 0.5
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6588.TWO",
@@ -52020,8 +52020,8 @@
     "revCumYoY": 129.018390510326,
     "exDate": null,
     "exType": null,
-    "volLots": 2422,
-    "turnMillion": 226
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6570.TWO",
@@ -52048,8 +52048,8 @@
     "revCumYoY": 28.33440391422597,
     "exDate": null,
     "exType": null,
-    "volLots": 85,
-    "turnMillion": 4.66
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6612.TWO",
@@ -52076,8 +52076,8 @@
     "revCumYoY": 15.92343965349022,
     "exDate": "2026-08-26",
     "exType": "除權息",
-    "volLots": 21,
-    "turnMillion": 1.5
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6617.TWO",
@@ -52104,8 +52104,8 @@
     "revCumYoY": 37.546274571145524,
     "exDate": null,
     "exType": null,
-    "volLots": 481,
-    "turnMillion": 46.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6596.TWO",
@@ -52132,8 +52132,8 @@
     "revCumYoY": -10.650298794794784,
     "exDate": null,
     "exType": null,
-    "volLots": 186,
-    "turnMillion": 17.58
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6615.TWO",
@@ -52161,7 +52161,7 @@
     "exDate": null,
     "exType": null,
     "volLots": 0,
-    "turnMillion": 0.02
+    "turnMillion": 0
   },
   {
     "id": "6613.TWO",
@@ -52188,8 +52188,8 @@
     "revCumYoY": 49.03603900870384,
     "exDate": null,
     "exType": null,
-    "volLots": 286,
-    "turnMillion": 73.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6590.TWO",
@@ -52216,8 +52216,8 @@
     "revCumYoY": 11.32137882558461,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6609.TWO",
@@ -52244,8 +52244,8 @@
     "revCumYoY": 0.3067495696225844,
     "exDate": null,
     "exType": null,
-    "volLots": 100,
-    "turnMillion": 3.86
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6569.TWO",
@@ -52272,8 +52272,8 @@
     "revCumYoY": 10.652483563003882,
     "exDate": null,
     "exType": null,
-    "volLots": 192,
-    "turnMillion": 17.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6593.TWO",
@@ -52300,8 +52300,8 @@
     "revCumYoY": 3.4986074534396847,
     "exDate": null,
     "exType": null,
-    "volLots": 55,
-    "turnMillion": 1.74
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6577.TWO",
@@ -52328,8 +52328,8 @@
     "revCumYoY": 3.5206532300360145,
     "exDate": null,
     "exType": null,
-    "volLots": 48,
-    "turnMillion": 3.86
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6568.TWO",
@@ -52356,8 +52356,8 @@
     "revCumYoY": 19.733168390476116,
     "exDate": null,
     "exType": null,
-    "volLots": 101,
-    "turnMillion": 13.14
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6616.TWO",
@@ -52384,8 +52384,8 @@
     "revCumYoY": -23.38481137284381,
     "exDate": null,
     "exType": null,
-    "volLots": 23,
-    "turnMillion": 0.2
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6603.TWO",
@@ -52412,8 +52412,8 @@
     "revCumYoY": 4.000086332521268,
     "exDate": null,
     "exType": null,
-    "volLots": 4141,
-    "turnMillion": 118.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6576.TWO",
@@ -52440,8 +52440,8 @@
     "revCumYoY": 26.53316591617596,
     "exDate": null,
     "exType": null,
-    "volLots": 94,
-    "turnMillion": 7.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6574.TWO",
@@ -52468,8 +52468,8 @@
     "revCumYoY": 35.09101637987208,
     "exDate": "2026-08-19",
     "exType": "除息",
-    "volLots": 56,
-    "turnMillion": 6.96
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6662.TWO",
@@ -52496,8 +52496,8 @@
     "revCumYoY": -1.9780724789915967,
     "exDate": null,
     "exType": null,
-    "volLots": 4,
-    "turnMillion": 0.12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6629.TWO",
@@ -52524,8 +52524,8 @@
     "revCumYoY": 92.46052262821689,
     "exDate": null,
     "exType": null,
-    "volLots": 7,
-    "turnMillion": 0.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6684.TWO",
@@ -52552,8 +52552,8 @@
     "revCumYoY": -0.5081935442192984,
     "exDate": null,
     "exType": null,
-    "volLots": 54,
-    "turnMillion": 2.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6642.TWO",
@@ -52580,8 +52580,8 @@
     "revCumYoY": 22.208054338326995,
     "exDate": null,
     "exType": null,
-    "volLots": 324,
-    "turnMillion": 26.18
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6680.TWO",
@@ -52636,8 +52636,8 @@
     "revCumYoY": 11.263508515887553,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6651.TWO",
@@ -52664,8 +52664,8 @@
     "revCumYoY": 14.218852698061713,
     "exDate": null,
     "exType": null,
-    "volLots": 141,
-    "turnMillion": 19.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6664.TWO",
@@ -52692,8 +52692,8 @@
     "revCumYoY": 16.749224958180182,
     "exDate": null,
     "exType": null,
-    "volLots": 302,
-    "turnMillion": 100.37
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6683.TWO",
@@ -52720,8 +52720,8 @@
     "revCumYoY": 30.456730748952044,
     "exDate": null,
     "exType": null,
-    "volLots": 608,
-    "turnMillion": 788.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6643.TWO",
@@ -52748,8 +52748,8 @@
     "revCumYoY": -2.8874959216159297,
     "exDate": null,
     "exType": null,
-    "volLots": 377,
-    "turnMillion": 158.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6667.TWO",
@@ -52776,8 +52776,8 @@
     "revCumYoY": 2.761335867499321,
     "exDate": "2026-08-25",
     "exType": "除權",
-    "volLots": 134,
-    "turnMillion": 29.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6679.TWO",
@@ -52804,8 +52804,8 @@
     "revCumYoY": 7.317366341444702,
     "exDate": null,
     "exType": null,
-    "volLots": 293,
-    "turnMillion": 58.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6640.TWO",
@@ -52832,8 +52832,8 @@
     "revCumYoY": 72.66496222543178,
     "exDate": null,
     "exType": null,
-    "volLots": 311,
-    "turnMillion": 332.2
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6624.TWO",
@@ -52860,8 +52860,8 @@
     "revCumYoY": -29.447563536621953,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 11,
-    "turnMillion": 0.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6654.TWO",
@@ -52888,8 +52888,8 @@
     "revCumYoY": 116.78701577411346,
     "exDate": null,
     "exType": null,
-    "volLots": 35,
-    "turnMillion": 5.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6692.TWO",
@@ -52916,8 +52916,8 @@
     "revCumYoY": -55.109993726575496,
     "exDate": null,
     "exType": null,
-    "volLots": 19,
-    "turnMillion": 0.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6620.TWO",
@@ -52944,8 +52944,8 @@
     "revCumYoY": -51.11272979535207,
     "exDate": null,
     "exType": null,
-    "volLots": 212,
-    "turnMillion": 16.3
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6649.TWO",
@@ -52972,8 +52972,8 @@
     "revCumYoY": -36.46180307924655,
     "exDate": null,
     "exType": null,
-    "volLots": 108,
-    "turnMillion": 3.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6690.TWO",
@@ -53000,8 +53000,8 @@
     "revCumYoY": 14.334457157670082,
     "exDate": null,
     "exType": null,
-    "volLots": 19,
-    "turnMillion": 3.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6637.TWO",
@@ -53028,8 +53028,8 @@
     "revCumYoY": -30.77419300077241,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 76,
-    "turnMillion": 4.66
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6761.TWO",
@@ -53056,8 +53056,8 @@
     "revCumYoY": -4.762088461863027,
     "exDate": null,
     "exType": null,
-    "volLots": 705,
-    "turnMillion": 128.18
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6732.TWO",
@@ -53084,8 +53084,8 @@
     "revCumYoY": -14.799103080249566,
     "exDate": null,
     "exType": null,
-    "volLots": 150,
-    "turnMillion": 22.76
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6752.TWO",
@@ -53112,8 +53112,8 @@
     "revCumYoY": 4.852666200781931,
     "exDate": "2026-08-25",
     "exType": "除權",
-    "volLots": 32,
-    "turnMillion": 3.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6725.TWO",
@@ -53140,8 +53140,8 @@
     "revCumYoY": 6.412030678362895,
     "exDate": null,
     "exType": null,
-    "volLots": 43,
-    "turnMillion": 9.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6741.TWO",
@@ -53168,8 +53168,8 @@
     "revCumYoY": 32.382006181082836,
     "exDate": null,
     "exType": null,
-    "volLots": 91,
-    "turnMillion": 5.01
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6728.TWO",
@@ -53196,8 +53196,8 @@
     "revCumYoY": 5.98872530479645,
     "exDate": null,
     "exType": null,
-    "volLots": 19,
-    "turnMillion": 1.99
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6751.TWO",
@@ -53224,8 +53224,8 @@
     "revCumYoY": -17.645539985497766,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.08
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6730.TWO",
@@ -53252,8 +53252,8 @@
     "revCumYoY": 2.3306728941354047,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6720.TWO",
@@ -53280,8 +53280,8 @@
     "revCumYoY": -21.71168316555881,
     "exDate": null,
     "exType": null,
-    "volLots": 26,
-    "turnMillion": 3.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6703.TWO",
@@ -53308,8 +53308,8 @@
     "revCumYoY": 15.76723845605173,
     "exDate": null,
     "exType": null,
-    "volLots": 59,
-    "turnMillion": 6.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6697.TWO",
@@ -53336,8 +53336,8 @@
     "revCumYoY": -0.4061320901992713,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.42
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6735.TWO",
@@ -53364,8 +53364,8 @@
     "revCumYoY": 37.725241549699675,
     "exDate": null,
     "exType": null,
-    "volLots": 70,
-    "turnMillion": 4.43
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6712.TWO",
@@ -53392,8 +53392,8 @@
     "revCumYoY": 16.30787525493074,
     "exDate": null,
     "exType": null,
-    "volLots": 184,
-    "turnMillion": 27.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6727.TWO",
@@ -53420,8 +53420,8 @@
     "revCumYoY": 68.93591875772917,
     "exDate": null,
     "exType": null,
-    "volLots": 1960,
-    "turnMillion": 892.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6716.TWO",
@@ -53448,8 +53448,8 @@
     "revCumYoY": 60.26718739219521,
     "exDate": null,
     "exType": null,
-    "volLots": 872,
-    "turnMillion": 118.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6708.TWO",
@@ -53476,8 +53476,8 @@
     "revCumYoY": -5.855884114174913,
     "exDate": null,
     "exType": null,
-    "volLots": 18,
-    "turnMillion": 0.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6721.TWO",
@@ -53504,8 +53504,8 @@
     "revCumYoY": 1.7733758687544592,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.4
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6733.TWO",
@@ -53532,8 +53532,8 @@
     "revCumYoY": 7.54325037495689,
     "exDate": null,
     "exType": null,
-    "volLots": 95,
-    "turnMillion": 2.39
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6739.TWO",
@@ -53560,8 +53560,8 @@
     "revCumYoY": 97.12714229178272,
     "exDate": null,
     "exType": null,
-    "volLots": 153,
-    "turnMillion": 153.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6693.TWO",
@@ -53588,8 +53588,8 @@
     "revCumYoY": 87.422781026537,
     "exDate": null,
     "exType": null,
-    "volLots": 854,
-    "turnMillion": 150.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6846.TWO",
@@ -53616,8 +53616,8 @@
     "revCumYoY": -11.620303163623467,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6855.TWO",
@@ -53672,8 +53672,8 @@
     "revCumYoY": 12.826318001960361,
     "exDate": null,
     "exType": null,
-    "volLots": 122,
-    "turnMillion": 5.1
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6762.TWO",
@@ -53701,7 +53701,7 @@
     "exDate": null,
     "exType": null,
     "volLots": 0,
-    "turnMillion": 0.06
+    "turnMillion": 0
   },
   {
     "id": "6840.TWO",
@@ -53728,8 +53728,8 @@
     "revCumYoY": 12.835329551026126,
     "exDate": null,
     "exType": null,
-    "volLots": 714,
-    "turnMillion": 59.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6811.TWO",
@@ -53756,8 +53756,8 @@
     "revCumYoY": 20.080121426260916,
     "exDate": null,
     "exType": null,
-    "volLots": 160,
-    "turnMillion": 35.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6829.TWO",
@@ -53784,8 +53784,8 @@
     "revCumYoY": 39.73204605770141,
     "exDate": null,
     "exType": null,
-    "volLots": 1236,
-    "turnMillion": 282.79
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6844.TWO",
@@ -53812,8 +53812,8 @@
     "revCumYoY": -1.262684811941858,
     "exDate": null,
     "exType": null,
-    "volLots": 31,
-    "turnMillion": 1.88
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6767.TWO",
@@ -53840,8 +53840,8 @@
     "revCumYoY": -1.3266666666666667,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6803.TWO",
@@ -53868,8 +53868,8 @@
     "revCumYoY": 0.9074733837833605,
     "exDate": null,
     "exType": null,
-    "volLots": 44,
-    "turnMillion": 11.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6823.TWO",
@@ -53896,8 +53896,8 @@
     "revCumYoY": 8.027711229456914,
     "exDate": null,
     "exType": null,
-    "volLots": 65,
-    "turnMillion": 4.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6791.TWO",
@@ -53924,8 +53924,8 @@
     "revCumYoY": 9.59880744053406,
     "exDate": null,
     "exType": null,
-    "volLots": 23,
-    "turnMillion": 2.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6856.TWO",
@@ -53980,8 +53980,8 @@
     "revCumYoY": 6.364101431245567,
     "exDate": null,
     "exType": null,
-    "volLots": 93,
-    "turnMillion": 1.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6788.TWO",
@@ -54008,8 +54008,8 @@
     "revCumYoY": 18.221827161583555,
     "exDate": null,
     "exType": null,
-    "volLots": 216,
-    "turnMillion": 77.37
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6843.TWO",
@@ -54036,8 +54036,8 @@
     "revCumYoY": -2.701522908547137,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6859.TWO",
@@ -54064,8 +54064,8 @@
     "revCumYoY": -40.314797794117645,
     "exDate": null,
     "exType": null,
-    "volLots": 50,
-    "turnMillion": 5.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6821.TWO",
@@ -54092,8 +54092,8 @@
     "revCumYoY": -7.304398598676528,
     "exDate": null,
     "exType": null,
-    "volLots": 99,
-    "turnMillion": 4.09
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6841.TWO",
@@ -54120,8 +54120,8 @@
     "revCumYoY": 4.821325173840751,
     "exDate": null,
     "exType": null,
-    "volLots": 153,
-    "turnMillion": 8.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6785.TWO",
@@ -54148,8 +54148,8 @@
     "revCumYoY": 19.71268954509178,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 82,
-    "turnMillion": 8.16
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6872.TWO",
@@ -54176,8 +54176,8 @@
     "revCumYoY": 317.7594604720869,
     "exDate": null,
     "exType": null,
-    "volLots": 68,
-    "turnMillion": 1.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6945.TWO",
@@ -54204,8 +54204,8 @@
     "revCumYoY": null,
     "exDate": null,
     "exType": null,
-    "volLots": 129,
-    "turnMillion": 12.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6922.TWO",
@@ -54232,8 +54232,8 @@
     "revCumYoY": 43.72904295042841,
     "exDate": null,
     "exType": null,
-    "volLots": 178,
-    "turnMillion": 34.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6877.TWO",
@@ -54260,8 +54260,8 @@
     "revCumYoY": -44.422395116948934,
     "exDate": null,
     "exType": null,
-    "volLots": 54,
-    "turnMillion": 6.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6903.TWO",
@@ -54288,23 +54288,23 @@
     "revCumYoY": 254.49853199963667,
     "exDate": null,
     "exType": null,
-    "volLots": 548,
-    "turnMillion": 180.39
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6913.TWO",
     "code": "6913",
     "name": "鴻呈",
-    "close": 140,
-    "ma5": 146.3,
+    "close": 140.5,
+    "ma5": 146.4,
     "features": [
-      51.71746164038771,
-      37.433255197213725,
-      7.410012147560896,
-      12.243462694201135,
-      4.438642297650119,
-      -12.026946511007775,
-      10.671936758893285
+      51.393477534848955,
+      37.463044954808176,
+      7.786728039892599,
+      12.313003452243976,
+      4.792093977251555,
+      -11.740292897200376,
+      11.067193675889332
     ],
     "pe": 22.07,
     "pb": 3.63,
@@ -54316,8 +54316,8 @@
     "revCumYoY": 37.134808819794856,
     "exDate": null,
     "exType": null,
-    "volLots": 249,
-    "turnMillion": 36.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6925.TWO",
@@ -54344,8 +54344,8 @@
     "revCumYoY": 4.062656072644722,
     "exDate": null,
     "exType": null,
-    "volLots": 44,
-    "turnMillion": 2.2
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6894.TWO",
@@ -54372,8 +54372,8 @@
     "revCumYoY": 66.61105842439342,
     "exDate": null,
     "exType": null,
-    "volLots": 63,
-    "turnMillion": 20.85
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6881.TWO",
@@ -54428,8 +54428,8 @@
     "revCumYoY": 5.617433504923441,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6870.TWO",
@@ -54456,8 +54456,8 @@
     "revCumYoY": 47.134307715505365,
     "exDate": null,
     "exType": null,
-    "volLots": 38,
-    "turnMillion": 9.99
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6929.TWO",
@@ -54484,8 +54484,8 @@
     "revCumYoY": -0.6209278355447564,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6884.TWO",
@@ -54512,8 +54512,8 @@
     "revCumYoY": 29.98426568386618,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6895.TWO",
@@ -54540,8 +54540,8 @@
     "revCumYoY": -31.290719310428916,
     "exDate": null,
     "exType": null,
-    "volLots": 63,
-    "turnMillion": 7.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6899.TWO",
@@ -54568,8 +54568,8 @@
     "revCumYoY": -1.5624127528375606,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6875.TWO",
@@ -54596,8 +54596,8 @@
     "revCumYoY": -89.63045798810552,
     "exDate": null,
     "exType": null,
-    "volLots": 46,
-    "turnMillion": 1.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6907.TWO",
@@ -54624,8 +54624,8 @@
     "revCumYoY": 104.93917887420015,
     "exDate": null,
     "exType": null,
-    "volLots": 2500,
-    "turnMillion": 451.74
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6874.TWO",
@@ -54652,8 +54652,8 @@
     "revCumYoY": 50.06747984058976,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 1.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6910.TWO",
@@ -54680,8 +54680,8 @@
     "revCumYoY": 4.491562729273661,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.3
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6865.TWO",
@@ -54736,8 +54736,8 @@
     "revCumYoY": 26.7527107270697,
     "exDate": null,
     "exType": null,
-    "volLots": 302,
-    "turnMillion": 22.42
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6983.TWO",
@@ -54764,8 +54764,8 @@
     "revCumYoY": 9.876712746803381,
     "exDate": null,
     "exType": null,
-    "volLots": 49,
-    "turnMillion": 14.88
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7556.TWO",
@@ -54792,8 +54792,8 @@
     "revCumYoY": 11.8524338065766,
     "exDate": null,
     "exType": null,
-    "volLots": 71,
-    "turnMillion": 17.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7708.TWO",
@@ -54820,8 +54820,8 @@
     "revCumYoY": 12.079293389819634,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7709.TWO",
@@ -54848,8 +54848,8 @@
     "revCumYoY": 5.327495439546786,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 1.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6982.TWO",
@@ -54876,8 +54876,8 @@
     "revCumYoY": 21.0500416184608,
     "exDate": null,
     "exType": null,
-    "volLots": 29,
-    "turnMillion": 1.4
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7584.TWO",
@@ -54904,8 +54904,8 @@
     "revCumYoY": -5.153674891643722,
     "exDate": "2026-08-31",
     "exType": "除權息",
-    "volLots": 3,
-    "turnMillion": 0.08
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6997.TWO",
@@ -54932,8 +54932,8 @@
     "revCumYoY": 31.15448275184629,
     "exDate": null,
     "exType": null,
-    "volLots": 7,
-    "turnMillion": 0.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7703.TWO",
@@ -54960,8 +54960,8 @@
     "revCumYoY": 19.707592339261286,
     "exDate": null,
     "exType": null,
-    "volLots": 91,
-    "turnMillion": 16.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7704.TWO",
@@ -54988,8 +54988,8 @@
     "revCumYoY": 8.927906546743092,
     "exDate": null,
     "exType": null,
-    "volLots": 32,
-    "turnMillion": 2.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6961.TWO",
@@ -55016,8 +55016,8 @@
     "revCumYoY": 4.06774081854783,
     "exDate": null,
     "exType": null,
-    "volLots": 39,
-    "turnMillion": 2.01
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6971.TWO",
@@ -55044,8 +55044,8 @@
     "revCumYoY": -11.449100311377686,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 0.62
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6968.TWO",
@@ -55072,8 +55072,8 @@
     "revCumYoY": 16.41516160995317,
     "exDate": "2026-08-24",
     "exType": "除權息",
-    "volLots": 18,
-    "turnMillion": 0.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7547.TWO",
@@ -55100,8 +55100,8 @@
     "revCumYoY": 33.36863133432168,
     "exDate": "2026-08-21",
     "exType": "除息",
-    "volLots": 13,
-    "turnMillion": 0.7
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7712.TWO",
@@ -55128,8 +55128,8 @@
     "revCumYoY": 17.800514957689,
     "exDate": "2026-08-13",
     "exType": "除息",
-    "volLots": 303,
-    "turnMillion": 44.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7642.TWO",
@@ -55156,8 +55156,8 @@
     "revCumYoY": -28.81521870657128,
     "exDate": null,
     "exType": null,
-    "volLots": 18,
-    "turnMillion": 1.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7713.TWO",
@@ -55184,8 +55184,8 @@
     "revCumYoY": 20.371762733371064,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.36
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6953.TWO",
@@ -55212,8 +55212,8 @@
     "revCumYoY": 12.628954078058895,
     "exDate": null,
     "exType": null,
-    "volLots": 52,
-    "turnMillion": 12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6996.TWO",
@@ -55240,8 +55240,8 @@
     "revCumYoY": 28.23160094741273,
     "exDate": null,
     "exType": null,
-    "volLots": 105,
-    "turnMillion": 18.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7402.TWO",
@@ -55268,8 +55268,8 @@
     "revCumYoY": -12.677140413670774,
     "exDate": null,
     "exType": null,
-    "volLots": 1284,
-    "turnMillion": 147.94
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7716.TWO",
@@ -55296,8 +55296,8 @@
     "revCumYoY": 0.0433018393402973,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7757.TWO",
@@ -55324,8 +55324,8 @@
     "revCumYoY": 3.797291692006375,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.87
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7723.TWO",
@@ -55352,8 +55352,8 @@
     "revCumYoY": -18.856272105515295,
     "exDate": null,
     "exType": null,
-    "volLots": 97,
-    "turnMillion": 1.85
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7734.TWO",
@@ -55380,8 +55380,8 @@
     "revCumYoY": 62.94478500329031,
     "exDate": null,
     "exType": null,
-    "volLots": 314,
-    "turnMillion": 947.92
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7747.TWO",
@@ -55408,8 +55408,8 @@
     "revCumYoY": 10.716183459025881,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.23
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7751.TWO",
@@ -55436,8 +55436,8 @@
     "revCumYoY": 64.94018330521438,
     "exDate": null,
     "exType": null,
-    "volLots": 537,
-    "turnMillion": 817.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7772.TWO",
@@ -55464,8 +55464,8 @@
     "revCumYoY": -12.257963772642098,
     "exDate": null,
     "exType": null,
-    "volLots": 49,
-    "turnMillion": 4.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7743.TWO",
@@ -55492,8 +55492,8 @@
     "revCumYoY": 9.714211852905061,
     "exDate": "2026-08-10",
     "exType": "除息",
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7728.TWO",
@@ -55520,8 +55520,8 @@
     "revCumYoY": 29.6361569382571,
     "exDate": "2026-08-27",
     "exType": "除權",
-    "volLots": 4,
-    "turnMillion": 2.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7718.TWO",
@@ -55548,8 +55548,8 @@
     "revCumYoY": 5.1109034791488925,
     "exDate": null,
     "exType": null,
-    "volLots": 10,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7714.TWO",
@@ -55576,8 +55576,8 @@
     "revCumYoY": 28.46916367749099,
     "exDate": "2026-08-18",
     "exType": "除息",
-    "volLots": 931,
-    "turnMillion": 160.76
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7782.TWO",
@@ -55604,8 +55604,8 @@
     "revCumYoY": 4.0572081744708015,
     "exDate": null,
     "exType": null,
-    "volLots": 12,
-    "turnMillion": 0.31
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7744.TWO",
@@ -55632,8 +55632,8 @@
     "revCumYoY": 90.64668719543371,
     "exDate": null,
     "exType": null,
-    "volLots": 142,
-    "turnMillion": 70.12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7770.TWO",
@@ -55660,8 +55660,8 @@
     "revCumYoY": -49.871596624825564,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.31
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7753.TWO",
@@ -55688,8 +55688,8 @@
     "revCumYoY": -5.823643010270069,
     "exDate": null,
     "exType": null,
-    "volLots": 16,
-    "turnMillion": 0.61
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7715.TWO",
@@ -55716,8 +55716,8 @@
     "revCumYoY": -41.36585809072949,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 0.79
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7717.TWO",
@@ -55744,8 +55744,8 @@
     "revCumYoY": 26.304782046763012,
     "exDate": null,
     "exType": null,
-    "volLots": 75,
-    "turnMillion": 31.68
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7777.TWO",
@@ -55772,8 +55772,8 @@
     "revCumYoY": 251.11818209107557,
     "exDate": "2026-08-25",
     "exType": "除權",
-    "volLots": 1340,
-    "turnMillion": 51.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7738.TWO",
@@ -55800,8 +55800,8 @@
     "revCumYoY": 13.93917793702059,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 1.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7767.TWO",
@@ -55828,8 +55828,8 @@
     "revCumYoY": 49.136901077250144,
     "exDate": null,
     "exType": null,
-    "volLots": 57,
-    "turnMillion": 2.54
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7828.TWO",
@@ -55856,8 +55856,8 @@
     "revCumYoY": 235.79712118672478,
     "exDate": null,
     "exType": null,
-    "volLots": 159,
-    "turnMillion": 265
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7819.TWO",
@@ -55884,8 +55884,8 @@
     "revCumYoY": -35.19794776399286,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.39
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7820.TWO",
@@ -55912,8 +55912,8 @@
     "revCumYoY": 48.147827217191626,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.95
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7839.TWO",
@@ -55940,8 +55940,8 @@
     "revCumYoY": 4.219008305368297,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7805.TWO",
@@ -55968,8 +55968,8 @@
     "revCumYoY": 11.724122650314769,
     "exDate": "2026-08-24",
     "exType": "除權息",
-    "volLots": 65,
-    "turnMillion": 45.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8042.TWO",
@@ -55996,8 +55996,8 @@
     "revCumYoY": 35.951653879966386,
     "exDate": null,
     "exType": null,
-    "volLots": 2286,
-    "turnMillion": 238.92
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8043.TWO",
@@ -56024,8 +56024,8 @@
     "revCumYoY": 61.67192630543382,
     "exDate": "2026-08-19",
     "exType": "除息",
-    "volLots": 1669,
-    "turnMillion": 238.81
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7842.TWO",
@@ -56052,8 +56052,8 @@
     "revCumYoY": 58.047744105289354,
     "exDate": null,
     "exType": null,
-    "volLots": 338,
-    "turnMillion": 33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8032.TWO",
@@ -56080,8 +56080,8 @@
     "revCumYoY": 47.33779998072094,
     "exDate": null,
     "exType": null,
-    "volLots": 35,
-    "turnMillion": 1.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8040.TWO",
@@ -56108,8 +56108,8 @@
     "revCumYoY": 32.03126999155557,
     "exDate": null,
     "exType": null,
-    "volLots": 486,
-    "turnMillion": 34.3
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7794.TWO",
@@ -56164,8 +56164,8 @@
     "revCumYoY": 74.2163966740238,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 4.69
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7811.TWO",
@@ -56192,8 +56192,8 @@
     "revCumYoY": -5.017085910073798,
     "exDate": null,
     "exType": null,
-    "volLots": 7,
-    "turnMillion": 0.5
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "7792.TWO",
@@ -56220,8 +56220,8 @@
     "revCumYoY": 15.844397380359414,
     "exDate": null,
     "exType": null,
-    "volLots": 801,
-    "turnMillion": 207.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8047.TWO",
@@ -56248,8 +56248,8 @@
     "revCumYoY": 32.835655150758576,
     "exDate": null,
     "exType": null,
-    "volLots": 31,
-    "turnMillion": 1.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8044.TWO",
@@ -56276,8 +56276,8 @@
     "revCumYoY": 8.35600777324654,
     "exDate": null,
     "exType": null,
-    "volLots": 211,
-    "turnMillion": 5.41
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8027.TWO",
@@ -56304,8 +56304,8 @@
     "revCumYoY": 48.744335862859636,
     "exDate": null,
     "exType": null,
-    "volLots": 2311,
-    "turnMillion": 403.66
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8038.TWO",
@@ -56332,8 +56332,8 @@
     "revCumYoY": 44.882393374771645,
     "exDate": null,
     "exType": null,
-    "volLots": 73,
-    "turnMillion": 2.26
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8034.TWO",
@@ -56360,8 +56360,8 @@
     "revCumYoY": -46.5649328834553,
     "exDate": null,
     "exType": null,
-    "volLots": 133,
-    "turnMillion": 2.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8024.TWO",
@@ -56388,8 +56388,8 @@
     "revCumYoY": 22.117566381944513,
     "exDate": null,
     "exType": null,
-    "volLots": 32,
-    "turnMillion": 0.43
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8050.TWO",
@@ -56416,8 +56416,8 @@
     "revCumYoY": 9.808994738410176,
     "exDate": null,
     "exType": null,
-    "volLots": 2052,
-    "turnMillion": 115.76
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8071.TWO",
@@ -56444,8 +56444,8 @@
     "revCumYoY": 20.051005432728896,
     "exDate": null,
     "exType": null,
-    "volLots": 620,
-    "turnMillion": 14.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8049.TWO",
@@ -56472,8 +56472,8 @@
     "revCumYoY": 0.26355910856567105,
     "exDate": "2026-08-17",
     "exType": "除息",
-    "volLots": 290,
-    "turnMillion": 7.18
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8076.TWO",
@@ -56500,8 +56500,8 @@
     "revCumYoY": 48.391610980508304,
     "exDate": "2026-09-02",
     "exType": "除息",
-    "volLots": 341,
-    "turnMillion": 7.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8066.TWO",
@@ -56528,8 +56528,8 @@
     "revCumYoY": -9.235457345365615,
     "exDate": null,
     "exType": null,
-    "volLots": 15,
-    "turnMillion": 0.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8084.TWO",
@@ -56556,8 +56556,8 @@
     "revCumYoY": 0.4921601778724784,
     "exDate": "2026-08-26",
     "exType": "除權",
-    "volLots": 277,
-    "turnMillion": 13.95
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8068.TWO",
@@ -56584,8 +56584,8 @@
     "revCumYoY": 78.59110630029545,
     "exDate": null,
     "exType": null,
-    "volLots": 116,
-    "turnMillion": 1.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8074.TWO",
@@ -56612,8 +56612,8 @@
     "revCumYoY": 23.506309485616512,
     "exDate": null,
     "exType": null,
-    "volLots": 315,
-    "turnMillion": 17.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8085.TWO",
@@ -56640,8 +56640,8 @@
     "revCumYoY": -0.06616095057482348,
     "exDate": null,
     "exType": null,
-    "volLots": 705,
-    "turnMillion": 8.56
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8087.TWO",
@@ -56668,8 +56668,8 @@
     "revCumYoY": 264.748477505454,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8059.TWO",
@@ -56696,8 +56696,8 @@
     "revCumYoY": 129.79790130584084,
     "exDate": null,
     "exType": null,
-    "volLots": 320,
-    "turnMillion": 4.28
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8054.TWO",
@@ -56724,8 +56724,8 @@
     "revCumYoY": 164.7222531197297,
     "exDate": null,
     "exType": null,
-    "volLots": 768,
-    "turnMillion": 61.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8048.TWO",
@@ -56752,8 +56752,8 @@
     "revCumYoY": 38.597305832785295,
     "exDate": null,
     "exType": null,
-    "volLots": 53,
-    "turnMillion": 2.73
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8080.TWO",
@@ -56780,8 +56780,8 @@
     "revCumYoY": -58.98013484133774,
     "exDate": null,
     "exType": null,
-    "volLots": 15,
-    "turnMillion": 0.42
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8064.TWO",
@@ -56808,8 +56808,8 @@
     "revCumYoY": 7.7140294211905465,
     "exDate": null,
     "exType": null,
-    "volLots": 1838,
-    "turnMillion": 184.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8069.TWO",
@@ -56836,8 +56836,8 @@
     "revCumYoY": -3.7873850490050307,
     "exDate": null,
     "exType": null,
-    "volLots": 9255,
-    "turnMillion": 1468.65
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8086.TWO",
@@ -56864,8 +56864,8 @@
     "revCumYoY": 39.98556967631784,
     "exDate": "2026-09-01",
     "exType": "除息",
-    "volLots": 11008,
-    "turnMillion": 1313.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8077.TWO",
@@ -56892,8 +56892,8 @@
     "revCumYoY": 3.2029508234992004,
     "exDate": "2026-08-20",
     "exType": "除息",
-    "volLots": 6,
-    "turnMillion": 0.28
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8067.TWO",
@@ -56920,8 +56920,8 @@
     "revCumYoY": -19.719307975535735,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 0.17
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8083.TWO",
@@ -56948,8 +56948,8 @@
     "revCumYoY": 1.7520378782307653,
     "exDate": null,
     "exType": null,
-    "volLots": 67,
-    "turnMillion": 10.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8111.TWO",
@@ -56976,8 +56976,8 @@
     "revCumYoY": -5.691746110211193,
     "exDate": null,
     "exType": null,
-    "volLots": 1978,
-    "turnMillion": 111.25
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8147.TWO",
@@ -57004,8 +57004,8 @@
     "revCumYoY": 20.896256827923434,
     "exDate": null,
     "exType": null,
-    "volLots": 123,
-    "turnMillion": 14.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8109.TWO",
@@ -57032,8 +57032,8 @@
     "revCumYoY": 26.902780815545704,
     "exDate": null,
     "exType": null,
-    "volLots": 697,
-    "turnMillion": 92.88
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8155.TWO",
@@ -57060,8 +57060,8 @@
     "revCumYoY": 35.657112455844135,
     "exDate": null,
     "exType": null,
-    "volLots": 590,
-    "turnMillion": 189.05
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8089.TWO",
@@ -57088,8 +57088,8 @@
     "revCumYoY": -61.45132257274646,
     "exDate": null,
     "exType": null,
-    "volLots": 111,
-    "turnMillion": 1.97
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8121.TWO",
@@ -57116,8 +57116,8 @@
     "revCumYoY": 22.164601193164856,
     "exDate": null,
     "exType": null,
-    "volLots": 574,
-    "turnMillion": 16.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8091.TWO",
@@ -57144,8 +57144,8 @@
     "revCumYoY": 55.78938271071452,
     "exDate": null,
     "exType": null,
-    "volLots": 351,
-    "turnMillion": 78.85
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8176.TWO",
@@ -57172,8 +57172,8 @@
     "revCumYoY": -17.53517274847115,
     "exDate": null,
     "exType": null,
-    "volLots": 92,
-    "turnMillion": 0.93
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8097.TWO",
@@ -57200,8 +57200,8 @@
     "revCumYoY": -16.438808627969095,
     "exDate": null,
     "exType": null,
-    "volLots": 90,
-    "turnMillion": 4.55
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8182.TWO",
@@ -57228,8 +57228,8 @@
     "revCumYoY": 3.1817537351089404,
     "exDate": null,
     "exType": null,
-    "volLots": 683,
-    "turnMillion": 27.39
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8102.TWO",
@@ -57256,8 +57256,8 @@
     "revCumYoY": 1.9459664423168073,
     "exDate": "2026-10-22",
     "exType": "除息",
-    "volLots": 25,
-    "turnMillion": 1.78
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8093.TWO",
@@ -57284,8 +57284,8 @@
     "revCumYoY": 42.615465722731635,
     "exDate": null,
     "exType": null,
-    "volLots": 38,
-    "turnMillion": 0.91
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8171.TWO",
@@ -57312,8 +57312,8 @@
     "revCumYoY": 95.2159119029943,
     "exDate": null,
     "exType": null,
-    "volLots": 34,
-    "turnMillion": 0.67
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8092.TWO",
@@ -57340,8 +57340,8 @@
     "revCumYoY": -7.948633924548396,
     "exDate": null,
     "exType": null,
-    "volLots": 18,
-    "turnMillion": 0.22
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8088.TWO",
@@ -57368,8 +57368,8 @@
     "revCumYoY": 45.01179799288139,
     "exDate": null,
     "exType": null,
-    "volLots": 556,
-    "turnMillion": 25.91
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8183.TWO",
@@ -57396,8 +57396,8 @@
     "revCumYoY": 28.703007680982346,
     "exDate": null,
     "exType": null,
-    "volLots": 208,
-    "turnMillion": 6.16
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8227.TWO",
@@ -57424,8 +57424,8 @@
     "revCumYoY": 78.38724402764541,
     "exDate": null,
     "exType": null,
-    "volLots": 238,
-    "turnMillion": 36.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8096.TWO",
@@ -57452,8 +57452,8 @@
     "revCumYoY": 64.53688967524297,
     "exDate": null,
     "exType": null,
-    "volLots": 4305,
-    "turnMillion": 486.08
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8099.TWO",
@@ -57480,8 +57480,8 @@
     "revCumYoY": 32.88233050669616,
     "exDate": "2026-09-07",
     "exType": "除息",
-    "volLots": 98,
-    "turnMillion": 5.8
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8107.TWO",
@@ -57508,8 +57508,8 @@
     "revCumYoY": -32.776313492030496,
     "exDate": null,
     "exType": null,
-    "volLots": 64,
-    "turnMillion": 0.79
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8403.TWO",
@@ -57536,8 +57536,8 @@
     "revCumYoY": 7.120165839896894,
     "exDate": "2026-08-25",
     "exType": "除息",
-    "volLots": 60,
-    "turnMillion": 1.16
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8401.TWO",
@@ -57564,8 +57564,8 @@
     "revCumYoY": 4.6067295601869604,
     "exDate": null,
     "exType": null,
-    "volLots": 19,
-    "turnMillion": 0.43
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8284.TWO",
@@ -57592,8 +57592,8 @@
     "revCumYoY": 12.374302706107892,
     "exDate": null,
     "exType": null,
-    "volLots": 57,
-    "turnMillion": 3.77
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8390.TWO",
@@ -57620,8 +57620,8 @@
     "revCumYoY": 43.33468054973785,
     "exDate": null,
     "exType": null,
-    "volLots": 366,
-    "turnMillion": 35.72
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8354.TWO",
@@ -57648,8 +57648,8 @@
     "revCumYoY": 5.7293429901983,
     "exDate": null,
     "exType": null,
-    "volLots": 89,
-    "turnMillion": 1.52
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8349.TWO",
@@ -57676,8 +57676,8 @@
     "revCumYoY": 5.88889213307373,
     "exDate": null,
     "exType": null,
-    "volLots": 46,
-    "turnMillion": 1.79
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8383.TWO",
@@ -57704,8 +57704,8 @@
     "revCumYoY": 58.370007138877284,
     "exDate": null,
     "exType": null,
-    "volLots": 1762,
-    "turnMillion": 123.39
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8279.TWO",
@@ -57732,8 +57732,8 @@
     "revCumYoY": -5.741157243781213,
     "exDate": null,
     "exType": null,
-    "volLots": 56,
-    "turnMillion": 4.83
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8240.TWO",
@@ -57760,8 +57760,8 @@
     "revCumYoY": -9.835163630112064,
     "exDate": null,
     "exType": null,
-    "volLots": 101,
-    "turnMillion": 4.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8272.TWO",
@@ -57788,8 +57788,8 @@
     "revCumYoY": -0.8053486650115423,
     "exDate": null,
     "exType": null,
-    "volLots": 3,
-    "turnMillion": 0.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8255.TWO",
@@ -57816,8 +57816,8 @@
     "revCumYoY": -4.112430103816249,
     "exDate": null,
     "exType": null,
-    "volLots": 419,
-    "turnMillion": 63.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8410.TWO",
@@ -57844,8 +57844,8 @@
     "revCumYoY": -22.854813058265744,
     "exDate": "2026-08-26",
     "exType": "除息",
-    "volLots": 7,
-    "turnMillion": 0.2
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8277.TWO",
@@ -57872,8 +57872,8 @@
     "revCumYoY": -60.72640331909358,
     "exDate": null,
     "exType": null,
-    "volLots": 80,
-    "turnMillion": 0.64
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8342.TWO",
@@ -57900,8 +57900,8 @@
     "revCumYoY": 3.7223676933181236,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.14
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8358.TWO",
@@ -57928,8 +57928,8 @@
     "revCumYoY": 44.8779185874296,
     "exDate": null,
     "exType": null,
-    "volLots": 33693,
-    "turnMillion": 14492.53
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8289.TWO",
@@ -57956,8 +57956,8 @@
     "revCumYoY": 12.165512115128202,
     "exDate": null,
     "exType": null,
-    "volLots": 399,
-    "turnMillion": 18.61
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8234.TWO",
@@ -57984,8 +57984,8 @@
     "revCumYoY": 0.3063460400025812,
     "exDate": null,
     "exType": null,
-    "volLots": 491,
-    "turnMillion": 33.37
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8291.TWO",
@@ -58012,8 +58012,8 @@
     "revCumYoY": 200.42598509052183,
     "exDate": null,
     "exType": null,
-    "volLots": 14,
-    "turnMillion": 0.47
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8299.TWO",
@@ -58040,8 +58040,8 @@
     "revCumYoY": 263.52267875236555,
     "exDate": null,
     "exType": null,
-    "volLots": 4979,
-    "turnMillion": 10167.59
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8409.TWO",
@@ -58068,8 +58068,8 @@
     "revCumYoY": 34.40720465256718,
     "exDate": null,
     "exType": null,
-    "volLots": 24,
-    "turnMillion": 0.44
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8446.TWO",
@@ -58096,8 +58096,8 @@
     "revCumYoY": 18.3039878240549,
     "exDate": null,
     "exType": null,
-    "volLots": 41,
-    "turnMillion": 3.48
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8436.TWO",
@@ -58124,8 +58124,8 @@
     "revCumYoY": -2.527241406686132,
     "exDate": "2026-09-01",
     "exType": "除息",
-    "volLots": 843,
-    "turnMillion": 104.64
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8489.TWO",
@@ -58152,8 +58152,8 @@
     "revCumYoY": 53.350258827290865,
     "exDate": null,
     "exType": null,
-    "volLots": 16,
-    "turnMillion": 0.36
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8455.TWO",
@@ -58180,8 +58180,8 @@
     "revCumYoY": 6.520738189174645,
     "exDate": null,
     "exType": null,
-    "volLots": 8,
-    "turnMillion": 0.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8437.TWO",
@@ -58208,8 +58208,8 @@
     "revCumYoY": -8.46454679225388,
     "exDate": null,
     "exType": null,
-    "volLots": 15,
-    "turnMillion": 0.14
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8450.TWO",
@@ -58236,8 +58236,8 @@
     "revCumYoY": 48.7842755134666,
     "exDate": null,
     "exType": null,
-    "volLots": 13,
-    "turnMillion": 0.19
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8440.TWO",
@@ -58264,8 +58264,8 @@
     "revCumYoY": -3.5031192400396995,
     "exDate": null,
     "exType": null,
-    "volLots": 52,
-    "turnMillion": 1.04
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8421.TWO",
@@ -58292,8 +58292,8 @@
     "revCumYoY": 15.775959293166352,
     "exDate": "2026-08-10",
     "exType": "除權",
-    "volLots": 148,
-    "turnMillion": 1.95
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8431.TWO",
@@ -58320,8 +58320,8 @@
     "revCumYoY": -7.540301961945259,
     "exDate": null,
     "exType": null,
-    "volLots": 134,
-    "turnMillion": 6.32
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8472.TWO",
@@ -58348,8 +58348,8 @@
     "revCumYoY": 11.363150412069878,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.36
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8444.TWO",
@@ -58376,8 +58376,8 @@
     "revCumYoY": -59.01020581253271,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8477.TWO",
@@ -58404,8 +58404,8 @@
     "revCumYoY": -13.288487102638088,
     "exDate": null,
     "exType": null,
-    "volLots": 21,
-    "turnMillion": 0.33
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8416.TWO",
@@ -58432,8 +58432,8 @@
     "revCumYoY": 11.353541402949997,
     "exDate": null,
     "exType": null,
-    "volLots": 2,
-    "turnMillion": 0.38
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8433.TWO",
@@ -58460,8 +58460,8 @@
     "revCumYoY": 12.655168370481523,
     "exDate": null,
     "exType": null,
-    "volLots": 14,
-    "turnMillion": 0.75
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8426.TWO",
@@ -58488,8 +58488,8 @@
     "revCumYoY": 0.352995491465594,
     "exDate": null,
     "exType": null,
-    "volLots": 14,
-    "turnMillion": 0.28
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8424.TWO",
@@ -58516,8 +58516,8 @@
     "revCumYoY": -2.035921835226824,
     "exDate": null,
     "exType": null,
-    "volLots": 5,
-    "turnMillion": 0.34
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8423.TWO",
@@ -58544,8 +58544,8 @@
     "revCumYoY": 12.094468557904673,
     "exDate": null,
     "exType": null,
-    "volLots": 9,
-    "turnMillion": 0.16
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8432.TWO",
@@ -58572,8 +58572,8 @@
     "revCumYoY": 12.878997090188554,
     "exDate": null,
     "exType": null,
-    "volLots": 66,
-    "turnMillion": 3.27
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8415.TWO",
@@ -58600,8 +58600,8 @@
     "revCumYoY": 21.38739527771596,
     "exDate": null,
     "exType": null,
-    "volLots": 546,
-    "turnMillion": 20.58
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8435.TWO",
@@ -58628,8 +58628,8 @@
     "revCumYoY": 11.899295065458208,
     "exDate": null,
     "exType": null,
-    "volLots": 19,
-    "turnMillion": 1.03
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8937.TWO",
@@ -58656,8 +58656,8 @@
     "revCumYoY": 839.1382774682619,
     "exDate": null,
     "exType": null,
-    "volLots": 25,
-    "turnMillion": 0.57
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8923.TWO",
@@ -58684,8 +58684,8 @@
     "revCumYoY": 0.8537206931702345,
     "exDate": null,
     "exType": null,
-    "volLots": 76,
-    "turnMillion": 1.43
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8927.TWO",
@@ -58712,8 +58712,8 @@
     "revCumYoY": 45.425214048830775,
     "exDate": "2026-08-10",
     "exType": "除息",
-    "volLots": 125,
-    "turnMillion": 2.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8929.TWO",
@@ -58740,8 +58740,8 @@
     "revCumYoY": -0.9473502758077226,
     "exDate": null,
     "exType": null,
-    "volLots": 6,
-    "turnMillion": 0.07
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8908.TWO",
@@ -58768,8 +58768,8 @@
     "revCumYoY": -1.3061457586718652,
     "exDate": "2026-09-03",
     "exType": "除權",
-    "volLots": 40,
-    "turnMillion": 1.61
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8906.TWO",
@@ -58796,8 +58796,8 @@
     "revCumYoY": -0.7566097084077191,
     "exDate": null,
     "exType": null,
-    "volLots": 37,
-    "turnMillion": 1.01
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8921.TWO",
@@ -58824,8 +58824,8 @@
     "revCumYoY": 6.507009992627196,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8933.TWO",
@@ -58852,8 +58852,8 @@
     "revCumYoY": -8.916109430353517,
     "exDate": null,
     "exType": null,
-    "volLots": 64,
-    "turnMillion": 0.29
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8930.TWO",
@@ -58880,8 +58880,8 @@
     "revCumYoY": -3.6400969159377436,
     "exDate": null,
     "exType": null,
-    "volLots": 11,
-    "turnMillion": 0.31
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8931.TWO",
@@ -58908,8 +58908,8 @@
     "revCumYoY": 10.070088246603348,
     "exDate": null,
     "exType": null,
-    "volLots": 27,
-    "turnMillion": 1.11
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8941.TWO",
@@ -58936,8 +58936,8 @@
     "revCumYoY": 5.659525901449851,
     "exDate": "2026-08-27",
     "exType": "除息",
-    "volLots": 4,
-    "turnMillion": 0.18
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8924.TWO",
@@ -58964,8 +58964,8 @@
     "revCumYoY": -1.3325506437693868,
     "exDate": null,
     "exType": null,
-    "volLots": 62,
-    "turnMillion": 3.13
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8916.TWO",
@@ -58992,8 +58992,8 @@
     "revCumYoY": -6.8785406326134995,
     "exDate": "2026-08-12",
     "exType": "除息",
-    "volLots": 52,
-    "turnMillion": 2.08
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8917.TWO",
@@ -59020,8 +59020,8 @@
     "revCumYoY": -4.442329449487665,
     "exDate": null,
     "exType": null,
-    "volLots": 1,
-    "turnMillion": 0.06
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8905.TWO",
@@ -59048,8 +59048,8 @@
     "revCumYoY": 14.250713539365634,
     "exDate": null,
     "exType": null,
-    "volLots": 18,
-    "turnMillion": 0.61
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8928.TWO",
@@ -59076,8 +59076,8 @@
     "revCumYoY": -12.864938438100946,
     "exDate": "2026-08-18",
     "exType": "除息",
-    "volLots": 50,
-    "turnMillion": 1.18
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8936.TWO",
@@ -59104,8 +59104,8 @@
     "revCumYoY": 17.858446174227954,
     "exDate": null,
     "exType": null,
-    "volLots": 1633,
-    "turnMillion": 82.02
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8932.TWO",
@@ -59132,8 +59132,8 @@
     "revCumYoY": 11.86306711265136,
     "exDate": "2026-08-28",
     "exType": "除權息",
-    "volLots": 2321,
-    "turnMillion": 253.89
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8938.TWO",
@@ -59160,8 +59160,8 @@
     "revCumYoY": -5.076160644962898,
     "exDate": null,
     "exType": null,
-    "volLots": 47,
-    "turnMillion": 2.46
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8935.TWO",
@@ -59188,8 +59188,8 @@
     "revCumYoY": -11.686464411472787,
     "exDate": null,
     "exType": null,
-    "volLots": 133,
-    "turnMillion": 2.35
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "9962.TWO",
@@ -59216,8 +59216,8 @@
     "revCumYoY": -12.986317312406088,
     "exDate": null,
     "exType": null,
-    "volLots": 21,
-    "turnMillion": 0.21
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "9949.TWO",
@@ -59244,8 +59244,8 @@
     "revCumYoY": 6.803843799078979,
     "exDate": null,
     "exType": null,
-    "volLots": 21,
-    "turnMillion": 0.49
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "9951.TWO",
@@ -59272,8 +59272,8 @@
     "revCumYoY": 6.8009253658017945,
     "exDate": "2026-09-03",
     "exType": "除息",
-    "volLots": 30,
-    "turnMillion": 1.6
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "8942.TWO",
@@ -59300,8 +59300,8 @@
     "revCumYoY": -41.85972060224931,
     "exDate": null,
     "exType": null,
-    "volLots": 321,
-    "turnMillion": 13.45
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "9960.TWO",
@@ -59356,8 +59356,8 @@
     "revCumYoY": -10.84783569836858,
     "exDate": null,
     "exType": null,
-    "volLots": 29,
-    "turnMillion": 0.3
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "1780.TWO",
@@ -59384,8 +59384,8 @@
     "revCumYoY": 16.662014398602313,
     "exDate": null,
     "exType": null,
-    "volLots": 57,
-    "turnMillion": 1.36
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "6986.TWO",
@@ -59412,8 +59412,8 @@
     "revCumYoY": 9.542843018453878,
     "exDate": "2026-08-18",
     "exType": "除息",
-    "volLots": 23,
-    "turnMillion": 0.98
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "009820.TW",
@@ -59496,8 +59496,8 @@
     "revCumYoY": 51.06855330568431,
     "exDate": null,
     "exType": null,
-    "volLots": 69,
-    "turnMillion": 2.12
+    "volLots": 0,
+    "turnMillion": 0
   },
   {
     "id": "5236.TW",
