@@ -4,8 +4,8 @@ import { CORE_STOCKS } from './stocks.js';
 let FULL_MARKET_LIST = [...CORE_STOCKS];
 
 const PROXY_URLS = [
-  'https://api.allorigins.win/raw?url=',
   'https://corsproxy.io/?',
+  'https://api.allorigins.win/raw?url=',
   'https://api.codetabs.com/v1/proxy?quest='
 ];
 const YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/';
@@ -17,7 +17,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0],
-  version: 'v3.2.1-Nitro',
+  version: 'v3.2.2-Nitro',
   lastUpdate: '2026.08.27',
   currentChart: null,
   selectedStock: null,
@@ -90,28 +90,32 @@ function updateVersionUI() {
     }
 }
 
-async function safeFetch(url, isHtml = false, retries = 1) {
+async function safeFetch(url, isHtml = false, retries = 1, timeoutMs = 4000) {
   let lastError;
   for (let pIdx = 0; pIdx < PROXY_URLS.length; pIdx++) {
     const proxy = PROXY_URLS[pIdx];
     for (let i = 0; i <= retries; i++) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
       try {
         const separator = url.includes('?') ? '&' : '?';
         const finalUrl = `${url}${separator}cb=${Date.now()}_${i}`;
         const targetUrl = proxy + encodeURIComponent(finalUrl);
-        const res = await fetch(targetUrl);
+        const res = await fetch(targetUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
         if (!res.ok) {
           if (res.status === 429 && i < retries) {
-            await new Promise(r => setTimeout(r, 600 * (i + 1)));
+            await new Promise(r => setTimeout(r, 400 * (i + 1)));
             continue;
           }
           throw new Error(`Fetch Error: ${res.status}`);
         }
         return isHtml ? await res.text() : await res.json();
       } catch (e) {
+        clearTimeout(timeoutId);
         lastError = e;
         if (i < retries) {
-          await new Promise(r => setTimeout(r, 300));
+          await new Promise(r => setTimeout(r, 200));
         }
       }
     }
@@ -362,32 +366,61 @@ function monitorAllResults() {
 }
 
 async function refreshWatchlistQuotes() {
-  if (state.watchlist.length === 0) return;
+  if (state.watchlist.length === 0) {
+    alert('目前監控清單為空，請先新增標的！');
+    return;
+  }
   const btn = document.getElementById('refresh-watchlist-btn');
-  if (btn) btn.disabled = true;
+  const originalText = btn ? btn.innerText : '🔄 刷新現價';
+  
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = `⌛ 刷新中 (0/${state.watchlist.length})...`;
+  }
   
   let updated = 0;
-  const batchSize = 10;
+  let completed = 0;
+  const batchSize = 5;
+  
   for (let i = 0; i < state.watchlist.length; i += batchSize) {
     const batch = state.watchlist.slice(i, i + batchSize);
     const promises = batch.map(async (stock) => {
       try {
-        const data = await safeFetch(`${YAHOO_URL}${stock.id}?range=1d&interval=1d`);
-        const res = data.chart.result[0];
-        const cur = res.indicators.quote[0].close[0];
-        if (cur != null) {
-          stock.currentPrice = cur;
-          updated++;
+        const data = await safeFetch(`${YAHOO_URL}${stock.id}?range=1d&interval=1m`);
+        const res = data?.chart?.result?.[0];
+        if (res) {
+          const metaPrice = res.meta?.regularMarketPrice;
+          const quotes = res.indicators?.quote?.[0]?.close || [];
+          const validCloses = quotes.filter(v => v != null && !isNaN(v));
+          const latestPrice = metaPrice || (validCloses.length > 0 ? validCloses[validCloses.length - 1] : null);
+          
+          if (latestPrice != null && latestPrice > 0) {
+            stock.currentPrice = parseFloat(latestPrice.toFixed(2));
+            updated++;
+          }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.warn(`Failed to refresh quote for ${stock.code}:`, e);
+      } finally {
+        completed++;
+        if (btn) {
+          btn.innerText = `⌛ 刷新中 (${completed}/${state.watchlist.length})...`;
+        }
+      }
     });
     await Promise.all(promises);
   }
   
   localStorage.setItem('watchlist', JSON.stringify(state.watchlist));
   updateWatchlistUI();
-  if (btn) btn.disabled = false;
-  alert(`價格刷新完成！共更新 ${updated} 檔標的。`);
+  
+  if (btn) {
+    btn.disabled = false;
+    btn.innerText = originalText;
+  }
+  
+  const nowStr = new Date().toLocaleTimeString();
+  alert(`✅ 現價報價刷新完成！(${nowStr})\n共成功更新 ${updated} / ${state.watchlist.length} 檔標的最新即時價格。`);
 }
 
 function clearWatchlist() {
