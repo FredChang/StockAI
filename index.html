@@ -180,7 +180,7 @@
             </div>
         </section>
         
-        <div class="version-tag">AI Stock Scanner v3.2.0-Nitro (2026.07.22)</div>
+        <div class="version-tag">AI Stock Scanner v3.2.1-Nitro (2026.08.27)</div>
     </div>
 
     <!-- Chart Modal -->
@@ -221,10 +221,20 @@
 
     <script type="module" src="src/main.js?v=3.2.1"></script>
     <script>
+      // Automatically unregister stale Service Worker & clear old PWA caches
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js?v=3.2.1', { updateViaCache: 'none' }).then(reg => {
-          reg.update();
-        }).catch(() => {});
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (let name of names) {
+            caches.delete(name);
+          }
+        });
       }
     </script>
 </body>

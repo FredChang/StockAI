@@ -27,6 +27,7 @@ let state = {
 
 // --- 初始化 ---
 document.addEventListener('DOMContentLoaded', () => {
+  try { updateVersionUI(); } catch(e) {}
   try { initWeights(); } catch(e) { console.error('Weights fail', e); }
   try { updateWatchlistUI(); } catch(e) { console.error('Watchlist UI fail', e); }
   try {
@@ -80,6 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateTime() {
     const el = document.getElementById('update-time');
     if (el) el.innerText = `更新於: ${new Date().toLocaleTimeString()}`;
+}
+
+function updateVersionUI() {
+    const versionEl = document.querySelector('.version-tag');
+    if (versionEl) {
+        versionEl.innerText = `AI Stock Scanner ${state.version} (${state.lastUpdate})`;
+    }
 }
 
 async function safeFetch(url, isHtml = false, retries = 1) {
