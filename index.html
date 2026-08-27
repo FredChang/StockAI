@@ -219,6 +219,13 @@
         </div>
     </div>
 
-    <script type="module" src="src/main.js?v=3.2.0"></script>
+    <script type="module" src="src/main.js?v=3.2.1"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js?v=3.2.1', { updateViaCache: 'none' }).then(reg => {
+          reg.update();
+        }).catch(() => {});
+      }
+    </script>
 </body>
 </html>
