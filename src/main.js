@@ -3,7 +3,11 @@ import { CORE_STOCKS } from './stocks.js';
 // --- 全市場精選標的 (Initial fallback) ---
 let FULL_MARKET_LIST = [...CORE_STOCKS];
 
-const PROXY_URL = 'https://corsproxy.io/?'; 
+const PROXY_URLS = [
+  'https://api.allorigins.win/raw?url=',
+  'https://corsproxy.io/?',
+  'https://api.codetabs.com/v1/proxy?quest='
+];
 const YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/';
 const TWSE_LIST_URL = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=';
 
@@ -13,8 +17,8 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0],
-  version: 'v3.2.0-Nitro',
-  lastUpdate: '2026.07.22',
+  version: 'v3.2.1-Nitro',
+  lastUpdate: '2026.08.27',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo',
@@ -78,28 +82,33 @@ function updateTime() {
     if (el) el.innerText = `更新於: ${new Date().toLocaleTimeString()}`;
 }
 
-async function safeFetch(url, isHtml = false, retries = 2) {
-  for (let i = 0; i <= retries; i++) {
-    try {
-      const separator = url.includes('?') ? '&' : '?';
-      const finalUrl = `${url}${separator}cb=${Date.now()}_${i}`;
-      const res = await fetch(PROXY_URL + encodeURIComponent(finalUrl));
-      if (!res.ok) {
+async function safeFetch(url, isHtml = false, retries = 1) {
+  let lastError;
+  for (let pIdx = 0; pIdx < PROXY_URLS.length; pIdx++) {
+    const proxy = PROXY_URLS[pIdx];
+    for (let i = 0; i <= retries; i++) {
+      try {
+        const separator = url.includes('?') ? '&' : '?';
+        const finalUrl = `${url}${separator}cb=${Date.now()}_${i}`;
+        const targetUrl = proxy + encodeURIComponent(finalUrl);
+        const res = await fetch(targetUrl);
+        if (!res.ok) {
           if (res.status === 429 && i < retries) {
-              await new Promise(r => setTimeout(r, 1000 * (i + 1)));
-              continue;
+            await new Promise(r => setTimeout(r, 600 * (i + 1)));
+            continue;
           }
           throw new Error(`Fetch Error: ${res.status}`);
+        }
+        return isHtml ? await res.text() : await res.json();
+      } catch (e) {
+        lastError = e;
+        if (i < retries) {
+          await new Promise(r => setTimeout(r, 300));
+        }
       }
-      return isHtml ? await res.text() : await res.json();
-    } catch (e) {
-      if (i === retries) {
-          console.error('Fetch failed after retries:', url, e);
-          throw e;
-      }
-      await new Promise(r => setTimeout(r, 500));
     }
   }
+  throw lastError || new Error(`Failed to fetch ${url} across all proxies`);
 }
 
 async function fetchCloudJson(filename) {
