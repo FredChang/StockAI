@@ -17,7 +17,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0],
-  version: 'v3.2.2-Nitro',
+  version: 'v3.2.3-Nitro',
   lastUpdate: '2026.08.27',
   currentChart: null,
   selectedStock: null,
@@ -25,8 +25,34 @@ let state = {
   preScannedResults: []
 };
 
+function closeChartModal(updateHistory = true) {
+  const modal = document.getElementById('chart-modal');
+  if (modal) modal.style.display = 'none';
+  if (state.currentChart) {
+    state.currentChart.destroy();
+    state.currentChart = null;
+  }
+  if (updateHistory && history.state?.modal === 'chart') {
+    history.back();
+  }
+}
+
 // --- 初始化 ---
 document.addEventListener('DOMContentLoaded', () => {
+  try {
+    history.replaceState({ tab: 'scan' }, '', '#scan');
+  } catch (e) {}
+
+  window.addEventListener('popstate', (e) => {
+    const modal = document.getElementById('chart-modal');
+    if (modal && modal.style.display === 'block') {
+      closeChartModal(false);
+      return;
+    }
+    const targetTab = e.state?.tab || 'scan';
+    switchTab(targetTab, false);
+  });
+
   try { updateVersionUI(); } catch(e) {}
   try { initWeights(); } catch(e) { console.error('Weights fail', e); }
   try { updateWatchlistUI(); } catch(e) { console.error('Watchlist UI fail', e); }
@@ -46,8 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const cb = document.querySelector('.close-modal');
   if (cb) cb.onclick = () => {
-    document.getElementById('chart-modal').style.display = 'none';
-    if (state.currentChart) { state.currentChart.destroy(); state.currentChart = null; }
+    closeChartModal(true);
   };
 
   const searchInput = document.getElementById('watchlist-search-input');
@@ -542,7 +567,7 @@ function renderResults() {
   `).join('');
 }
 
-window.showStockDetails = async (id) => {
+window.showStockDetails = async (id, updateHistory = true) => {
   const s = state.results.find(r => r.id === id) || 
             state.watchlist.find(w => w.id === id) || 
             state.preScannedResults.find(p => p.id === id) || 
@@ -552,8 +577,16 @@ window.showStockDetails = async (id) => {
   state.selectedStock = s;
   state.currentTimeframe = '1mo';
   
-  document.getElementById('chart-modal').style.display = 'block';
-  document.getElementById('modal-title').innerText = `${s.name} (${s.code})`;
+  const modal = document.getElementById('chart-modal');
+  if (modal) modal.style.display = 'block';
+  const titleEl = document.getElementById('modal-title');
+  if (titleEl) titleEl.innerText = `${s.name} (${s.code})`;
+
+  if (updateHistory) {
+    try {
+      history.pushState({ modal: 'chart', id, tab: state.activeTab }, '', `#stock-${s.code}`);
+    } catch (e) {}
+  }
   
   updateWatchlistBtnUI();
   updateChartTabsUI();
@@ -755,7 +788,7 @@ window.applyMarketPreset = (key) => {
 function avg(a) { return a.reduce((x,y)=>x+y,0)/a.length; }
 function stdDev(a) { const m = avg(a); return Math.sqrt(a.reduce((x,y)=>x+Math.pow(y-m,2),0)/a.length); }
 
-window.switchTab = (t) => {
+window.switchTab = (t, updateHistory = true) => {
   state.activeTab = t;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes(t==='scan'?'目標':'監控'));
@@ -763,6 +796,18 @@ window.switchTab = (t) => {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   const targetSection = document.getElementById(`${t}-section`);
   if (targetSection) targetSection.classList.add('active');
+
+  if (updateHistory) {
+    try {
+      if (t === 'scan') {
+        if (history.state?.tab && history.state.tab !== 'scan') {
+          history.replaceState({ tab: 'scan' }, '', '#scan');
+        }
+      } else {
+        history.pushState({ tab: t }, '', `#${t}`);
+      }
+    } catch (e) {}
+  }
 };
 
 function updateWatchlistUI() {
