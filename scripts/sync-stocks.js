@@ -1,3 +1,4 @@
+// Stock Universe Sync Script - Trigger sync update (2026-08-27)
 import fs from 'fs';
 import path from 'path';
 
