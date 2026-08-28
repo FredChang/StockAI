@@ -24,6 +24,7 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('scan')">🎯 目標掃描</button>
             <button class="tab-btn" onclick="switchTab('watchlist')">📈 監控清單</button>
+            <button class="tab-btn" onclick="switchTab('ai-recs')">🤖 AI 推薦</button>
         </div>
 
         <!-- Scan Section -->
@@ -177,6 +178,42 @@
             <div id="clear-watchlist-container" style="text-align: center; margin-top: 20px; padding-bottom: 2rem; display: flex; flex-direction: column; gap: 10px; align-items: center;">
                 <button id="refresh-watchlist-btn" class="btn-primary" style="background: var(--accent-color); width: 80%;">🔄 刷新現價報價</button>
                 <button id="clear-watchlist-btn" class="btn-secondary" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; width: 80%;">一鍵移除監控</button>
+            </div>
+        </section>
+
+        <!-- AI Recommendations Section -->
+        <section id="ai-recs-section" class="section" style="padding-bottom: 2rem;">
+            <div class="controls-card" style="margin-bottom: 1.2rem;">
+                <h3 style="font-size: 0.95rem; margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 8px;">🤖 AI 智慧分析推薦</h3>
+                <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0; line-height: 1.4; margin-bottom: 12px;">
+                    輸入您的 Gemini API Key，即可讓 AI 深入讀取全市場資料庫，依據「200元以下、有量、低估本益比、修正後重新轉強」等複合條件為您即時篩選與撰寫 Top 3 焦點報告。
+                </p>
+                
+                <!-- Gemini Key Config -->
+                <div id="gemini-key-config" style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+                    <div id="gemini-key-input-container">
+                        <label style="font-size: 0.75rem; color: var(--text-primary); display: block; margin-bottom: 6px; font-weight: bold;">Gemini API Key：</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="password" id="gemini-api-key-input" placeholder="貼上 AI Studio 取得的 API Key" style="flex: 1; padding: 8px; background: rgba(30, 41, 59, 0.8); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-size: 0.75rem;">
+                            <button id="save-gemini-key-btn" class="btn-primary" style="padding: 6px 12px; font-size: 0.75rem; background: var(--accent-color); border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer;">啟用</button>
+                        </div>
+                        <a href="https://aistudio.google.com/" target="_blank" style="font-size: 0.65rem; color: #60a5fa; display: block; margin-top: 6px; text-decoration: underline;">👉 按此前往 Google AI Studio 免費申請 API Key</a>
+                    </div>
+                    <div id="gemini-key-active-container" style="display: none; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 0.75rem; color: #10b981; font-weight: bold; display: flex; align-items: center; gap: 5px;">🟢 Gemini API 已啟用 (免費流量)</span>
+                        <button id="clear-gemini-key-btn" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; border-radius: 6px; padding: 3px 8px; font-size: 0.65rem; cursor: pointer;">清除金鑰</button>
+                    </div>
+                </div>
+
+                <!-- Generate Trigger Button -->
+                <button id="generate-ai-recs-btn" class="btn-primary" style="width: 100%; padding: 10px; font-size: 0.85rem; background: var(--accent-color); color: #000; border: none; border-radius: 8px; font-weight: bold; display: none; cursor: pointer;">🔍 開始即時 AI 分析推薦</button>
+            </div>
+            
+            <!-- Output Report Container -->
+            <div id="ai-recs-report-container" class="controls-card" style="display: none; background: rgba(15, 23, 42, 0.6); padding: 16px;">
+                <div id="ai-recs-report-content" style="font-size: 0.8rem; color: var(--text-primary); line-height: 1.6; white-space: pre-wrap;">
+                    <!-- Markdown or Text report will go here -->
+                </div>
             </div>
         </section>
         

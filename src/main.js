@@ -53,7 +53,7 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0],
-  version: 'v3.4.0-Nitro',
+  version: 'v3.5.0-Nitro',
   lastUpdate: '2026.08.28',
   currentChart: null,
   selectedStock: null,
@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   try { updateVersionUI(); } catch(e) {}
   try { initWeights(); } catch(e) { console.error('Weights fail', e); }
   try { updateWatchlistUI(); } catch(e) { console.error('Watchlist UI fail', e); }
+  try { initGeminiConfig(); } catch(e) { console.error('Gemini Config fail', e); }
   try {
     updateTime();
     setInterval(updateTime, 1000);
@@ -866,8 +867,13 @@ function stdDev(a) { const m = avg(a); return Math.sqrt(a.reduce((x,y)=>x+Math.p
 window.switchTab = (t, updateHistory = true) => {
   state.activeTab = t;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes(t==='scan'?'目標':'監控'));
-  if(btn) btn.classList.add('active');
+  
+  let btn;
+  if (t === 'scan') btn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes('目標'));
+  else if (t === 'watchlist') btn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes('監控'));
+  else if (t === 'ai-recs') btn = [...document.querySelectorAll('.tab-btn')].find(b => b.innerText.includes('推薦'));
+  
+  if (btn) btn.classList.add('active');
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   const targetSection = document.getElementById(`${t}-section`);
   if (targetSection) targetSection.classList.add('active');
@@ -884,6 +890,165 @@ window.switchTab = (t, updateHistory = true) => {
     } catch (e) {}
   }
 };
+
+function initGeminiConfig() {
+  const keyInput = document.getElementById('gemini-api-key-input');
+  const saveBtn = document.getElementById('save-gemini-key-btn');
+  const clearBtn = document.getElementById('clear-gemini-key-btn');
+  const inputContainer = document.getElementById('gemini-key-input-container');
+  const activeContainer = document.getElementById('gemini-key-active-container');
+  const generateBtn = document.getElementById('generate-ai-recs-btn');
+  
+  if (!keyInput || !saveBtn || !clearBtn || !inputContainer || !activeContainer || !generateBtn) return;
+  
+  const savedKey = localStorage.getItem('gemini_api_key');
+  if (savedKey) {
+    inputContainer.style.display = 'none';
+    activeContainer.style.display = 'flex';
+    generateBtn.style.display = 'block';
+  } else {
+    inputContainer.style.display = 'block';
+    activeContainer.style.display = 'none';
+    generateBtn.style.display = 'none';
+  }
+  
+  saveBtn.onclick = () => {
+    const val = keyInput.value.trim();
+    if (!val) {
+      alert('請輸入有效的 API Key！');
+      return;
+    }
+    localStorage.setItem('gemini_api_key', val);
+    keyInput.value = '';
+    inputContainer.style.display = 'none';
+    activeContainer.style.display = 'flex';
+    generateBtn.style.display = 'block';
+    alert('Gemini API Key 已儲存並啟用！');
+  };
+  
+  clearBtn.onclick = () => {
+    localStorage.removeItem('gemini_api_key');
+    inputContainer.style.display = 'block';
+    activeContainer.style.display = 'none';
+    generateBtn.style.display = 'none';
+    const reportContainer = document.getElementById('ai-recs-report-container');
+    if (reportContainer) reportContainer.style.display = 'none';
+    alert('Gemini API Key 已清除。');
+  };
+  
+  generateBtn.onclick = () => {
+    generateDynamicAiRecs();
+  };
+}
+
+async function generateDynamicAiRecs() {
+  const btn = document.getElementById('generate-ai-recs-btn');
+  const reportContainer = document.getElementById('ai-recs-report-container');
+  const reportContent = document.getElementById('ai-recs-report-content');
+  const apiKey = localStorage.getItem('gemini_api_key');
+  
+  if (!apiKey) {
+    alert('請先設定 Gemini API Key！');
+    return;
+  }
+  
+  if (!state.preScannedResults || state.preScannedResults.length === 0) {
+    alert('正在讀取數據庫，請稍候片刻再試。');
+    return;
+  }
+  
+  btn.disabled = true;
+  btn.innerText = '⌛ AI 正在分析資料庫與撰寫報告...';
+  reportContainer.style.display = 'block';
+  reportContent.innerHTML = '<div style="color: var(--text-secondary); text-align: center; padding: 1rem;">🤖 AI 正在精細篩選與解讀個股，需要大約 5~10 秒，請稍候...</div>';
+  
+  let sourceList = [...state.preScannedResults];
+  if (state.results && state.results.length > 0) {
+    sourceList = state.results; 
+  } else {
+    sourceList = scoreAndRank(sourceList, 30);
+  }
+  
+  const formattedStocks = sourceList.map((s, idx) => {
+    return `${idx + 1}. 代號:${s.code}, 名稱:${s.name}, 收盤價:${s.close}元, PE:${s.pe || '--'}x, PB:${s.pb || '--'}, 殖利率:${s.dy || '--'}%, 今日成交張數:${s.volLots || 0}張, 營收年增率:${s.revYoY ? s.revYoY.toFixed(1) + '%' : '--'}`;
+  }).join('\n');
+  
+  const prompt = `你是一位專業的台灣股市分析師。以下是今日最新篩選出的精選股票清單數據（已按量化指標初步排序）：
+${formattedStocks}
+
+請幫我從這份清單中，挑選出符合以下條件的 Top 3 最優質股票：
+1. 股價在 200 元以下
+2. 有量（今日成交量大或顯著放大，以今日成交張數為準）
+3. 本益比不要太高（低估或在合理區間，例如小於 22x）
+4. 有近期題材（請結合你的金融知識庫，分析該股近期是否有 AI、綠能、伺服器、半導體、營收成長或景氣回溫等近期題材）
+5. 不要只是已經噴到高點才追，優先尋找「修正後重新轉強」或「基本面剛開始反映」的個股特徵。
+
+請以繁體中文撰寫一份 Top 3 推薦報告，格式如下：
+🥇 [排名與獎牌] [股票名稱與代號] - 今日收盤價: [今日收盤價]元 (PE: [本益比]x, 今日成交: [成交量]張)
+🔥 近期題材：[簡短列出2-3個題材，例如：AI記憶體、NOR/NAND、7月營收創高]
+📊 推薦評價：[1-5顆星，例如 ⭐⭐⭐⭐⭐]
+💡 深度分析：[結合其價格趨勢、營收成長、本益比估值及「修正後重新轉強/打底起漲」的特徵，進行 3 句左右的深度分析說明。請務必詳細、客觀且具備專業感。]
+
+請直接輸出 Top 3 推薦報告內容，不需要其他寒暄。`;
+
+  try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }]
+      })
+    });
+    
+    if (!res.ok) {
+      throw new Error(`Gemini API 回傳錯誤: ${res.status}`);
+    }
+    
+    const data = await res.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (!text) {
+      throw new Error('Gemini 未回傳有效文字。');
+    }
+    
+    reportContent.innerHTML = formatGeminiResponseToHtml(text);
+  } catch (err) {
+    console.error(err);
+    reportContent.innerHTML = `<div style="color: var(--danger); text-align: center; padding: 1rem;">❌ AI 推薦生成失敗：<br>${err.message || err}<br><br>請檢查您的 API Key 是否正確且具備免費額度。</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.innerText = '🔍 開始即時 AI 分析推薦';
+  }
+}
+
+function formatGeminiResponseToHtml(text) {
+  let html = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n/g, '<br>');
+    
+  const codeRegex = /\b(1[0-9]{3}|2[0-9]{3}|3[0-9]{3}|4[0-9]{3}|5[0-9]{3}|6[0-9]{3}|8[0-9]{3}|9[0-9]{3})\b/g;
+  html = html.replace(codeRegex, (match) => {
+    const matchStock = state.preScannedResults.find(p => p.code === match);
+    if (matchStock) {
+      return `<span class="stock-id" style="cursor: pointer; text-decoration: underline; color: var(--accent-color);" onclick="showStockDetails('${matchStock.id}')">${match}</span>`;
+    }
+    return match;
+  });
+  
+  return html;
+}
 
 function updateWatchlistUI() {
   const l = document.getElementById('watchlist-list'), s = document.getElementById('watchlist-summary');
