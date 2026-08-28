@@ -152,11 +152,24 @@ function parseYahooBatch(chunk, data, peMap, revMap, exMap) {
           const peData = peMap.get(s.code) || { pe: null, pb: null, dy: null };
           const revData = revMap.get(s.code) || { rev: null, revYm: null, revYoY: null, revMoM: null, revCumYoY: null };
           const exData = exMap ? (exMap.get(s.code) || { exDate: null, exType: null }) : { exDate: null, exType: null };
+          
+          const historyCount = Math.min(30, resp.timestamp.length);
+          const history = [];
+          for (let idx = resp.timestamp.length - historyCount; idx < resp.timestamp.length; idx++) {
+            if (resp.timestamp[idx] != null && resp.indicators.quote[0].close[idx] != null) {
+              history.push({
+                t: resp.timestamp[idx],
+                c: parseFloat(resp.indicators.quote[0].close[idx].toFixed(2))
+              });
+            }
+          }
+
           results.push({
             ...feat,
             ...peData,
             ...revData,
-            ...exData
+            ...exData,
+            history
           });
           continue;
         }
@@ -543,6 +556,7 @@ async function sync() {
       r.exDate = r.exDate || null;
       r.exType = r.exType || null;
     }
+    r.history = r.history || [];
   }
 
   if (merged.length > 1000) {

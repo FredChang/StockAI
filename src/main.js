@@ -17,8 +17,8 @@ let state = {
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0],
-  version: 'v3.2.3-Nitro',
-  lastUpdate: '2026.08.27',
+  version: 'v3.3.0-Nitro',
+  lastUpdate: '2026.08.28',
   currentChart: null,
   selectedStock: null,
   currentTimeframe: '1mo',
@@ -400,44 +400,25 @@ async function refreshWatchlistQuotes() {
   
   if (btn) {
     btn.disabled = true;
-    btn.innerText = `⌛ 刷新中 (0/${state.watchlist.length})...`;
+    btn.innerText = `⌛ 刷新中...`;
   }
   
   let updated = 0;
-  let completed = 0;
-  const batchSize = 5;
-  
-  for (let i = 0; i < state.watchlist.length; i += batchSize) {
-    const batch = state.watchlist.slice(i, i + batchSize);
-    const promises = batch.map(async (stock) => {
-      try {
-        const data = await safeFetch(`${YAHOO_URL}${stock.id}?range=1d&interval=1m`);
-        const res = data?.chart?.result?.[0];
-        if (res) {
-          const metaPrice = res.meta?.regularMarketPrice;
-          const quotes = res.indicators?.quote?.[0]?.close || [];
-          const validCloses = quotes.filter(v => v != null && !isNaN(v));
-          const latestPrice = metaPrice || (validCloses.length > 0 ? validCloses[validCloses.length - 1] : null);
-          
-          if (latestPrice != null && latestPrice > 0) {
-            stock.currentPrice = parseFloat(latestPrice.toFixed(2));
-            updated++;
-          }
-        }
-      } catch (e) {
-        console.warn(`Failed to refresh quote for ${stock.code}:`, e);
-      } finally {
-        completed++;
-        if (btn) {
-          btn.innerText = `⌛ 刷新中 (${completed}/${state.watchlist.length})...`;
-        }
+  try {
+    const list = await fetchCloudJson('scan_results.json');
+    state.watchlist.forEach(w => {
+      const match = list.find(l => l.id === w.id);
+      if (match && match.close) {
+        w.currentPrice = match.close;
+        updated++;
       }
     });
-    await Promise.all(promises);
+    localStorage.setItem('watchlist', JSON.stringify(state.watchlist));
+    updateWatchlistUI();
+  } catch (e) {
+    console.error('Refresh fail:', e);
+    alert('價格刷新失敗：無法從雲端讀取最新數據庫。');
   }
-  
-  localStorage.setItem('watchlist', JSON.stringify(state.watchlist));
-  updateWatchlistUI();
   
   if (btn) {
     btn.disabled = false;
@@ -445,7 +426,7 @@ async function refreshWatchlistQuotes() {
   }
   
   const nowStr = new Date().toLocaleTimeString();
-  alert(`✅ 現價報價刷新完成！(${nowStr})\n共成功更新 ${updated} / ${state.watchlist.length} 檔標的最新即時價格。`);
+  alert(`✅ 價格刷新完成！(${nowStr})\n已成功從雲端同步更新 ${updated} 檔標的之最新報價。`);
 }
 
 function clearWatchlist() {
@@ -599,8 +580,62 @@ window.showStockDetails = async (id, updateHistory = true) => {
   renderChart(s.id, '1mo');
 };
 
+function renderChartWithData(el, chartData) {
+    const opts = {
+        series: [{ name: '價格', data: chartData }],
+        chart: { 
+            type: 'area', 
+            height: 250, 
+            toolbar: { show: false },
+            zoom: { enabled: false },
+            animations: { enabled: true }
+        },
+        colors: ['#39d2c0'],
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1, opacityFrom: 0.7, opacityTo: 0.2, stops: [0, 90, 100]
+            }
+        },
+        dataLabels: { enabled: false },
+        stroke: { curve: 'smooth', width: 2 },
+        theme: { mode: 'dark' },
+        xaxis: { 
+            type: 'datetime',
+            labels: { 
+                style: { colors: '#94a3b8', fontSize: '10px' },
+                datetimeFormatter: { year: 'yyyy', month: 'MM/dd', day: 'MM/dd', hour: 'HH:mm' }
+            }
+        },
+        yaxis: {
+            labels: { 
+                style: { colors: '#94a3b8', fontSize: '10px' },
+                formatter: (v) => v.toFixed(1)
+            }
+        },
+        grid: { borderColor: 'rgba(255,255,255,0.05)' },
+        tooltip: { x: { format: 'yyyy/MM/dd HH:mm' }, theme: 'dark' }
+    };
+
+    el.innerHTML = '';
+    if (state.currentChart) state.currentChart.destroy();
+    state.currentChart = new window.ApexCharts(el, opts);
+    state.currentChart.render();
+}
+
 async function renderChart(symbol, range) {
     const el = document.getElementById('chart-container');
+    
+    // If range is 1M (1mo) and we have historical data locally, render instantly!
+    if (range === '1mo' && state.selectedStock && state.selectedStock.history && state.selectedStock.history.length > 0) {
+        const chartData = state.selectedStock.history.map(pt => ({
+            x: pt.t * 1000,
+            y: pt.c
+        }));
+        renderChartWithData(el, chartData);
+        return;
+    }
+    
     el.innerHTML = '<div style="color: var(--text-secondary);">載入圖表數據...</div>';
     
     try {
@@ -618,48 +653,9 @@ async function renderChart(symbol, range) {
             return { x: t * 1000, y: parseFloat(prices[i].toFixed(2)) };
         }).filter(v => v != null);
 
-        const opts = {
-            series: [{ name: '價格', data: chartData }],
-            chart: { 
-                type: 'area', 
-                height: 250, 
-                toolbar: { show: false },
-                zoom: { enabled: false },
-                animations: { enabled: true }
-            },
-            colors: ['#39d2c0'],
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    shadeIntensity: 1, opacityFrom: 0.7, opacityTo: 0.2, stops: [0, 90, 100]
-                }
-            },
-            dataLabels: { enabled: false },
-            stroke: { curve: 'smooth', width: 2 },
-            theme: { mode: 'dark' },
-            xaxis: { 
-                type: 'datetime',
-                labels: { 
-                    style: { colors: '#94a3b8', fontSize: '10px' },
-                    datetimeFormatter: { year: 'yyyy', month: 'MM/dd', day: 'MM/dd', hour: 'HH:mm' }
-                }
-            },
-            yaxis: {
-                labels: { 
-                    style: { colors: '#94a3b8', fontSize: '10px' },
-                    formatter: (v) => v.toFixed(1)
-                }
-            },
-            grid: { borderColor: 'rgba(255,255,255,0.05)' },
-            tooltip: { x: { format: 'yyyy/MM/dd HH:mm' }, theme: 'dark' }
-        };
-
-        el.innerHTML = '';
-        if (state.currentChart) state.currentChart.destroy();
-        state.currentChart = new window.ApexCharts(el, opts);
-        state.currentChart.render();
+        renderChartWithData(el, chartData);
     } catch (e) {
-        el.innerHTML = '<div style="color: var(--danger);">圖表載入失敗</div>';
+        el.innerHTML = '<div style="color: var(--danger);">圖表載入失敗 (CORS 代理異常)</div>';
     }
 }
 
