@@ -6,9 +6,9 @@
     <meta name="theme-color" content="#1e293b">
     <title>MANUS AI 動能妖股雷達</title>
     <link rel="manifest" href="/StockAI/assets/manifest-BxB5Zljs.webmanifest?v=2.5.1">
-    <link rel="icon" href="/StockAI/assets/icon-CNzFRXmK.svg" type="image/svg+xml">
+    <link rel="icon" href="/StockAI/assets/icon-CNzFRXmK.svg" type="image/svg+xml">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script type="module" crossorigin src="/StockAI/assets/index-DxRORf_4.js"></script>
+  <script type="module" crossorigin src="/StockAI/assets/index-ByQwO0PM.js"></script>
   <link rel="stylesheet" crossorigin href="/StockAI/assets/index-CiCFe0yX.css">
 </head>
 <body>
@@ -181,7 +181,7 @@
             </div>
         </section>
         
-        <div class="version-tag">AI Stock Scanner v3.2.0-Nitro (2026.07.22)</div>
+        <div class="version-tag">AI Stock Scanner v3.3.0-Nitro (2026.08.28)</div>
     </div>
 
     <!-- Chart Modal -->
@@ -219,6 +219,23 @@
             </div>
         </div>
     </div>
-
+
+    <script>
+      // Automatically unregister stale Service Worker & clear old PWA caches
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (let name of names) {
+            caches.delete(name);
+          }
+        });
+      }
+    </script>
 </body>
 </html>
