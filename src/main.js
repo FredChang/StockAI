@@ -11,13 +11,49 @@ const PROXY_URLS = [
 const YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/';
 const TWSE_LIST_URL = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=';
 
+const FUGLE_API_KEY = 'ZTIzY2ViMWMtODY3OC00YmUyLTljYzktMTRjMWYxMGNkYjdiIGQ1YmE5ZTg4LTk5Y2ItNDE0Ni1iOGY3LWI4YTQxZGZmYTVhMQ==';
+
+function getFugleApiKey() {
+  return localStorage.getItem('fugle_api_key') || FUGLE_API_KEY;
+}
+
+async function fetchFugleQuote(symbol) {
+  const code = symbol.split('.')[0];
+  const url = `https://api.fugle.tw/marketdata/v1.0/stock/intraday/quote/${code}`;
+  const res = await fetch(url, {
+    headers: {
+      'X-API-KEY': getFugleApiKey()
+    }
+  });
+  if (!res.ok) {
+    throw new Error(`Fugle error: ${res.status}`);
+  }
+  return await res.json();
+}
+
+async function fetchFugleHistory(symbol) {
+  const code = symbol.split('.')[0];
+  const toDate = new Date().toISOString().split('T')[0];
+  const fromDate = new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const url = `https://api.fugle.tw/marketdata/v1.0/stock/historical/candles/${code}?from=${fromDate}&to=${toDate}`;
+  const res = await fetch(url, {
+    headers: {
+      'X-API-KEY': getFugleApiKey()
+    }
+  });
+  if (!res.ok) {
+    throw new Error(`Fugle history error: ${res.status}`);
+  }
+  return await res.json();
+}
+
 let state = {
   activeTab: 'scan',
   isScanning: false,
   results: [],
   watchlist: JSON.parse(localStorage.getItem('watchlist') || '[]'),
   weights: [29.08, 19.33, 10.39, 7.67, 7.26, 5.09, 4.25, 0, 0, 0, 0, 0],
-  version: 'v3.3.0-Nitro',
+  version: 'v3.4.0-Nitro',
   lastUpdate: '2026.08.28',
   currentChart: null,
   selectedStock: null,
@@ -400,24 +436,49 @@ async function refreshWatchlistQuotes() {
   
   if (btn) {
     btn.disabled = true;
-    btn.innerText = `⌛ 刷新中...`;
+    btn.innerText = `⌛ 刷新中 (0/${state.watchlist.length})...`;
   }
   
   let updated = 0;
+  let completed = 0;
+  
   try {
-    const list = await fetchCloudJson('scan_results.json');
-    state.watchlist.forEach(w => {
-      const match = list.find(l => l.id === w.id);
-      if (match && match.close) {
-        w.currentPrice = match.close;
-        updated++;
+    const promises = state.watchlist.map(async (stock) => {
+      try {
+        const data = await fetchFugleQuote(stock.id);
+        const price = data.lastPrice || data.closePrice;
+        if (price != null && price > 0) {
+          stock.currentPrice = price;
+          updated++;
+        }
+      } catch (e) {
+        console.warn(`Fugle refresh failed for ${stock.code}:`, e);
+      } finally {
+        completed++;
+        if (btn) {
+          btn.innerText = `⌛ 刷新中 (${completed}/${state.watchlist.length})...`;
+        }
       }
     });
+    await Promise.all(promises);
     localStorage.setItem('watchlist', JSON.stringify(state.watchlist));
     updateWatchlistUI();
-  } catch (e) {
-    console.error('Refresh fail:', e);
-    alert('價格刷新失敗：無法從雲端讀取最新數據庫。');
+  } catch (err) {
+    console.error("Fugle refresh error, falling back to local database:", err);
+    try {
+      const list = await fetchCloudJson('scan_results.json');
+      state.watchlist.forEach(w => {
+        const match = list.find(l => l.id === w.id);
+        if (match && match.close) {
+          w.currentPrice = match.close;
+          updated++;
+        }
+      });
+      localStorage.setItem('watchlist', JSON.stringify(state.watchlist));
+      updateWatchlistUI();
+    } catch (e) {
+      alert('價格刷新失敗：無法從雲端讀取最新數據庫。');
+    }
   }
   
   if (btn) {
@@ -426,7 +487,7 @@ async function refreshWatchlistQuotes() {
   }
   
   const nowStr = new Date().toLocaleTimeString();
-  alert(`✅ 價格刷新完成！(${nowStr})\n已成功從雲端同步更新 ${updated} 檔標的之最新報價。`);
+  alert(`✅ 價格刷新完成！(${nowStr})\n已成功獲取 ${updated} / ${state.watchlist.length} 檔標的之即時報價。`);
 }
 
 function clearWatchlist() {
@@ -626,14 +687,32 @@ function renderChartWithData(el, chartData) {
 async function renderChart(symbol, range) {
     const el = document.getElementById('chart-container');
     
-    // If range is 1M (1mo) and we have historical data locally, render instantly!
-    if (range === '1mo' && state.selectedStock && state.selectedStock.history && state.selectedStock.history.length > 0) {
-        const chartData = state.selectedStock.history.map(pt => ({
-            x: pt.t * 1000,
-            y: pt.c
-        }));
-        renderChartWithData(el, chartData);
-        return;
+    // If range is 1M (1mo), try loading live history from Fugle first!
+    if (range === '1mo') {
+        try {
+            el.innerHTML = '<div style="color: var(--text-secondary);">載入即時圖表數據 (Fugle)...</div>';
+            const data = await fetchFugleHistory(symbol);
+            if (data && data.data && data.data.length > 0) {
+                const chartData = data.data.map(pt => ({
+                    x: new Date(pt.date).getTime(),
+                    y: pt.close
+                })).reverse();
+                renderChartWithData(el, chartData);
+                return;
+            }
+        } catch (e) {
+            console.warn("Fugle live chart failed, falling back to local database:", e);
+        }
+        
+        // Fallback to local history from scan_results.json
+        if (state.selectedStock && state.selectedStock.history && state.selectedStock.history.length > 0) {
+            const chartData = state.selectedStock.history.map(pt => ({
+                x: pt.t * 1000,
+                y: pt.c
+            }));
+            renderChartWithData(el, chartData);
+            return;
+        }
     }
     
     el.innerHTML = '<div style="color: var(--text-secondary);">載入圖表數據...</div>';
