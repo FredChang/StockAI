@@ -8,11 +8,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function fetchWithRetry(url, options, { retries = 3, baseDelayMs = 1000, label = 'fetch' } = {}) {
+async function fetchWithRetry(url, options = {}, { retries = 3, baseDelayMs = 1000, timeoutMs = 15000, label = 'fetch' } = {}) {
   let lastError;
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const res = await fetch(url, options);
+      const res = await fetch(url, {
+        ...options,
+        signal: AbortSignal.timeout(timeoutMs)
+      });
       if (res.status === 429 && attempt < retries) {
         const delay = baseDelayMs * Math.pow(2, attempt + 1);
         console.warn(`[${label}] Rate limited (429). Waiting ${delay}ms before retry ${attempt + 1}/${retries}...`);
